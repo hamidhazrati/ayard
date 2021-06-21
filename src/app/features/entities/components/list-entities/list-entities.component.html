@@ -109,30 +109,31 @@
     ></mat-paginator>
   </ng-container>
 -->
-<h1>
-  Hamid Hazrati
-</h1>
-<h2>
-  Gate In
-</h2>
-<mat-form-field appearance="outline">
-  <input
-  type="text"
-  placeholder="Car Registration"
-  aria-label="Car Registration"
-  matInput
-  />
-</mat-form-field>
-<br>
-<button mat-flat-button>
-  Check In
-</button>
-
-<zxing-scanner
-  (scanSuccess)="onCodeResult($event)"
-  [formats]="formatsEnabled"
-  [tryHarder]="true"
-></zxing-scanner>
+<center>
+  <h2>
+    Gate In
+  </h2>
+  <mat-form-field appearance="outline">
+    <input
+    type="text"
+    placeholder="Car Registration"
+    aria-label="Car Registration"
+    matInput
+    />
+  </mat-form-field>
+  <br>
+  <button mat-flat-button>
+    Check In
+  </button>
+  <br>
+  <br>
+  <zxing-scanner
+    (scanSuccess)="onCodeResult($event)"
+    [formats]="formatsEnabled"
+    [tryHarder]="true"
+    style="width:25%"
+  ></zxing-scanner>
+</center>
 
 <section class="results" *ngIf="qrResultString">
   <div>
