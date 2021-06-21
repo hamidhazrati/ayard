@@ -1,0 +1,37 @@
+<ng-container *ngIf="productCategory">
+  <section class="view-product-category">
+    <app-card>
+      <app-card-title data-testid="title">{{ productCategory.name }}</app-card-title>
+
+      <app-card-content>
+        <app-form-label>Product category Id</app-form-label>
+        <app-form-value data-testid="product-category-id">{{ productCategory.id }}</app-form-value>
+
+        <app-form-label>Status</app-form-label>
+        <app-form-value data-testid="product-category-status">{{
+          productCategory.status | titlecaseFormat
+        }}</app-form-value>
+
+        <app-form-label>Product category name</app-form-label>
+        <app-form-value data-testid="product-category-name">{{
+          productCategory.name
+        }}</app-form-value>
+
+        <app-form-label>Product type</app-form-label>
+        <app-form-value data-testid="product-category-productType">{{
+          productCategory.productType
+        }}</app-form-value>
+
+        <app-form-label>Product category description</app-form-label>
+        <app-form-value data-testid="product-category-description">{{
+          productCategory.description
+        }}</app-form-value>
+
+        <app-form-label>Product guide link</app-form-label>
+        <app-form-value data-testid="product-category-guide-link">{{
+          productCategory.productGuideLink
+        }}</app-form-value>
+      </app-card-content>
+    </app-card>
+  </section>
+</ng-container>

@@ -1,0 +1,182 @@
+<ng-container>
+  <ng-container *ngIf="!loading && product">
+
+    <div class="row">
+      <app-card class="col-12">
+        <app-card-title class="view-product__header">
+          <span>
+            <span data-testid="product-category-name">
+              {{ productCategory?.name }}
+            </span> |
+            <span data-testid="product-name">
+              {{ product.name }}
+            </span>
+          </span>
+        </app-card-title>
+      </app-card>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-card>
+          <app-card-content>
+            <div class="row--no-padding">
+              <div class="col-4">
+                <app-form-label>Product Id</app-form-label>
+                <app-form-value data-testid="product-id">
+                  {{ product.id }}
+                </app-form-value>
+                <app-form-label>
+                  Status
+                </app-form-label>
+                <app-form-value data-testid="product-status">
+                  {{product.status | titlecaseFormat}}
+                </app-form-value>
+              </div>
+              <div class="col-8">
+                <app-form-label>
+                  Product description
+                </app-form-label>
+                <app-form-value data-testid="product-description">
+                  {{product.description}}
+                </app-form-value>
+                <app-form-label>
+                  Product guide link
+                </app-form-label>
+                <app-form-value data-testid="product-guide-link">
+                  {{product.productGuideLink}}
+                  </app-form-value>
+              </div>
+            </div>
+          </app-card-content>
+        </app-card>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <app-card>
+    <app-card-content>
+
+      <div class="row">
+        <div class="col-2">
+          <mat-selection-list
+            [multiple]="false"
+            (selectionChange)="portalSelected($event.option.value)"
+          >
+            <mat-list-option
+              *ngFor="let portal of portals"
+              [selected]="portal.name === 'Behavioural parameters'"
+              [value]="portal"
+            >
+              {{ portal.name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div class="col-10">
+          <ng-template [cdkPortalOutlet]="selectedView?.portal"></ng-template>
+        </div>
+      </div>
+
+      <ng-template #templatePortalBehaviouralParameters >
+        <div class="parameterBox"
+          *ngFor="let item of behaviouralParameterDefinitions | keyvalue">
+          <div>
+            <mat-icon
+              *ngIf="product.status === 'DRAFT'"
+              class="float-right hand"
+              (click)="configureProductParameter(item)"
+              [matTooltip]="'Click to configure parameter'"
+              >
+                settings</mat-icon
+            >
+            <p>
+              {{ item.value.label }}
+            </p>
+          </div>
+          <div>
+            <p>
+              <mat-form-field appearance="outline">
+                <form *ngIf="item.value.type === 'MULTIPLE_CHOICE'"
+                  [formGroup]="form.controls.defaultValue">
+                  <mat-select [formControlName]="item.key">
+                    <mat-option
+                      *ngFor="let showValue of getShowValues(item.key)"
+                      [value]="showValue.value"
+                    >
+                      {{showValue.label}}
+                    </mat-option>
+                  </mat-select>
+                </form>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #templatePortalControlParameters>
+        <div class="parameterBox"
+          *ngFor="let item of controlParameterDefinitions | keyvalue"
+        >
+          <div>
+            <mat-icon
+              *ngIf="product.status === 'DRAFT'"
+              class="float-right hand"
+              (click)="configureProductParameter(item)"
+              [matTooltip]="'Click to configure parameter'"
+              >
+                settings</mat-icon
+            >
+            <p>
+              {{ item.value.label }}
+            </p>
+          </div>
+          <div>
+            <p>
+              <mat-form-field appearance="outline">
+                  <input
+                    *ngIf="item.value.type === 'INTEGER'"
+                    type="number"
+                    readonly
+                    matInput
+                    appPositiveTwoDecinal
+                    value="{{ product.parameters[item.key].defaultValue }}"
+                  />
+                </mat-form-field>
+            </p>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #templatePortalCounterparties>
+        <div class="view-product__portal-header">
+          <h2>Counterparties</h2>
+        </div>
+        <gds-data-table
+          [showRowSelect]="false"
+          [isClickableRow]="false"
+          [rows]="rows"
+          [columns]="columns"
+        ></gds-data-table>
+      </ng-template>
+
+      <ng-template #templatePortalRules>
+        <div class="view-product__portal-header">
+          <h2>Rules</h2>
+        </div>
+        <div *ngFor="let ruleGroup of groupedRules | keyvalue">
+          <h3>{{ ruleGroup.key }}</h3>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle *ngFor="let rule of ruleGroup.value">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ rule.name }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-view-rule [rule]="rule"></app-view-rule>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </ng-template>
+
+    </app-card-content>
+  </app-card>
+</ng-container>

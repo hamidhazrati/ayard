@@ -1,0 +1,24 @@
+<div class="confirm_dialog">
+  <div>
+    <h2>Origination proposal</h2>
+  </div>
+  <div class="confirm_content">
+    The cashflows will be submitted to Origination proposal
+    <div class="spinner_wrapper">
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+    </div>
+  </div>
+  <div class="confirm_buttons">
+    <button
+      mat-flat-button
+      data-testid="confirm-proposal"
+      (click)="this.submitForInternalApproval()"
+    >
+      Confirm
+    </button>
+
+    <button mat-flat-button data-testid="cancel-proposal" (click)="this.close()">
+      Cancel
+    </button>
+  </div>
+</div>

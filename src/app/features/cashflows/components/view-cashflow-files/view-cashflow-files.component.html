@@ -1,0 +1,294 @@
+<div class="row">
+  <mat-card
+    class="col-12 header-card"
+    [class.header-card--rejected]="cashflowsFileStatusRejected()"
+  >
+    <h1>{{ cashflowFile?.id }} - {{ cashflowFile?.clientName }}</h1>
+
+    <div class="header-card__right">
+      <button
+        *ngIf="cashflowFileStatusNotCreated() && !cashflowsFileStatusRejected() && loaded === true"
+        [disabled]="shouldDisableSubmit()"
+        mat-flat-button
+        data-testid="submit-processing"
+        (click)="submitForProcessing()"
+      >
+        <ng-container *ngIf="busy; else notBusy">
+          <mat-spinner class="mat-card__spinner mr-10" diameter="20"></mat-spinner>
+          Processing... Please Wait
+        </ng-container>
+        <ng-template #notBusy>Submit File for Processing</ng-template>
+      </button>
+      <div
+        [matTooltip]="invalidPermissionMsg"
+        [matTooltipPosition]="'above'"
+        [matTooltipDisabled]="hasCheckerAuthority"
+        data-testid="submit-proposal-btn-wrapper"
+      >
+        <button
+          *ngIf="
+            !cashflowFileStatusNotCreated() &&
+            !cashflowFileStatusOriginated() &&
+            !cashflowsFileStatusRejected() &&
+            !cashflowFileStatusSubmitted() &&
+            loaded === true
+          "
+          mat-flat-button
+          data-testid="submit-proposal"
+          (click)="openOriginationConfirmationDialogue()"
+          [disabled]="shouldDisableOriginationProposal()"
+        >
+          Submit to Origination Proposal
+        </button>
+      </div>
+
+      <button
+        *ngIf="!cashflowsFileStatusRejected() && loaded === true"
+        [disabled]="shouldDisableReject()"
+        mat-stroked-button
+        data-testid="reject"
+        (click)="openRejectDialogue()"
+      >
+        Reject File
+      </button>
+      <h1
+        data-testid="reject-header"
+        class="header-card--rejected-stamp"
+        *ngIf="cashflowsFileStatusRejected()"
+      >
+        REJECTED
+      </h1>
+      <div *ngIf="cashflowsFileStatusRejected()">
+        <div class="header-card--rejected-by" data-testid="reject-user-time">
+          Rejected by {{ cashflowFile?.rejectionDetail.user }}
+          {{ cashflowFile?.rejectionDetail.date }} UTC
+        </div>
+        <div data-testid="reject-message">{{ cashflowFile?.rejectionDetail.message }}</div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<ng-template [ngIf]="!cashflowFileStatusNotCreated()">
+  <div class="row">
+    <mat-card class="col-4" data-testid="contract-card">
+      <div class="row">
+        <div class="col-3">Sellers:</div>
+        <div class="col-9">
+          <span *ngFor="let seller of uniqueSellers">
+            {{ seller.name }}
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Contract:</div>
+        <div class="col-9">
+          <span *ngFor="let contract of cashflowContracts">
+            <a routerLink="/contracts/{{ contract.id }}">{{ contract.name }}</a>
+          </span>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="col-4" data-testid="cashflows-card-submitted">
+      <div class="row">
+        <div class="col-6">File total:</div>
+        <div class="col-6 col--align-right">
+          {{ getCashflowsCount() || '' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">Gross amount:</div>
+        <div class="col-6 col--align-right">
+          {{ cashflowTotal()?.totalOriginalValue + cashflowTotal()?.totalInvalidOriginalValue | number: '1.2' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6"><strong>Valid cashflows:</strong></div>
+        <div class="col-6 col--align-right">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowTotal()?.totalValidCashflows }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">Valid gross amount:</div>
+        <div class="col-6 col--align-right">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowTotal()?.totalOriginalValue | number: '1.2' }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6"><strong>Invalid cashflows:</strong></div>
+        <div class="col-6 col--align-right">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowTotal()?.totalInvalidCashflows }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">Invalid gross amount:</div>
+        <div class="col-6 col--align-right">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowTotal()?.totalInvalidOriginalValue | number: '1.2' }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-6"><strong>Cashflow Failures:</strong></div>
+        <div class="col-6 col--align-right">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowFailures?.length }}
+          </ng-container>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="col-4" data-testid="cashflow-file-card">
+      <div class="row">
+        <div class="col-3">Status:</div>
+        <div class="col-9">
+          <ng-container *ngIf="hasUnprocessedCashflows()">
+            <mat-spinner class="mat-card__spinner" diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!hasUnprocessedCashflows()">
+            {{ cashflowFile?.status | titlecaseFormat }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Cashflow file ID:</div>
+        <div class="col-9">{{ cashflowFile?.id }}</div>
+      </div>
+      <div class="row">
+        <div class="col-3">Filename:</div>
+        <div class="col-9">{{ cashflowFile?.filename }}</div>
+      </div>
+      <div class="row">
+        <div class="col-3">Uploaded:</div>
+        <div class="col-9">
+          {{ cashflowFile?.uploadDate | date: 'medium' }} - {{ cashflowFile?.uploadedBy }}
+        </div>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-3">Processed:</div>
+        <div class="col-9">
+          <ng-container *ngIf="cashflowFile?.processedDate; else noProcessDate">
+            <span class="processed-by">
+              {{ cashflowFile?.processedDate | date: 'medium' }} - {{ cashflowFile?.processedBy }}
+            </span>
+          </ng-container>
+          <ng-template #noProcessDate>
+            {{ cashflowFile?.processedBy }}
+          </ng-template>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="!cashflowFileStatusNotCreated()">
+  <div class="row">
+    <mat-card class="col-12 table-card" data-testid="cashflows-table-card">
+      <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+        <mat-tab label="Valid Cashflows {{ validCashflowCount() }}">
+          <app-cashflows-table
+            [cashflows]="validCashflows"
+            [hasUnprocessedCashflows]="hasUnprocessedCashflows()"
+          ></app-cashflows-table>
+        </mat-tab>
+        <mat-tab label="Invalid Cashflows {{ invalidAndFailedCashflowCount() }}">
+          <app-invalid-cashflows-table
+            [cashflows]="invalidCashflows?.concat(cashflowFailures)"
+            [hasUnprocessedCashflows]="hasUnprocessedCashflows()"
+          ></app-invalid-cashflows-table>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="cashflowFileStatusNotCreated()">
+  <div class="row">
+    <mat-card class="col-12" data-testid="cashflow-file-card">
+      <div class="row">
+        <div class="col-2">Status:</div>
+        <div class="col-10">{{ cashflowFile?.status | titlecaseFormat }}</div>
+      </div>
+      <div class="row">
+        <div class="col-2">Cashflow file ID:</div>
+        <div class="col-10">{{ cashflowFile?.id }}</div>
+      </div>
+      <div class="row">
+        <div class="col-2">Filename:</div>
+        <div class="col-10">{{ cashflowFile?.filename }}</div>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-2">Uploaded:</div>
+        <div class="col-10">
+          {{ cashflowFile?.uploadDate | date: 'medium' }} - {{ cashflowFile?.uploadedBy }}
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="cashflowFile?.processingFailureMessages">
+  <mat-card class="col-12 table-card" data-testid="cashflow-file-processing-failure">
+    <mat-tab-group mat-stretch-tabs animationDuration="0ms" color="warn">
+      <mat-tab label="Cashflow File Failures">
+        <table mat-table [dataSource]="cashflowFile?.processingFailureMessages">
+          <ng-container matColumnDef="rowFailed">
+            <th mat-header-cell *matHeaderCellDef>Cashflow File Row</th>
+            <td mat-cell *matCellDef="let element" data-testid="cashflow-file-row">
+              {{ element.rowFailed }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef>Message</th>
+            <td mat-cell *matCellDef="let element" data-testid="message">{{ element.message }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['rowFailed', 'message']"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['rowFailed', 'message']; let i = index"
+            [attr.data-testid]="'failure-row-' + i"
+          ></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</ng-template>

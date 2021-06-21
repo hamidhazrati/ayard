@@ -1,0 +1,97 @@
+@import 'content-common';
+
+h2 {
+  padding: 0 20px;
+  small {
+    display: block;
+  }
+}
+
+/* responsible for padding */
+.pd {
+  padding: 10px;
+}
+.delete {
+  color: $alert900;
+}
+
+.header {
+  border-bottom: 1px solid $grey100;
+  & > div {
+    display: inline-block;
+  }
+  .more {
+    cursor: pointer;
+    float: right;
+    padding: 18px 10px;
+  }
+}
+
+.stats {
+  &__section {
+    padding: 0 20px;
+    .title p {
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  &__info {
+    display: inline-block;
+    padding: 20px;
+
+    span {
+      display: block;
+    }
+    .title {
+      color: $grey500;
+    }
+    .value {
+      color: $supportive800;
+    }
+  }
+}
+
+.information {
+  &__title {
+    color: $grey200;
+    font-size: 13px;
+  }
+  &__value {
+    color: $supportive800;
+    a {
+      display: block;
+    }
+    .link {
+      display: inline;
+    }
+  }
+
+  & > div {
+    display: inline-block;
+    padding: 20px;
+
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      padding-right: 0;
+    }
+
+    span {
+      display: block;
+    }
+  }
+
+  &.guarantors {
+    & > div {
+      border-right: 1px solid $grey200;
+    }
+    & > .single {
+      padding-right: 20px;
+    }
+    & > div:first-of-type p {
+      margin-top: 0;
+    }
+  }
+}

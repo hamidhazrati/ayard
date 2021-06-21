@@ -1,0 +1,15 @@
+.mat-dialog-actions {
+  margin-bottom: -10px;
+
+  .mat-error {
+    padding-left: 10px;
+  }
+}
+
+.mat-dialog-actions__spaced {
+  justify-content: space-between;
+
+  .mat-error {
+    flex-grow: 1;
+  }
+}

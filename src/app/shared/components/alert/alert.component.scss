@@ -1,0 +1,86 @@
+$red: #f26152;
+$alert: #fdced3;
+$warning: #fff9e4;
+$warningIcon: #fdb935;
+$success: #afe2cf;
+
+.alert {
+  border: 1px solid black;
+  border-radius: 4px;
+  display: inline-grid;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.1rem;
+  grid-template-columns: 4% 60% 35%;
+  margin-bottom: 20px;
+  padding: 20px 20px 15px 10px;
+  position: relative;
+  width: 100%;
+
+  h4 {
+    margin: 0;
+  }
+
+  p {
+    margin: 5px 0;
+    opacity: 0.8;
+  }
+
+  &__buttons {
+    text-align: right;
+    button {
+      display: inline-block;
+      margin: 10px 5px;
+    }
+  }
+
+  &__close {
+    background: transparent;
+    cursor: pointer;
+    font-size: 25px;
+    position: absolute;
+    right: 40px;
+    top: 28px;
+  }
+
+  &__content {
+    padding: 0 5px;
+  }
+
+  &__symbol {
+    align-items: center;
+    color: $warningIcon;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  &--no-border {
+    border: 0;
+  }
+
+  &--alert {
+    background: $alert; // this can be changed
+  }
+
+  &--info {
+    background: blue; // this can be changed
+  }
+
+  &--warning {
+    background: $warning;
+  }
+
+  &--success {
+    background: $success;
+  }
+}
+
+.reject {
+  border: 1px solid $red;
+  color: $red;
+  padding: 0 30px;
+  &:hover {
+    background: transparent;
+  }
+}

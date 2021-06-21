@@ -1,0 +1,31 @@
+<mat-form-field appearance="outline">
+  <input
+    matInput
+    type="text"
+    [id]="inputId"
+    data-testid="entity-selector-input"
+    [formControl]="form"
+    [matAutocomplete]="auto"
+  />
+  <mat-icon matPrefix>search</mat-icon>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    data-testid="entity-selector-autocomplete"
+    [displayWith]="displayFn"
+  >
+    <mat-option
+      class="entity-selector-option"
+      *ngFor="let entity of entities | async"
+      data-testid="entity-selector-option"
+      [value]="entity"
+    >
+      <strong>{{ entity.name }} </strong>
+      <small class="entity-selector-option__label" *ngIf="entity.dunsNumber"
+        >(DUNS No:{{ entity.dunsNumber }})</small
+      >
+      <br />
+      <small *ngIf="entity.address">{{ formatAddress(entity.address) }}</small>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

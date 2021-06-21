@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline">
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let value of values" [removable]="true" (removed)="removeValue(value)">
+      {{ value }}
+      <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+    </mat-chip>
+    <input
+      #input
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="true"
+      (matChipInputTokenEnd)="addValue($event.value)"
+    />
+  </mat-chip-list>
+</mat-form-field>

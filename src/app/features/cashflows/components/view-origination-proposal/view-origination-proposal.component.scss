@@ -1,0 +1,89 @@
+/*
+ * Move these styles into common when we've done a couple
+ * of similar pages and have a pattern
+ */
+@import 'palette';
+
+span {
+  display: block;
+}
+
+.header-card {
+  h1 {
+    display: inline;
+    margin: 0;
+  }
+
+  p {
+    margin: 0px;
+  }
+}
+
+.header-card__status {
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+.header-card__actions {
+  justify-self: end;
+  align-self: center;
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+.header-card__action-wrapper {
+  display: inline-block;
+}
+
+.header-card--rejected {
+  background-color: $alert100;
+}
+
+.header-card--rejected-stamp {
+  padding-right: 24px;
+  color: $alert700;
+}
+
+.header-card--rejected-by {
+  color: $grey700;
+}
+
+.col--align-right {
+  text-align: right;
+}
+
+.table-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.proposal-tabs {
+  background-color: $supportive0;
+}
+
+.proposal-tabs__background {
+  padding-top: 20px;
+  background-color: $supportive100;
+}
+
+.proposal-tab {
+  flex-direction: column;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.proposal-tab__heading {
+  display: block;
+}
+
+.proposal-tab__subheading {
+  display: block;
+  font-size: 1rem;
+}
+
+.cashflow-tabs {
+  background-color: $supportive0;
+}

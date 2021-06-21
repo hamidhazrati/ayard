@@ -1,0 +1,39 @@
+<form class="form" [formGroup]="form" (ngSubmit)="addLimit()">
+  <h2 mat-dialog-title>Approved {{ data.counterparty.role | lowercase }} limit</h2>
+  <mat-dialog-content>
+    <app-form-label>Entity</app-form-label>
+    <app-form-value>
+      {{ data.counterparty.name }}
+    </app-form-value>
+
+    <div *ngFor="let requirement of data.limitRequirements.requirements; let i = index">
+      <div class="row--no-padding">
+        <app-form-label class="col-8"
+          >Approved {{ requirement.limitType | lowercase }} limit</app-form-label
+        >
+        <app-form-label class="col-4">Currency</app-form-label>
+      </div>
+
+      <app-limit-form-field
+        [formControlName]="requirement.limitType"
+        [limitSources]="requirement.validSources"
+        [limitType]="requirement.limitType"
+        [currencyCodes]="currencyCodes"
+      ></app-limit-form-field>
+
+      <app-form-error
+        [label]="'Valid ' + requirement.limitType + ' Limit'"
+        [control]="form.controls[requirement.limitType]"
+      ></app-form-error>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mat-dialog-actions__spaced">
+    <button mat-flat-button data-testid="submit-add-limit" type="submit">
+      Approve {{ data.counterparty.role | lowercase }} limit
+    </button>
+
+    <mat-error>{{ serverError }}</mat-error>
+
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</form>

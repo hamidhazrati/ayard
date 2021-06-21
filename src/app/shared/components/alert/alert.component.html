@@ -1,0 +1,40 @@
+<div [class]="'alert alert--no-border alert--' + status" data-testid="gs-alert-component">
+  <div class="alert__symbol">
+    <span>
+      <mat-icon aria-hidden="false" aria-label="">error_outline</mat-icon>
+    </span>
+  </div>
+
+  <div class="alert__content">
+    <h4 [innerText]="title"></h4>
+    <p [innerText]="description"></p>
+  </div>
+
+  <div class="alert__close" *ngIf="showClose">
+    <span tabindex="0" (click)="onClose()" (keydown.enter)="onClose()" (keydown.space)="onClose()">
+      <mat-icon aria-hidden="false" aria-label="">close</mat-icon>
+    </span>
+  </div>
+
+  <div class="alert__buttons" *ngIf="showActions">
+    <button
+      class="reject"
+      disableRipple
+      mat-stroked-button
+      (click)="onReject()"
+      data-testid="gs-alert-reject-btn"
+    >
+      Reject
+    </button>
+
+    <button
+      class="approve"
+      disableRipple
+      mat-flat-button
+      (click)="onApprove()"
+      data-testid="gs-alert-approve-btn"
+    >
+      Approve
+    </button>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<label [for]="for">
+  <ng-content></ng-content>
+  <span class="required-marker" *ngIf="requiredHtml" [innerHTML]="requiredHtml"></span>
+</label>

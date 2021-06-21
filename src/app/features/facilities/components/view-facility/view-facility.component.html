@@ -1,0 +1,357 @@
+<ng-container *ngIf="data$ | async as projection">
+  <section class="row">
+    <app-card class="col-12">
+      <app-card-title data-testid="title">
+        Relationship limit
+        <app-separator></app-separator>
+        <span data-testid="facility-name">{{ projection.facility.name }}</span>
+        <app-separator></app-separator>
+        <span data-testid="facility-currency">{{ projection.facility.currency }}</span>
+        <span data-testid="facility-limit">
+          {{ (projection.exposure.results[0]?.results)[0]?.total || 0 | number }}
+        </span>
+      </app-card-title>
+
+      <app-card-content>
+        <div class="row">
+          <div class="col-2">
+            <app-form-label>Exposure</app-form-label>
+            <app-form-value data-testid="facility-exposure">
+              {{ (projection.exposure.results[0]?.results)[0].used || 0 | number: '0.2' }}
+            </app-form-value>
+          </div>
+
+          <div class="col-2">
+            <app-form-label>Available</app-form-label>
+            <app-form-value
+              data-testid="facility-available"
+              [ngClass]="{
+                'negative-number': isNegative(
+                  (projection.exposure.results[0]?.results)[0].available || 0
+                )
+              }"
+            >
+              {{ (projection.exposure.results[0]?.results)[0].available || 0 | number: '0.2' }}
+            </app-form-value>
+          </div>
+        </div>
+      </app-card-content>
+    </app-card>
+  </section>
+
+  <section class="row">
+    <ng-container *ngIf="projection.children.length">
+      <app-card *ngFor="let projection of projection.children; let i = index" class="col-12">
+        <app-card-title [attr.data-testid]="'contract-facility-title-' + i">
+          Facility {{ i + 1 }}
+          <app-separator></app-separator>
+          {{ projection.facility.name }}
+          <app-separator></app-separator>
+          {{ projection.facility.currency }}
+          {{ (projection.exposure.results[0]?.results)[0].total || 0 | number }}
+
+        </app-card-title>
+
+        <app-card-content>
+          <div class="row">
+            <div class="col-2">
+              <app-form-label>Exposure</app-form-label>
+              <app-form-value [attr.data-testid]="'contract-facility-exposure-' + i">
+                {{ (projection.exposure.results[0]?.results)[0].used || 0 | number: '0.2' }}
+              </app-form-value>
+            </div>
+
+            <div class="col-2">
+              <app-form-label>Available</app-form-label>
+              <app-form-value
+                data-testid="facility-available"
+                [ngClass]="{
+                  'negative-number': isNegative(
+                    (projection.exposure.results[0]?.results)[0].available
+                  )
+                }"
+              >
+                {{ (projection.exposure.results[0]?.results)[0].available || 0 | number: '0.2' }}
+              </app-form-value>
+            </div>
+
+            <div class="col-4">
+              <app-form-label>Contracts</app-form-label>
+              <app-form-value data-testid="facility-contracts">
+                <div class="text-ellipsis">
+                  <ng-container
+                    *ngFor="let contract of projection.facility.contracts; let _index = index"
+                  >
+                    <a [routerLink]="['/contracts/' + contract.id]">
+                      <span [innerText]="contract.name"></span>
+                    </a>
+                    <ng-container *ngIf="_index + 1 < projection.facility.contracts.length"
+                      >,</ng-container
+                    >
+                  </ng-container>
+                </div>
+              </app-form-value>
+            </div>
+
+            <div class="col-4">
+              <app-form-label>Discretionary Limit</app-form-label>
+              <app-form-value data-testid="facility-dcl">{{
+                projection.facility.dcl | number
+              }}</app-form-value>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button mat-flat-button [matMenuTriggerFor]="menu">
+                <mat-icon>expand_more</mat-icon> Add facility component
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="addProductFacilityComponent(projection.facility)">
+                  Product
+                </button>
+              </mat-menu>
+
+              <button mat-button (click)="this.editContractFacility(projection.facility)">Edit</button>
+            </div>
+          </div>
+
+          <mat-tab-group
+            [@.disabled]="true"
+            *ngIf="
+              projection.sections.products.length ||
+              projection.sections.other?.exposure.results.length ||
+              projection.sections.perCounterparties.length ||
+              projection.sections.guarantors.length
+            "
+          >
+            <!-- Products tab -->
+            <mat-tab label="Products" *ngIf="projection.sections.products.length">
+              <table mat-table [dataSource]="projection.sections.products">
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Product
+                  </th>
+                  <td mat-cell data-testid="name" *matCellDef="let projection">
+                    {{ projection.facility.products.join(', ') }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="currency">
+                  <th mat-header-cell *matHeaderCellDef>
+                    CCY
+                  </th>
+                  <td mat-cell data-testid="currency" *matCellDef="let projection">
+                    {{ projection.facility.currency }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="creditLimit">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Limit
+                  </th>
+                  <td mat-cell data-testid="limit" *matCellDef="let projection">
+                    {{ (projection.exposure.results[0].results[0].total | number) || '-' }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="exposure">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Exposure
+                  </th>
+                  <td mat-cell data-testid="exposure" *matCellDef="let projection">
+                    {{ (projection.exposure.results[0].results[0].used | number: '0.2') || '-' }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="available">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Available
+                  </th>
+                  <td
+                    mat-cell
+                    data-testid="facility-available"
+                    *matCellDef="let projection"
+                    [ngClass]="{
+                      'negative-number': isNegative(
+                        projection.exposure.results[0].results[0].available
+                      )
+                    }"
+                  >
+                    {{
+                      (projection.exposure.results[0].results[0].available | number: '0.2') || '-'
+                    }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="['name', 'currency', 'creditLimit', 'exposure', 'available']"
+                ></tr>
+                <tr
+                  mat-row
+                  [attr.data-testid]="'facility-row-' + i"
+                  *matRowDef="
+                    let row;
+                    columns: ['name', 'currency', 'creditLimit', 'exposure', 'available'];
+                    let i = index
+                  "
+                ></tr>
+              </table>
+            </mat-tab>
+
+            <!-- Percounterparties tab -->
+            <mat-tab
+              [label]="perCounterparties.facility.name"
+              *ngFor="let perCounterparties of projection.sections.perCounterparties"
+            >
+              <gs-counterparties-table
+                [searchable]="true"
+                [source]="perCounterparties.exposure.results"
+              ></gs-counterparties-table>
+            </mat-tab>
+
+            <!-- Other tab -->
+            <mat-tab label="Other" *ngIf="projection.sections.other?.exposure.results.length">
+              <table mat-table [dataSource]="projection.sections.other.exposure.results">
+                <ng-container matColumnDef="description">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Description
+                  </th>
+                  <td mat-cell data-testid="description" *matCellDef="let result">
+                    {{ projection.sections.other.facility.name }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="concentration">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Limit
+                  </th>
+                  <td mat-cell data-testid="concentration" *matCellDef="let result">
+                    {{ result.results[0].limit.percentage | number: '0.2' }}%
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actual">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Actual
+                  </th>
+                  <td mat-cell data-testid="actual" *matCellDef="let result">
+                    {{
+                      result.results[0].used /
+                        (result.results[0].total / result.results[0].limit.decimalFraction)
+                        | percent: '0.2'
+                    }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="['description', 'concentration', 'actual']"
+                ></tr>
+                <tr
+                  mat-row
+                  [attr.data-testid]="'facility-row-' + i"
+                  *matRowDef="
+                    let row;
+                    columns: ['description', 'concentration', 'actual'];
+                    let i = index
+                  "
+                ></tr>
+              </table>
+            </mat-tab>
+
+            <!-- Guarantors tab -->
+            <mat-tab label="Guarantors" *ngIf="projection.sections.guarantors.length">
+              <table mat-table [dataSource]="projection.sections.guarantors">
+                <ng-container matColumnDef="entity">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Entity
+                  </th>
+                  <td
+                    mat-cell
+                    id="guarantor-entity"
+                    data-testid="guarantor-entity"
+                    *matCellDef="let result"
+                  >
+                    {{ result.result.limit.entity.name }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="duns">
+                  <th mat-header-cell *matHeaderCellDef>
+                    DUNS
+                  </th>
+                  <td mat-cell data-testid="guarantor-duns" *matCellDef="let result">
+                    {{ result.result.limit.entity.dunsNumber }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ccy">
+                  <th mat-header-cell *matHeaderCellDef>
+                    CCY
+                  </th>
+                  <td mat-cell data-testid="guarantor-ccy" *matCellDef="let result">
+                    {{ result.result.currency }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="guarantorLimit">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Guarantor Limit
+                  </th>
+                  <td mat-cell data-testid="guarantor-limit" *matCellDef="let result">
+                    {{ result.result.limit.limit | number }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="exposure">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Exposure
+                  </th>
+                  <td mat-cell data-testid="guarantor-exposure" *matCellDef="let result">
+                    {{ result.result.used | number: '0.2' }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="guarantorLevel">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Guarantor Level
+                  </th>
+                  <td mat-cell data-testid="guarantor-level" *matCellDef="let result">
+                    {{ result.facilityTypeName }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="[
+                    'entity',
+                    'duns',
+                    'ccy',
+                    'guarantorLimit',
+                    'exposure',
+                    'guarantorLevel'
+                  ]"
+                ></tr>
+                <tr
+                  mat-row
+                  [attr.data-testid]="'guarantor-row-' + i"
+                  *matRowDef="
+                    let row;
+                    columns: [
+                      'entity',
+                      'duns',
+                      'ccy',
+                      'guarantorLimit',
+                      'exposure',
+                      'guarantorLevel'
+                    ];
+                    let i = index
+                  "
+                ></tr>
+              </table>
+            </mat-tab>
+          </mat-tab-group>
+        </app-card-content>
+      </app-card>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-12">
+        <button mat-flat-button color="primary" data-testid="add-child" (click)="addContractFacility()">
+          Add facility
+        </button>
+      </div>
+    </div>
+  </section>
+</ng-container>

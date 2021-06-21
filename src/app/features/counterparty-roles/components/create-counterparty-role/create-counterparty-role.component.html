@@ -1,0 +1,9 @@
+<app-card>
+  <app-card-title data-testid="title">Create New Counterparty Role</app-card-title>
+  <app-card-content>
+    <mat-error data-testid="server-error">{{ serverError }}</mat-error>
+    <app-create-counterparty-role-form
+      (save)="this.handleSubmit($event)"
+    ></app-create-counterparty-role-form>
+  </app-card-content>
+</app-card>

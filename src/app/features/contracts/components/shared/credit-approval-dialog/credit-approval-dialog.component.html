@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ this.data.counterparty.role }} Credit Approval</h2>
+<mat-dialog-content>
+  <app-form-label>Entity</app-form-label>
+  <app-form-value>
+    {{ data.counterparty.name }}
+  </app-form-value>
+
+  <app-form-label>Contract</app-form-label>
+  <app-form-value>
+    {{ data.contract.name }}
+  </app-form-value>
+</mat-dialog-content>
+<mat-dialog-actions class="mat-dialog-actions__spaced">
+  <button mat-flat-button cdkFocusInitial (click)="approve()">
+    Approve
+  </button>
+  <button mat-button mat-dialog-close (click)="reject()">
+    Reject
+  </button>
+</mat-dialog-actions>

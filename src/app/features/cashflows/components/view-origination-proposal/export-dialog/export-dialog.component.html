@@ -1,0 +1,16 @@
+<div class="export">
+  <h2 class="export__title">Download proposal file</h2>
+  <div class="export__actions">
+    <button mat-flat-button data-testid="close" (click)="close()">
+      Close
+    </button>
+
+    <button mat-flat-button data-testid="download" (click)="download()" [disabled]="isDownloading">
+      <ng-container *ngIf="isDownloading; else notDownloading">
+        <mat-spinner class="export__spinner" diameter="20"></mat-spinner>
+        Downloading...
+      </ng-container>
+      <ng-template #notDownloading>Download</ng-template>
+    </button>
+  </div>
+</div>

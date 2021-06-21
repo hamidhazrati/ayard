@@ -1,0 +1,56 @@
+<section class="list_cashflows">
+  <div class="table-toolbar"></div>
+
+  <table mat-table [dataSource]="cashflows">
+    <ng-container matColumnDef="externalReference">
+      <th mat-header-cell *matHeaderCellDef>Invoice Id</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="invoice-id">
+        {{ cashflow.externalReference }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef>CCY</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="currency">
+        {{ cashflow.currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="certifiedAmount">
+      <th mat-header-cell *matHeaderCellDef>Invoice Amount</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="invoice-amount">
+        {{ cashflow.certifiedAmount | number: '1.2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="issueDate">
+      <th mat-header-cell *matHeaderCellDef>Invoice Date</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="invoice-date">
+        {{ cashflow.issueDate }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="originalDueDate">
+      <th mat-header-cell *matHeaderCellDef>Due Date</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="due-date">
+        {{ cashflow.originalDueDate }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let cashflow" data-testid="status">
+        {{ cashflow.state }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      class="mat-row--selectable"
+      mat-row
+      [attr.data-testid]="'cashflow-row-' + i"
+      *matRowDef="let row; columns: displayedColumns; let i = index"
+      [routerLink]="['/cashflows/' + row.id]"
+    ></tr>
+  </table>
+</section>

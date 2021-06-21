@@ -1,0 +1,49 @@
+@import 'palette';
+
+.sidebar {
+  .mat-dialog-title {
+    padding: 10px 25px;
+    border-bottom: 1px solid $supportive300;
+  }
+
+  .mat-list-base .mat-list-item .mat-list-item-content,
+  .mat-list-base .mat-list-option .mat-list-item-content {
+    padding: 0 25px;
+  }
+
+  .mat-dialog-container {
+    border-radius: 0;
+    padding: 0;
+  }
+
+  //Note: This might move to global expansion-panel style
+
+  .mat-accordion .mat-expansion-panel {
+    box-shadow: none;
+  }
+
+  .mat-accordion .mat-expansion-panel:last-of-type {
+    border-radius: 0;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 25px;
+  }
+
+  .mat-expansion-panel-header .mat-expansion-panel-header--dynamic {
+    max-height: none;
+  }
+
+  .mat-expansion-panel-header {
+    max-height: 40px;
+    border-top: 1px solid $supportive300;
+    border-bottom: 1px solid $supportive300;
+
+    &:hover,
+    &:focus {
+      box-shadow: 3px 0 $primary700 inset;
+      color: $primary700;
+      background: none;
+    }
+  }
+}

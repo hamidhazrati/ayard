@@ -1,0 +1,374 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<ng-container *ngIf="!loading && entity">
+  <app-alert
+    *ngIf="showAlert"
+    [description]="
+      'Entity manually created by ' +
+      (entity.createdBy | titlecaseFormat) +
+      ' on ' +
+      (entity.createdAt ? (entity.createdAt | date: 'mediumDate') : '')
+    "
+    title="Approval required"
+    [showActions]="isAuthorised$ | async"
+    (whenActioned)="onActioned($event)"
+    (whenClosed)="onClosed()"
+  ></app-alert>
+
+  <app-card>
+    <app-card-title data-testid="gs-title">
+      {{ entity.name }}
+      <span
+        class="capsule"
+        [ngClass]="{
+          'capsule--active': entity.status === 'ACTIVE',
+          'capsule--awaiting': entity.status === 'AWAITING_APPROVAL'
+        }"
+      >
+        {{ entity.status | titlecaseFormat }}
+      </span>
+
+      <button class="btn-history" mat-button (click)="onHistoryView()" *ngIf="showHistoryButton">
+        <mat-icon>history</mat-icon> Show History
+      </button>
+    </app-card-title>
+
+    <app-card-content>
+      <div class="row">
+        <div class="col-4">
+          <div *ngIf="entity.id">
+            <app-form-label>Entity ID</app-form-label>
+            <app-form-value data-testid="gs-entity-id">
+              {{ entity.id }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.dunsNumber">
+            <app-form-label>DUNS Number</app-form-label>
+            <app-form-value data-testid="gs-duns-number">
+              {{ entity.dunsNumber }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.tradeStyleNames && entity.tradeStyleNames.length > 0">
+            <app-form-label>Trade Style Names</app-form-label>
+            <app-form-value
+              *ngFor="let tradeStyleName of entity.tradeStyleNames; let i = index"
+              [attr.data-testid]="'gs-trade-style-names-' + i"
+            >
+              {{ tradeStyleName.name }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.registrationnumbers &&
+              entity.packagesData.CMPCVF.registrationnumbers.length > 0
+            "
+          >
+            <app-form-label>Registration Numbers</app-form-label>
+            <app-form-value *ngFor="let regNum of entity.packagesData.CMPCVF.registrationnumbers">
+              {{ regNum.typeDescription }} : {{ regNum.registrationNumber }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.incorporateddate
+            "
+          >
+            <app-form-label>Incorporated Date</app-form-label>
+            <app-form-value>
+              {{ entity.packagesData.CMPCVF.incorporateddate }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.industrycodes &&
+              entity.packagesData.CMPCVF.industrycodes.length > 0
+            "
+          >
+            <app-form-label
+              *ngIf="checkIfNaicsCodesPresent(entity.packagesData.CMPCVF.industrycodes)"
+              >Industry Classification Codes
+            </app-form-label>
+            <app-form-value>
+              <div
+                *ngFor="let code of entity.packagesData.CMPCVF.industrycodes; let i = index"
+                [attr.data-testid]="'gs-classification-codes-' + i"
+              >
+                <span *ngIf="isNAICS(code.typeDescription)"
+                  >{{ code.code }} : {{ code.description }}</span
+                >
+              </div>
+            </app-form-value>
+          </div>
+        </div>
+        <div class="col-4">
+          <h4>Primary Address</h4>
+          <div *ngIf="entity.address.line1">
+            <app-form-label>Address line 1</app-form-label>
+            <app-form-value data-testid="gs-address-line-1">
+              {{ entity.address.line1 }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.address.line2">
+            <app-form-label>Address line 2</app-form-label>
+            <app-form-value data-testid="gs-address-line-2">
+              {{ entity.address.line2 }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.address.city">
+            <app-form-label>City/Locality</app-form-label>
+            <app-form-value data-testid="gs-city">
+              {{ entity.address.city }}
+            </app-form-value>
+          </div>
+          <div *ngIf="regionNameIfNotRegionCode">
+            <app-form-label>Region/State/Province</app-form-label>
+            <app-form-value data-testid="gs-region">
+              {{ regionNameIfNotRegionCode }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.address.postalCode">
+            <app-form-label>Postal Code</app-form-label>
+            <app-form-value data-testid="gs-postcode">
+              {{ entity.address.postalCode }}
+            </app-form-value>
+          </div>
+          <div *ngIf="entity.address.countryName">
+            <app-form-label>Country</app-form-label>
+            <app-form-value data-testid="gs-country">
+              {{ entity.address.countryName }}
+            </app-form-value>
+          </div>
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.primaryaddress_isregisteredaddress
+            "
+          >
+            <app-form-value>
+              <span
+                ><mat-icon>check_circle</mat-icon>
+                Is registered address
+              </span>
+            </app-form-value>
+          </div>
+
+          <div *ngIf="isRegisteredAddressHasValues(entity.registeredAddress)">
+            <h6>Registered Address</h6>
+            >
+            <div *ngIf="entity.registeredAddress.line1">
+              <app-form-label>Address line 1</app-form-label>
+              <app-form-value>
+                {{ entity.registeredAddress.line1 }}
+              </app-form-value>
+            </div>
+            <div *ngIf="entity.registeredAddress.line2">
+              <app-form-label>Address line 2</app-form-label>
+              <app-form-value>
+                {{ entity.registeredAddress.line2 }}
+              </app-form-value>
+            </div>
+            <div *ngIf="entity.registeredAddress.city">
+              <app-form-label>City/Locality</app-form-label>
+              <app-form-value>
+                {{ entity.registeredAddress.city }}
+              </app-form-value>
+            </div>
+            <div *ngIf="registeredAddressRegionNameIfNotRegionCode">
+              <app-form-label>Region/State/Province</app-form-label>
+              <app-form-value>
+                {{ registeredAddressRegionNameIfNotRegionCode }}
+              </app-form-value>
+            </div>
+            <div *ngIf="entity.registeredAddress.postalCode">
+              <app-form-label>Postal Code</app-form-label>
+              <app-form-value>
+                {{ entity.registeredAddress.postalCode }}
+              </app-form-value>
+            </div>
+            <div *ngIf="entity.registeredAddress.countryName">
+              <app-form-label>Country</app-form-label>
+              <app-form-value>
+                {{ entity.registeredAddress.countryName }}
+              </app-form-value>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-4"
+          *ngIf="
+            entity.packagesData &&
+            entity.packagesData.CMPCVF &&
+            entity.packagesData.CMPCVF.corporatelinkage_familytreerolesplayed &&
+            entity.packagesData.CMPCVF.corporatelinkage_familytreerolesplayed.length > 0
+          "
+        >
+          <div>
+            <h4>Family Tree Role</h4>
+            <app-form-value
+              *ngFor="
+                let familyTreeRole of entity.packagesData.CMPCVF
+                  .corporatelinkage_familytreerolesplayed
+              "
+            >
+              {{ familyTreeRole.description }}
+            </app-form-value>
+          </div>
+          <div>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_globalultimate_primaryname
+              "
+            >
+              <h4>Global Ultimate</h4>
+              <app-form-label>Name</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_globalultimate_primaryname }}
+              </app-form-value>
+            </div>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_globalultimate_duns
+              "
+            >
+              <app-form-label>DUNS Number</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_globalultimate_duns }}
+              </app-form-value>
+            </div>
+          </div>
+
+          <div>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_domesticultimate_primaryname
+              "
+            >
+              <h4>Domestic Ultimate</h4>
+              <app-form-label>Name</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_domesticultimate_primaryname }}
+              </app-form-value>
+            </div>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_domesticultimate_duns
+              "
+            >
+              <app-form-label>DUNS Number</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_domesticultimate_duns }}
+              </app-form-value>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              (entity.packagesData.CMPCVF.corporatelinkage_parent_primaryname ||
+                entity.packagesData.CMPCVF.corporatelinkage_parent_duns)
+            "
+          >
+            <h4>Parent</h4>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_parent_primaryname
+              "
+            >
+              <app-form-label>Name</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_parent_primaryname }}
+              </app-form-value>
+            </div>
+            <div
+              *ngIf="
+                entity.packagesData &&
+                entity.packagesData.CMPCVF &&
+                entity.packagesData.CMPCVF.corporatelinkage_parent_duns
+              "
+            >
+              <app-form-label>DUNS Number</app-form-label>
+              <app-form-value>
+                {{ entity.packagesData.CMPCVF.corporatelinkage_parent_duns }}
+              </app-form-value>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-4"
+          *ngIf="
+            entity.packagesData &&
+            entity.packagesData.CMPCVF &&
+            entity.packagesData.CMPCVF.businessentitytype_description
+          "
+        >
+          <div>
+            <app-form-label>Business Entity Type</app-form-label>
+            <app-form-value data-testid="gs-business-entity-type">
+              {{ entity.packagesData.CMPCVF.businessentitytype_description }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.controlownershiptype_description
+            "
+          >
+            <app-form-label>Control Ownership Type</app-form-label>
+            <app-form-value data-testid="gs-ownership-type">
+              {{ entity.packagesData.CMPCVF.controlownershiptype_description }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.legalform_description
+            "
+          >
+            <app-form-label>Legal Form</app-form-label>
+            <app-form-value data-testid="gs-legal-form">
+              {{ entity.packagesData.CMPCVF.legalform_description }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entity.packagesData &&
+              entity.packagesData.CMPCVF &&
+              entity.packagesData.CMPCVF.dunscontrolstatus_operatingstatus_description
+            "
+          >
+            <app-form-label>Operating Status</app-form-label>
+            <app-form-value data-testid="gs-operating-status">
+              {{ entity.packagesData.CMPCVF.dunscontrolstatus_operatingstatus_description }}
+            </app-form-value>
+          </div>
+        </div>
+      </div>
+    </app-card-content>
+  </app-card>
+</ng-container>

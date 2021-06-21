@@ -1,0 +1,432 @@
+<table mat-table [dataSource]="proposalCashflowsWithFacilities" multiTemplateDataRows>
+  <ng-container matColumnDef="accountDebtor">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-account-debtor-name">
+      Account Debtor
+    </th>
+    <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-account-debtor-name">
+      {{ cashflow.accountDebtorName }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="noOfCashflows">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-no-of-cf" class="mat-col--right">
+      No of Cashflows
+    </th>
+    <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-no-of-cf" class="mat-col--right">
+      {{ cashflow.noOfCashflows }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CCY">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-ccy">
+      CCY
+    </th>
+    <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-ccy">
+      {{ cashflow.currency }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="newCashflowsAmount">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-cashflow-new-cashflows-amount"
+      class="mat-col--right"
+    >
+      New Cashflows Amount
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-new-cashflows-amount"
+      class="mat-col--right"
+    >
+      {{ cashflow.fundingAmount | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="currentOutstanding">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-cashflow-current-outstanding"
+      class="mat-col--right"
+    >
+      Current Outstanding
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-current-outstanding"
+      class="mat-col--right"
+    >
+      {{ cashflow.currentOutstanding | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="latestMaturityDate">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-latest-maturity-date">
+      Latest Expected Payment
+    </th>
+    <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-latest-maturity-date">
+      {{ cashflow.latestMaturityDate | date: 'dd MMM y' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalIfPurchased">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-cashflow-total-if-purchased"
+      class="mat-col--right"
+    >
+      Total if Purchased
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-total-if-purchased"
+      class="mat-col--right"
+    >
+      {{ cashflow.totalIfPurchased | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="limit">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-limit" class="mat-col--right">
+      Limit
+    </th>
+    <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-limit" class="mat-col--right">
+      {{ cashflow.limit | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="utilisation">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-cashflow-utilisation"
+      class="mat-col--right"
+    >
+      Utilisation
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-utilisation"
+      class="mat-col--right"
+    >
+      {{ cashflow.utilisation | number: '1.2' }}%
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="insuranceLimit">
+    <th mat-header-cell *matHeaderCellDef data-testid="th-insurance-limit" class="mat-col--right">
+      Insurance Limit
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-utilisation"
+      class="mat-col--right"
+    >
+      {{ cashflow.insuranceLimit | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="insuranceAvailable">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-insurnace-available"
+      class="mat-col--right"
+    >
+      Insurance Available
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="insurance-available"
+      class="mat-col--right"
+    >
+      {{ cashflow.insuranceAvailable | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="insuranceLimitType">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-insurance-limit-type"
+      class="mat-col--right"
+    >
+      Insurance Limit Type
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="insurance-limit-type"
+      class="mat-col--right"
+    >
+      {{ cashflow.insuranceLimitType }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="insured">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-insured"
+      class="mat-col--right"
+    >
+      Insured
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="insurance-limit-type"
+      class="mat-col--right"
+    >
+      <div *ngIf="cashflow.insuranceType ==='INSURED'">
+        Yes
+      </div>
+      <div *ngIf="cashflow.insuranceType === 'UNINSURED'">
+        No
+      </div>
+      <div *ngIf="cashflow.insuranceType === undefined">
+        Undefined
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="availableLimit">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      data-testid="th-cashflow-available-limit"
+      class="mat-col--right"
+    >
+      Available Limit
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let cashflow"
+      data-testid="cashflow-available-limit"
+      class="mat-col--right"
+      [ngClass]="{ 'negative-number': isNegative(cashflow.availableLimit) }"
+    >
+      {{ cashflow.availableLimit | number: '1.2' }}
+    </td>
+  </ng-container>
+
+  <!--Nested cashflow table-->
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="parentTableColumns.length"
+      class="table-nested"
+    >
+      <div
+        class="table-nested__detail"
+        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <table mat-table [dataSource]="element.cashflows">
+          <ng-container matColumnDef="entityTwo" data-testid="th-cashflow-nested-entity-two">
+            <th mat-header-cell *matHeaderCellDef>Counterparty</th>
+            <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-nested-entity-two">
+              <p class="table__text">{{ cashflow.entityTwo?.name }}</p>
+              <p class="table__text table__text--gray">{{ cashflow.entityTwo?.role }}</p>
+            </td>
+          </ng-container>
+
+          <ng-container
+            matColumnDef="documentReference"
+            data-testid="th-cashflow-nested-documentref"
+          >
+            <th mat-header-cell *matHeaderCellDef>Invoice Id</th>
+            <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-nested-documentref">
+              {{ cashflow.documentReference }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="issueDate">
+            <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-nested-issuedate">
+              Issue Date
+            </th>
+            <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-nested-issuedate">
+              {{ cashflow.issueDate | date: 'dd MMM y' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="originalDueDate">
+            <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-nested-originalduedate">
+              Due Date
+            </th>
+            <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-nested-originalduedate">
+              {{ cashflow.originalDueDate | date: 'dd MMM y' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef data-testid="th-cashflow-nested-currency">CCY</th>
+            <td mat-cell *matCellDef="let cashflow" data-testid="cashflow-nested-currency">
+              {{ cashflow.currency }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="originalValue">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-originalvalue"
+              class="mat-col--right"
+            >
+              Invoice Amount
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-originalvalue"
+              class="mat-col--right"
+            >
+              {{ cashflow.originalValue | number: '1.2' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fundingAmount">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-fundingamount"
+              class="mat-col--right"
+            >
+              FMV Amount
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-fundingamount"
+              class="mat-col--right"
+            >
+              {{ cashflow.fundingAmount | number: '1.2' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="contract.advanceRate">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-contract-advancerate"
+              class="mat-col--right mat-col--rate"
+            >
+              Fmv Rate
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-contract-advancerate"
+              class="mat-col--right mat-col--rate"
+            >
+              {{ cashflow.advanceRate }}%
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price.annualisedMarginRate">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-price-annualisedmarginrate"
+              class="mat-col--right"
+            >
+              Total Rate
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-price-annualisedmarginrate"
+              class="mat-col--right"
+            >
+              {{ this.getTotalRate(cashflow) | number: '1.5' }}%
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price.maturityDate">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-price-maturitydate"
+            >
+              Expected Payment Date
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-price-maturitydate"
+            >
+              {{ cashflow.maturityDate | date: 'dd MMM y' }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price.settlementAmount">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              data-testid="th-cashflow-nested-price-settlementamount"
+              class="mat-col--right"
+            >
+              Seller Payment Amount
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let cashflow"
+              data-testid="cashflow-nested-price-settlementamount"
+              class="mat-col--right"
+            >
+              {{ cashflow.settlementAmount | number: '1.2' }}
+            </td>
+          </ng-container>
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="accept">
+            <th mat-header-cell *matHeaderCellDef data-testid="th-row-accept">Accept</th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              data-testid="row-accept"
+              class="mat-cell mat-col--center"
+            >
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="handleCheckboxChange($event, row)"
+                [checked]="selection.isSelected(row)"
+                [disabled]="disableAccept"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="nestedTableColumns"></tr>
+          <tr
+            mat-row
+            [attr.data-testid]="'cashflow-nested-row-' + i"
+            *matRowDef="let row; columns: nestedTableColumns; let i = index"
+          ></tr>
+        </table>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="parentTableColumns"></tr>
+  <tr
+    mat-row
+    [attr.data-testid]="'cashflow-row-' + i"
+    *matRowDef="let row; columns: parentTableColumns; let i = dataIndex"
+    class="table-nested__element-row"
+    [class.table-nested__expanded-row]="expandedElement === row"
+    (click)="expandedElement = expandedElement === row ? null : row"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="table-nested__detail-row"
+  ></tr>
+</table>

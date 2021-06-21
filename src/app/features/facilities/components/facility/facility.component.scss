@@ -1,0 +1,16 @@
+@import 'content-common';
+
+.facility {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 4px $grey100;
+  display: grid;
+  grid-template-columns: 30% 70%;
+
+  &__tree {
+    border-right: 1px solid $grey100;
+  }
+  &__view {
+    min-height: 80vh;
+  }
+}

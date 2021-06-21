@@ -1,0 +1,121 @@
+<h2 mat-dialog-title>
+  <mat-icon data-testid="close-button" class="close-icon hand" (click)="this.dialogRef.close()">
+    close
+  </mat-icon>
+  {{item.value.label}}
+</h2>
+<div>
+  <form [formGroup]="form" class="form">
+    <fieldset>
+      <legend></legend>
+      <div class="controlparameter-form_content">
+        <div class="row">
+          <div class="col-8">
+            {{item.value.description}}
+          </div>
+        </div>
+        <div class="row">
+          <mat-checkbox [formControl]="form.controls.requiredField">
+            Make this a required field.
+          </mat-checkbox>
+        </div>
+        <div class="row">
+          <mat-checkbox [formControl]="form.controls.contractConfigurable">
+            Can be configured at contract level.
+          </mat-checkbox>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <app-form-label [required]="true">Help Text</app-form-label>
+            <mat-form-field appearance="outline">
+              <input
+                (blur)="helpTextBlur()"
+                type="text"
+                [formControl]="form.controls.helpText"
+                placeholder="Enter help text here"
+                matInput
+              />
+            </mat-form-field>
+            <app-form-error label="Help Text" [control]="form.controls.helpText"></app-form-error>
+          </div>
+        </div>
+        <app-number-product-parameter
+          [item]="item.value"
+          [parentForm]="form.controls.numberParameter"
+          *ngIf="item.value.type === 'INTEGER'"
+          [formControl]="form.controls.numberParameter" >
+        </app-number-product-parameter>
+        <app-product-parameter-option
+          [item]="item.value"
+          *ngIf="item.value.type === 'MULTIPLE_CHOICE'"
+          [formControl]="form.controls.multipleChoiceParameter" >
+        </app-product-parameter-option>
+        <div>
+        <div class="row">
+          <div class="col-12">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              (click)="this.handleSave()"
+              data-testid="save"
+              [disabled]="
+                (
+                ( ! ( form?.valid ) ) ||
+                ( form.value?.numberParameter?.defaultValue===null && item.value.initialDefaultValue.mandatory===true ) ||
+                ( form.value?.numberParameter?.minimumValue===null && item.value.initialMinimumValue.mandatory===true ) ||
+                ( form.value?.numberParameter?.maximumValue===null && item.value.initialMaximumValue.mandatory===true ) ||
+                ( ( form.value?.numberParameter?.minimumValue!==null && form.value?.numberParameter?.defaultValue!==null ) && ( form.value?.numberParameter?.minimumValue > form.value?.numberParameter?.defaultValue )) ||
+                ( ( form.value?.numberParameter?.defaultValue!==null && form.value?.numberParameter?.maximumValue!==null ) && ( form.value?.numberParameter?.defaultValue > form.value?.numberParameter?.maximumValue ))
+                )
+              "
+            >
+
+              {{item.value.actionButtonLabel}}
+            </button>
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <button type="button" mat-button color="primary" type="submit" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <mat-error *ngIf="form.value?.numberParameter?.minimumValue > form.value?.numberParameter?.defaultValue">
+          Mimimum Value is greater than Default Value
+        </mat-error>
+        <mat-error *ngIf="
+          form.value?.numberParameter?.minimumValue &&
+          form.value?.numberParameter?.maximumValue &&
+          ( form.value?.numberParameter?.minimumValue > form.value?.numberParameter?.maximumValue )
+          ">
+          Minimum Value is greater than the Maximum Value
+        </mat-error>
+        <mat-error *ngIf="
+          form.value?.numberParameter?.maximumValue &&
+          form.value?.numberParameter?.minimumValue &&
+          ( form.value?.numberParameter?.maximumValue < form.value?.numberParameter?.minimumValue )
+        ">
+          Maximum Value is less than the Minimum Value
+        </mat-error>
+        <mat-error *ngIf="
+          form.value?.numberParameter?.defaultValue &&
+          form.value?.numberParameter?.maximumValue &&
+          ( form.value?.numberParameter?.defaultValue > form.value?.numberParameter?.maximumValue )
+        ">
+          Default Value is not within the Minimum and Maximum Values
+        </mat-error>
+        <mat-error *ngIf="
+          form.value?.numberParameter?.defaultValue &&
+          form.value?.numberParameter?.minimumValue &&
+          ( form.value?.numberParameter?.defaultValue < form.value?.numberParameter?.minimumValue )
+        ">
+          Default Value is not within the Minimum and Maximum Values
+        </mat-error>
+          <app-form-error
+            [control]="this.form.controls.multipleChoiceParameter"
+            [messages]="multipleChoiceCustomErrorMessages"
+          ></app-form-error>
+      </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+<div class="help-item-list">
+  <div class="help-item" *ngFor="let item of helpList$ | async" (click)="onHelpItemClick(item)">
+    <div class="help-item__title">
+      {{ item.title }}
+    </div>
+    <div class="help-item__description">
+      {{ item.description }}
+    </div>
+  </div>
+</div>
+
+<div class="intro-container">
+  <app-help-page [url]="homePath$ | async"></app-help-page>
+</div>

@@ -1,0 +1,34 @@
+<div class="table-toolbar">
+  <div class="table-toolbar__right">
+    <a mat-flat-button routerLink="/products/new" data-testid="create-new-product-btn"
+      >Create new product
+    </a>
+    <a
+      mat-flat-button
+      routerLink="/product-categories/new"
+      data-testid="create-new-product-category-btn"
+      >Create new product category
+    </a>
+  </div>
+</div>
+
+<table mat-table [dataSource]="productRows">
+  <ng-container matColumnDef="name" class="entities-header">
+    <th mat-header-cell *matHeaderCellDef data-testid="card-title" class="entities-title">
+      Product
+    </th>
+    <td mat-cell class="entities" data-testid="product-name" *matCellDef="let product">
+      {{ product.name }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    class="mat-row--selectable"
+    [attr.data-testid]="'product-row-' + i"
+    *matRowDef="let row; columns: displayedColumns; let i = index"
+    [ngClass]="{ 'mat-row--group': row.isParent }"
+    (click)="row.isParent ? viewProductCategory(row.id) : viewProduct(row.id)"
+  ></tr>
+</table>

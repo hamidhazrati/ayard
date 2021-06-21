@@ -1,0 +1,55 @@
+<section>
+  <div>
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="The name by which this Contract will be commonly known."
+      [required]="true"
+      >Name</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="text"
+        [formControl]="form.controls.name"
+        id="contract-name-input"
+        data-testid="contract-name-input"
+      />
+    </mat-form-field>
+
+    <app-form-error
+      label="Name"
+      [control]="form.controls.name"
+      data-testid="contract-name-error"
+    ></app-form-error>
+  </div>
+
+  <div>
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="The current status of this contract"
+      [required]="true"
+      >Status</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <mat-select
+        [formControl]="form.controls.status"
+        placeholder="Select status"
+        panelClass="selector-position"
+        data-testid="contract-status-select"
+      >
+        <mat-option
+          *ngFor="let status of contractStatuses"
+          [value]="status.code"
+          data-testid="contract-status-select-option"
+          >{{ status.description }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <app-form-error
+      label="Status"
+      [control]="form.controls.status"
+      data-testid="contract-status-error"
+    ></app-form-error>
+  </div>
+</section>

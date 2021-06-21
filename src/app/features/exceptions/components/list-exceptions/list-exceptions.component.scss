@@ -1,0 +1,13 @@
+@import 'palette';
+
+.gray-text {
+  color: $grey500;
+}
+
+.capsule {
+  white-space: nowrap;
+  background-color: $alert100;
+  border-radius: 25px;
+  padding: 3px 12px;
+  font-weight: normal;
+}

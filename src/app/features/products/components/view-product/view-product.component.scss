@@ -1,0 +1,28 @@
+// Temporary local style whilst we decide how to do view children
+.view-product__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-product__portal-header {
+  margin: 24px 0;
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+}
+.float-right {
+  float: right;
+}
+.hand {
+  cursor: pointer;
+}
+.parameterBox {
+  border: solid grey 1px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  width: 300px;
+}

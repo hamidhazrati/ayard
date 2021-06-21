@@ -1,0 +1,10 @@
+@import 'content-common';
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text-ellipsis:hover {
+  overflow: visible;
+}

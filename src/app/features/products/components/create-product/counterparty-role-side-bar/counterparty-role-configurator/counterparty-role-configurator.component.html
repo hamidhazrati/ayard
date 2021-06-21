@@ -1,0 +1,66 @@
+<form [formGroup]="form" autocomplete="off" data-testid="counterparty-role-configurator">
+  <mat-divider></mat-divider>
+
+  <div class="row">
+    <div class="col-4">
+      <div style="padding: 3em 0 0 2em;">
+        <mat-checkbox
+          color="primary"
+          [id]="'required'"
+          [formControl]="form.controls.required"
+          data-testid="required"
+          >Make this a mandatory field</mat-checkbox
+        >
+      </div>
+
+      <div style="padding: 1em 0 0 2em;">
+        <app-form-label required="true" for="roleTypeSelect">Counterparty type</app-form-label>
+        <mat-form-field appearance="outline">
+          <mat-select
+            id="roleTypeSelect"
+            [formControl]="form.controls.type"
+            placeholder="Select type"
+            panelClass="selector-position"
+            data-testid="role-type-select"
+          >
+            <mat-option
+              *ngFor="let roleTypeSelectOption of counterpartyConstants.roleTypeSelectOptions"
+              [value]="roleTypeSelectOption.code"
+              data-testid="role-type-select-option"
+              >{{ roleTypeSelectOption.description }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <app-form-error
+          data-testid="role-type-error"
+          label="Counterparty type"
+          [control]="form.controls.type"
+        ></app-form-error>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div style="padding: 2em 0 0 2em;">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="this.handleSave()"
+          data-testid="save"
+        >
+          {{ this.editing ? 'Update' : 'Add' }} counterparty role
+        </button>
+
+        <button
+          type="button"
+          mat-stroked-button
+          color="primary"
+          type="submit"
+          (click)="this.cancel.emit()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

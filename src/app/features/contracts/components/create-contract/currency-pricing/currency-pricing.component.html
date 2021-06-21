@@ -1,0 +1,435 @@
+<div data-testid="side-bar">
+  <h2 mat-dialog-title>
+    <button
+      type="button"
+      mat-icon-button
+      (click)="dialogRef.close()"
+      data-testid="close"
+      tabindex="-1"
+    >
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+
+    Currency pricing parameters
+  </h2>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="handleSubmit()" autocomplete="off" novalidate>
+    <div>
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="Please select from list of available currencies."
+        required="true"
+        >Currency</app-form-label
+      >
+
+      <mat-form-field appearance="outline" *ngIf="!editing && (currencies$ | async) as currencies">
+        <input
+          type="text"
+          placeholder="Select a Currency"
+          aria-label="Number"
+          matInput
+          [formControl]="autocompleteCurrencyControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let currency of filteredOptions | async" [value]="currency">
+            {{ currency.code }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-select
+        [hidden]="true"
+        [formControl]="form.controls.currency"
+        data-testid="currency"
+        panelClass="selector-position"
+      >
+        <mat-option
+          *ngFor="let currency of currencies"
+          [value]="currency"
+          data-testid="currency-option"
+          >{{ currency.code }}</mat-option
+        >
+      </mat-select>
+      <app-form-value *ngIf="editing">{{ form.value.currency.code }}</app-form-value>
+
+      <app-form-error label="Currency" [control]="form.controls.currency"></app-form-error>
+    </div>
+    <div></div>
+    <ng-container *ngIf="form.value.currency">
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The number of decimal points as applicable for the currency selected."
+            >Decimal places</app-form-label
+          >
+          <app-form-value data-testid="decimals">{{ form.value.decimals }}</app-form-value>
+        </div>
+
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The fraction of tenor by number of annual days as applicable for the currency selected."
+            required="true"
+            >Day count convention</app-form-label
+          >
+          <app-form-value data-testid="day-count-convention">{{
+            form.value.dayCountConvention
+          }}</app-form-value>
+        </div>
+      </div>
+
+      <div>
+        <app-form-label
+          matTooltipPosition="right"
+          matTooltip="The Exchange / Authority base rate provider to use for calculations of the selected currency"
+          required="true"
+          >Reference rate type</app-form-label
+        >
+
+        <mat-form-field appearance="outline">
+          <mat-select
+            [formControl]="form.controls.referenceRateType"
+            placeholder="Select a reference rate type"
+            data-testid="reference-rate-type"
+            panelClass="selector-position"
+          >
+            <mat-option
+              *ngFor="let option of currencyReferenceRates"
+              [value]="option.rateType"
+              data-testid="reference-rate-type-option"
+            >
+              {{ option.rateType + ' : ' + option.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-form-error
+          label="Reference rate type"
+          [control]="form.controls.referenceRateType"
+        ></app-form-error>
+      </div>
+
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            [required]="false"
+            matTooltipPosition="right"
+            matTooltip="The minimum value of the cashflow to be eligible for acceptance for the currency"
+            >Minimum cashflow amount</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              required="false"
+              data-testid="min-cashflow-amount"
+              [formControl]="form.controls.amountRange.controls.cashflowAmountRange.controls.min"
+            />
+          </mat-form-field>
+
+          <app-form-error
+            label="Minimum cashflow amount"
+            [control]="form.controls.amountRange.controls.cashflowAmountRange.controls.min"
+          ></app-form-error>
+        </div>
+
+        <div class="col-6">
+          <app-form-label
+            [required]="false"
+            matTooltipPosition="right"
+            matTooltip="The maximum value of the cashflow to be eligible for acceptance for the currency"
+            >Maximum cashflow amount</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              required="false"
+              data-testid="max-cashflow-amount"
+              [formControl]="form.controls.amountRange.controls.cashflowAmountRange.controls.max"
+            />
+          </mat-form-field>
+
+          <app-form-error
+            label="Maximum cashflow amount"
+            [control]="form.controls.amountRange.controls.cashflowAmountRange.controls.max"
+          ></app-form-error>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <div class="col-12">
+          <app-form-error
+            label="Cashflow amount"
+            [control]="form.controls.amountRange.controls.cashflowAmountRange"
+          ></app-form-error>
+        </div>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            [required]="false"
+            matTooltipPosition="right"
+            matTooltip="The minimum value of the payment request to be eligible for acceptance for the currency"
+            >Minimum payment amount</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              [required]="false"
+              data-testid="min-payment-amount"
+              [formControl]="form.controls.amountRange.controls.paymentAmountRange.controls.min"
+            />
+          </mat-form-field>
+
+          <app-form-error
+            label="Minimum payment amount"
+            [control]="form.controls.amountRange.controls.paymentAmountRange.controls.min"
+          ></app-form-error>
+        </div>
+
+        <div class="col-6">
+          <app-form-label
+            [required]="false"
+            matTooltipPosition="right"
+            matTooltip="The maximum value of the payment request to be eligible for acceptance for the currency"
+            >Maximum payment amount</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              [required]="false"
+              data-testid="max-payment-amount"
+              [formControl]="form.controls.amountRange.controls.paymentAmountRange.controls.max"
+            />
+          </mat-form-field>
+
+          <app-form-error
+            label="Maximum payment amount"
+            [control]="form.controls.amountRange.controls.paymentAmountRange.controls.max"
+          ></app-form-error>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <div class="col-12">
+          <app-form-error
+            label="Payment amount"
+            [control]="form.controls.amountRange.controls.paymentAmountRange"
+          ></app-form-error>
+          <div class="mat-errors" *ngIf="form.controls.amountRange.errors?.min">
+            <mat-error>Minimum payment amount cannot be less than the Minimum cashflow amount</mat-error>
+          </div>
+          <div class="mat-errors" *ngIf="form.controls.amountRange.errors?.max">
+            <mat-error >Maximum cashflow amount cannot be greater than the Maximum payment amount</mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <app-form-label class="col-12 currency-pricing_section-label">Payment Date</app-form-label>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The adjustment type to determine a business day for payment."
+            >Adjustment Type</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControl]="form.controls.paymentDate.controls.adjustmentType"
+              panelClass="selector-position"
+            >
+              <mat-option *ngFor="let at of paymentDateAdjustmentTypes" [value]="at.key"
+                >{{ at.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-error
+            label="Payment Adjustment Type"
+            [control]="form.controls.paymentDate.controls.adjustmentType"
+          ></app-form-error>
+        </div>
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="One or more calendar reference for date adjustment."
+            >Calendars</app-form-label
+          >
+          <app-calendar-selector
+            name="paymentDateCalendars"
+            [formControl]="form.controls.paymentDate.controls.calendars"
+          ></app-calendar-selector>
+          <app-form-error
+            label="Payment Date Calendars"
+            [control]="form.controls.paymentDate.controls.calendars"
+          >
+          </app-form-error>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <app-form-label class="col-12 currency-pricing_section-label"
+          >Acceptance Date</app-form-label
+        >
+      </div>
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="the adjustment type to determine a business day for trade acceptance."
+            >Adjustment Type</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControl]="form.controls.acceptanceDate.controls.adjustmentType"
+              placeholder=""
+              panelClass="selector-position"
+            >
+              <mat-option *ngFor="let at of acceptanceDateAdjustmentTypes" [value]="at.key"
+                >{{ at.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-error
+            label="Acceptance Adjustment Type"
+            [control]="form.controls.acceptanceDate.controls.adjustmentType"
+          >
+          </app-form-error>
+        </div>
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="One or more calendar reference for date adjustment."
+            >Calendars</app-form-label
+          >
+          <app-calendar-selector
+            name="acceptanceDateCalendars"
+            [formControl]="form.controls.acceptanceDate.controls.calendars"
+          >
+          </app-calendar-selector>
+          <app-form-error
+            label="Acceptance Date Calendars"
+            [control]="form.controls.acceptanceDate.controls.calendars"
+          >
+          </app-form-error>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <app-form-label class="col-12 currency-pricing_section-label">Maturity Date</app-form-label>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="the adjustment type to determine a business day for a maturity payment."
+            >Adjustment Type</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControl]="form.controls.maturityDate.controls.adjustmentType"
+              placeholder=""
+              panelClass="selector-position"
+            >
+              <mat-option *ngFor="let at of maturityDateAdjustmentTypes" [value]="at.key"
+                >{{ at.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-error
+            label="Maturity Date Adjustment Type"
+            [control]="form.controls.maturityDate.controls.adjustmentType"
+          >
+          </app-form-error>
+        </div>
+        <div class="col-6">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="One or more calendar reference for date adjustment."
+            >Calendars</app-form-label
+          >
+          <app-calendar-selector
+            name="maturityDateCalendars"
+            [formControl]="form.controls.maturityDate.controls.calendars"
+          >
+          </app-calendar-selector>
+          <app-form-error
+            label="Maturity Date Calendars"
+            [control]="form.controls.maturityDate.controls.calendars"
+          >
+          </app-form-error>
+        </div>
+      </div>
+
+      <div class="row--no-padding">
+        <div class="col-3">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The maturity date buffer days for the currency"
+            >Maturity date buffer days</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="number"
+              data-testid="maturity-date-buffer-days"
+              [formControl]="form.controls.maturityDate.controls.bufferDays"
+            />
+          </mat-form-field>
+
+          <app-form-error
+            label="Maturity date buffer days"
+            [control]="form.controls.maturityDate.controls.bufferDays"
+          ></app-form-error>
+        </div>
+
+        <div class="col-3">
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The maturity date set day for the currency"
+            >Maturity date set day</app-form-label
+          >
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControl]="form.controls.maturityDate.controls.setDay"
+              placeholder=""
+              panelClass="selector-position"
+            >
+              <mat-option
+                *ngFor="let setDayOption of maturityDateSetDaySelectOptions"
+                [value]="setDayOption.key"
+                >{{ setDayOption.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <app-form-error
+            label="Maturity date set day"
+            [control]="form.controls.maturityDate.controls.setDay"
+          ></app-form-error>
+        </div>
+      </div>
+    </ng-container>
+
+    <div>
+      <button mat-flat-button color="primary" type="submit" data-testid="save">
+        {{ editing ? 'Update' : 'Add' }} currency
+      </button>
+
+      <button
+        mat-button
+        color="primary"
+        type="button"
+        (click)="dialogRef.close()"
+        data-testid="cancel"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

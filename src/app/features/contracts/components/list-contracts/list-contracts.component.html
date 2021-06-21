@@ -1,0 +1,21 @@
+<section class="list_contracts">
+  <div class="table-toolbar">
+    <div class="table-toolbar__right">
+      <a mat-flat-button routerLink="/contracts/new">Create Contract</a>
+    </div>
+  </div>
+  <gds-data-table
+    [rows]="rows"
+    [columns]="columns"
+    [defaultSorts]="defaultSorts"
+    [paginationMeta]="paginationMeta"
+    (paginationChange)="getContracts($event)"
+    (columnSort)="sort($event)"
+    (rowClick)="viewContract($event)"
+    [showRowSelect]="false"
+    [showSearch]="true"
+    (performSearch)="performSearch($event)"
+    [enableSearchTextHighlight]="false"
+    [showExportButton]="false"
+  ></gds-data-table>
+</section>

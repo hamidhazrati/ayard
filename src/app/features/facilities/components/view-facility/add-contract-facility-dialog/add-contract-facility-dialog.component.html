@@ -1,0 +1,85 @@
+<form [formGroup]="form" autocomplete="off" class="form dialog" novalidate>
+  <div class="dialog__title">
+    <h2>{{ editing ? 'Edit' : 'Add' }} facility</h2>
+  </div>
+
+  <div class="dialog__content">
+    <div class="row" *ngIf="!editing">
+      <div class="col-12">
+        <app-form-label
+          matTooltipPosition="right"
+          matTooltip="Please select a parent."
+          required="true"
+          >Parent</app-form-label
+        >
+        <mat-form-field appearance="outline">
+          <mat-select
+            id="parent"
+            data-testid="parent"
+            [formControl]="form.controls.parent"
+            typeaheadDebounceInterval="200"
+          >
+            <mat-option *ngFor="let parent of parents" [value]="parent" data-testid="parent-option">
+              {{ parent.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-form-error label="Parent" [control]="form.controls.parent"></app-form-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-form-label [for]="'name'" [required]="true">
+          Facility name
+        </app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            id="name"
+            matInput
+            data-testid="name"
+            [formControl]="form.controls.name"
+            required
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Facility name"
+          [control]="form.controls.name"
+          [messages]="nameCustomErrorMessages"
+          data-testid="name-error"
+        >
+        </app-form-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-form-label [for]="'credit-limit'">
+          Credit limit
+        </app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            id="credit-limit"
+            matInput
+            data-testid="name"
+            [formControl]="form.controls.creditLimit"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Credit limit"
+          [control]="form.controls.creditLimit"
+          data-testid="credit-limit-error"
+        >
+        </app-form-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog__actions">
+    <button mat-flat-button color="primary" data-testid="save" (click)="handleSave()">
+      {{ editing ? 'Edit' : 'Add' }} facility
+    </button>
+    <a mat-button data-testid="cancel" (click)="handleCancel()" type="button">Cancel</a>
+  </div>
+</form>

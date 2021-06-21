@@ -1,0 +1,420 @@
+[
+  {
+    "id": "abc-1",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "PENDING_PROCESSING",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-25",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1000,
+    "annualisedMarginRate": 1.01
+  },
+  {
+    "id": "abc-2",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "GBP",
+    "originalValue": 9999.0,
+    "state": "APPROVED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0002",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-23",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc2",
+    "settlementAmount": 1002,
+    "annualisedMarginRate": 1.21
+  },
+  {
+    "id": "abc-3",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "GBP",
+    "originalValue": 8887.0,
+    "state": "APPROVED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0003",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-23",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc2",
+    "settlementAmount": 1002,
+    "annualisedMarginRate": 1.21
+  },
+  {
+    "id": "abc-4",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "GBP",
+    "originalValue": 9999.0,
+    "state": "APPROVED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0004",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-23",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc2",
+    "settlementAmount": 1002,
+    "annualisedMarginRate": 1.21
+  },
+  {
+    "id": "abc-5",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity Two",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 9999.0,
+    "state": "APPROVED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0005",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-23",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc2",
+    "settlementAmount": 1002,
+    "annualisedMarginRate": 1.01
+  },
+  {
+    "id": "abc-8",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc4",
+      "name": "Entity Four",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "AWAITING_INTERNAL_APPROVAL",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-26",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1001,
+    "annualisedMarginRate": 1.01,
+    "adjustment": 15,
+    "leadDays": 14
+  },
+  {
+    "id": "abc-9",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc4",
+      "name": "Entity Four",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "AWAITING_INTERNAL_APPROVAL",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-26",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1001,
+    "annualisedMarginRate": 1.01,
+    "adjustment": 15,
+    "leadDays": 14
+  },
+  {
+    "id": "abc-10",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "AWAITING_INTERNAL_APPROVAL",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-26",
+    "reasonForFailure": [],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1001,
+    "annualisedMarginRate": 1.01,
+    "adjustment": 15,
+    "leadDays": 14
+  },
+  {
+    "id": "abc-11",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "REJECTED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-26",
+    "reasonForFailure": [
+      {
+        "code": "SINGLE_SUPPLIER",
+        "message": "Must be one and only one supplier on the cashflow"
+      },
+      {
+        "code": "SUPPLIER_NOT_ON_CONTRACT",
+        "message": "The SUPPLIER is not on the Contract"
+      }
+    ],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1001,
+    "annualisedMarginRate": 1.01,
+    "adjustment": 15,
+    "leadDays": 14
+  },
+  {
+    "id": "abc-12",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "456def",
+      "name": "Entity One",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "GBP",
+    "originalValue": 9999.0,
+    "state": "CASHFLOW_CONFLICT",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0002",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-23",
+    "reasonForFailure": [
+      {
+        "code": "CONTRACT_NOT_FOUND",
+        "message": null
+      }
+    ],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc2",
+    "settlementAmount": 1002,
+    "annualisedMarginRate": 1.21
+  },
+  {
+    "id": "abc-13",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityOne": {
+      "id": "123abc1",
+      "name": "Entity Two",
+      "role": "Account Debtor"
+    },
+    "entityTwo": {
+      "id": "123abc1",
+      "name": "Entity Three",
+      "role": "Affiliate-Seller"
+    },
+    "contract": {
+      "id": "the-contract-id1",
+      "name": "the contract name"
+    },
+    "issueDate": "2020-05-09",
+    "originalDueDate": "2020-05-10",
+    "currency": "USD",
+    "originalValue": 1000.0,
+    "state": "REJECTED",
+    "unitPrice": 123.34,
+    "certifiedAmount": 123.34,
+    "documentReference": "ABCD0001",
+    "fundingAmount": 900.0,
+    "advanceRate": 90,
+    "maturityDate": "2020-10-26",
+    "reasonForFailure": [
+      {
+        "code": "SINGLE_SUPPLIER",
+        "message": "Must be one and only one supplier on the cashflow"
+      },
+      {
+        "code": "SUPPLIER_NOT_ON_CONTRACT",
+        "message": "The SUPPLIER is not on the Contract"
+      }
+    ],
+    "bufferPeriod": 2,
+    "acceptanceDate": "2020-08-13",
+    "cashflowReference": "CR_123abc1",
+    "settlementAmount": 1001,
+    "annualisedMarginRate": 1.01,
+    "adjustment": 15,
+    "leadDays": 14
+  }
+]

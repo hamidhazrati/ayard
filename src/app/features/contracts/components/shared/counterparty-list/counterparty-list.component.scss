@@ -1,0 +1,20 @@
+.counterparty-list-column-reference {
+  max-width: 150px;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counterparty-list-column-name {
+  width: 300px;
+}
+
+.counterparty-list-column-status {
+  width: 1%;
+}
+
+.counterparty-list-column-actions {
+  padding: 0;
+  width: 1%;
+}

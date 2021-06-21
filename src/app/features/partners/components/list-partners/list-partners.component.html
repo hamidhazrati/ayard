@@ -1,0 +1,18 @@
+<section>
+  <div class="table-toolbar">
+    <div class="table-toolbar__right">
+      <a mat-flat-button routerLink="/partners/new">Create new Partner</a>
+    </div>
+  </div>
+  <gds-data-table style="overflow:hidden"
+    [showRowSelect]="false"
+    [enableHorizontalScroll]="false"
+    [showExportButton]="false"
+    [rows]="rows"
+    [columns]="columns"
+    [defaultSorts]="defaultSorts"
+    [paginationMeta]="paginationMeta"
+    (paginationChange)="getPartners($event)"
+    (columnSort)="sort($event)"
+  ></gds-data-table>
+</section>

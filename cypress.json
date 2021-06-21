@@ -1,0 +1,12 @@
+{
+  "supportFile": "cypress/support/index.ts",
+  "baseUrl": "http://localhost:4200",
+  "viewportHeight": 900,
+  "viewportWidth": 1440,
+  "video": false,
+  "env": {
+    "auth_base_url": "https://nonprod-keycloak.organisation.gcpfidn.net/auth",
+    "auth_realm": "dev1",
+    "auth_client_id": "operations-portal"
+  }
+}

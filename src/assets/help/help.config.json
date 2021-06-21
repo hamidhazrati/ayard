@@ -1,0 +1,166 @@
+{
+  "items": [
+    {
+      "isAvailableOnHomePage": true,
+      "path": "assets/help/markdown/CF_Cashflows.md",
+      "description": "About cashflow files in Verdi",
+      "title": "Cashflow Files"
+    },
+    {
+      "route": "/cashflows/files",
+      "path": "assets/help/markdown/CF_Manage_cashflow_files.md",
+      "description": "Uploading and processing cashflow files",
+      "title": "Working with cashflow files",
+      "nestedItems": [
+        {
+          "path": "assets/help/markdown/CF_MCF_Upload_cashflow_files.md",
+          "title": "How to upload new cashflow files"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Process_cashflow_files.md",
+          "title": "How to approve cashflow files for processing"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_CFStatuses.md",
+          "title": "Cashflow file statuses"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Valid_Cashflow_status.md",
+          "title": "Cashflow valid statuses"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Invalid_Cashflow_status.md",
+          "title": "Cashflow invalid statuses"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Related.md",
+          "title": "Related topics"
+        }
+      ]
+    },
+    {
+      "isAvailableOnHomePage": true,
+      "route": "/exceptions",
+      "path": "assets/help/markdown/CF_MCF_Manage_exceptions.md",
+      "description": "How to work with and approve rejected cashflows",
+      "title": "Managing exceptions",
+      "nestedItems":[
+        {
+          "path": "assets/help/markdown/CF_ME_Group.md",
+          "title": "Group exceptions"
+        },
+        {
+          "path": "assets/help/markdown/CF_ME_Invalid_Cashflows.md",
+          "title": "How to work with rejected cashflows"
+        },
+        {
+          "path": "assets/help/markdown/CF_ME_Approve_Exceptions.md",
+          "title": "How to approve overridden or released cashflows"
+        },
+        {
+          "path": "assets/help/markdown/CF_ME_Related.md",
+          "title": "Related topics"
+        }
+      ]
+    },
+    {
+      "isAvailableOnHomePage": true,
+      "route": "/cashflows/files/.*/proposals.*",
+      "path": "assets/help/markdown/CF_Manage_origination_proposals.md",
+      "description": "Getting internal approval and submitting to trade",
+      "title": "Origination Proposals",
+      "nestedItems": [
+        {
+          "path": "assets/help/markdown/CF_MOP_Request_internal_approval.md",
+          "title": "How to request internal approval of an origination proposal"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Submit_to_trade.md",
+          "title": "How to submit cashflows to trade"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Statuses.md",
+          "title": "Cashflow file statuses"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Related.md",
+          "title": "Related topics"
+        }
+      ]
+    },
+    {
+      "route": "/cashflows/proposals",
+      "path": "assets/help/markdown/CF_Manage_origination_proposals.md",
+      "description": "Getting internal approval and submitting to trade",
+      "title": "Origination Proposals",
+      "nestedItems": [
+        {
+          "path": "assets/help/markdown/CF_MOP_Request_internal_approval.md",
+          "title": "How to request internal approval of an origination proposal"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Submit_to_trade.md",
+          "title": "How to submit cashflows to trade"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Statuses.md",
+          "title": "Cashflow file statuses"
+        },
+        {
+          "path": "assets/help/markdown/CF_MOP_Related.md",
+          "title": "Related topics"
+        }
+      ]
+    },
+    {
+      "route": "/cashflows/files/.*",
+      "path": "assets/help/markdown/CF_Cashflow_Details.md",
+      "description": "Approving and submitting to origination proposals",
+      "title": "Cashflow details screen",
+      "nestedItems": [
+        {
+          "path": "assets/help/markdown/CF_MCF_Process_cashflow_files.md",
+          "title": "How to approve cashflow files for processing"
+        },
+        {
+          "path": "assets/help/markdown/CF_ME_Invalid_Cashflows.md",
+          "title": "How to work with rejected cashflows"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Submit_to_origination.md",
+          "title": "How to submit cashflow files to origination proposal"
+        },
+        {
+          "path": "assets/help/markdown/CF_MCF_Related2.md",
+          "title": "Related topics"
+        }
+      ]
+    },
+    {
+      "path": "assets/help/markdown/GEN_Tables.md",
+      "description": "Working with data tables in Verdi",
+      "title": "Data tables",
+      "nestedItems": [
+        {
+          "title": "Pagination",
+          "path": "assets/help/markdown/GEN_T_Pagination.md"
+        },
+        {
+          "title": "Sorting",
+          "path": "assets/help/markdown/GEN_T_Sort.md"
+        },
+        {
+          "title": "Column sizing",
+          "path": "assets/help/markdown/GEN_T_Columns.md"
+        }
+      ]
+    }
+  ],
+  "homeItem": {
+    "path": "assets/help/markdown/home.md"
+  },
+  "introModal": {
+    "path": "assets/help/markdown/intro-modal.md",
+    "title": "What is Verdi?"
+  }
+}

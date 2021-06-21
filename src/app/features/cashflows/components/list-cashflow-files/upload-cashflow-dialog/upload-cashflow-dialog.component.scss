@@ -1,0 +1,73 @@
+@import 'palette';
+
+.upload__form {
+  height: 100%;
+}
+
+.upload {
+  display: grid;
+  height: 100%;
+  gap: 0;
+  grid-template-columns: auto auto;
+  grid-template-rows: 28px auto 36px;
+  grid-template-areas:
+    'title title'
+    'content content'
+    'actions1 actions2';
+}
+
+.upload__title {
+  grid-area: title;
+}
+
+.upload__content {
+  grid-area: content;
+  align-self: center;
+}
+
+.upload__content--center {
+  text-align: center;
+}
+
+.upload__actions1 {
+  grid-area: actions1;
+  align-self: end;
+  justify-self: start;
+}
+
+.upload__actions2 {
+  grid-area: actions2;
+  align-self: end;
+  justify-self: end;
+}
+
+h2 {
+  margin: 0;
+  font-weight: normal;
+}
+
+p {
+  overflow-wrap: anywhere;
+}
+
+input {
+  font: inherit;
+}
+
+.upload__progress {
+  padding-top: 20px;
+}
+
+.upload__icon-ok {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: $primary700;
+}
+
+.upload__icon-failed {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: $alert500;
+}

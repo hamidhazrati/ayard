@@ -1,0 +1,166 @@
+<div class="header">
+  <div class="title pd" *ngIf="facility">
+    <h2 [innerText]="facility?.name"></h2>
+  </div>
+
+  <div class="more">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Options for this facility">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onMenuClick({ type: 'edit' })" disabled>
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="onMenuClick({ type: 'manage' })" disabled>
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Manage Guarantors</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+<div class="stats pd" *ngIf="facility; else pleaseSelect">
+  <ng-container *ngIf="facility.data | facility as stats">
+    <!-- Credit information -->
+    <div class="stats__section" *ngIf="stats.credit">
+      <div class="title">
+        <p>Credit Limit</p>
+      </div>
+
+      <div class="information">
+        <div>
+          <span class="information__title">Credit Limit:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.credit.currency + ' ' + (stats.credit.limit.limit | number)"
+          ></span>
+        </div>
+
+        <div>
+          <span class="information__title">Exposure:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.credit.currency + ' ' + (stats.credit.used | number: '0.2')"
+          ></span>
+        </div>
+
+        <div>
+          <span class="information__title">Credit Available:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.credit.currency + ' ' + (stats.credit.available | number)"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insurance information -->
+    <div class="stats__section" *ngIf="stats.insurance">
+      <div class="title">
+        <p>Insurance Limit</p>
+      </div>
+
+      <div class="information">
+        <div>
+          <span class="information__title">Insurance Limit:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.insurance.currency + ' ' + (stats.insurance.limit.limit | number)"
+          ></span>
+        </div>
+
+        <div>
+          <span class="information__title">Exposure:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.insurance.currency + ' ' + (stats.insurance.used | number: '0.2')"
+          ></span>
+        </div>
+
+        <div>
+          <span class="information__title">Insurance Available:</span>
+          <span
+            class="information__value"
+            [innerText]="stats.insurance.currency + ' ' + (stats.insurance.available | number)"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guarantors information -->
+    <div class="stats__section" *ngIf="stats.guarantors?.length">
+      <div class="title">
+        <p>Guarantors</p>
+      </div>
+
+      <div class="information guarantors" *ngFor="let guarantor of stats.guarantors">
+        <div [ngClass]="{ single: stats.guarantors.length === 1 }">
+          <p>
+            <span class="information__title">Guarantor Entity:</span>
+            <span class="information__value">
+              <a
+                target="_blank"
+                [routerLink]="'/entities/' + guarantor.limit.entity.id"
+                [innerText]="guarantor.limit.entity.name"
+              ></a>
+            </span>
+          </p>
+
+          <p>
+            <span class="information__title">Guarantor Limit:</span>
+            <span
+              class="information__value"
+              [innerText]="guarantor.currency + ' ' + (guarantor.total | number)"
+            ></span>
+          </p>
+
+          <p>
+            <span class="information__title">Guarantor Limit Used:</span>
+            <span
+              class="information__value"
+              [innerText]="guarantor.currency + ' ' + (guarantor.used | number)"
+            ></span>
+          </p>
+
+          <p>
+            <span class="information__title">Guarantor Limit Available:</span>
+            <span
+              class="information__value"
+              [innerText]="guarantor.currency + ' ' + (guarantor.available | number)"
+            ></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contracts -->
+    <div class="stats__section" *ngIf="stats.contracts?.length">
+      <div class="title">
+        <p>Contracts</p>
+      </div>
+
+      <div class="information">
+        <div>
+          <span class="information__title">Contracts:</span>
+          <span class="information__value">
+            <ng-container *ngFor="let contract of stats.contracts; let i = index">
+              <a
+                class="link"
+                [routerLink]="'/contracts/' + contract.id"
+                [innerText]="contract.name"
+                target="_blank"
+              ></a>
+
+              <ng-container *ngIf="i !== stats.contracts.length - 1">,&nbsp;</ng-container>
+            </ng-container>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #pleaseSelect>
+  <p>Please click on a facility...</p>
+</ng-template>

@@ -1,0 +1,9 @@
+<div class="modal" *ngIf="isShown">
+  <div class="modal__backdrop" (click)="close()"></div>
+  <div class="modal__close-button" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </div>
+  <div class="modal__content">
+    <ng-content></ng-content>
+  </div>
+</div>

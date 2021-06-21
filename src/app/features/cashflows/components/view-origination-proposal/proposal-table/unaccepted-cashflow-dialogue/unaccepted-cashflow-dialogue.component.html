@@ -1,0 +1,40 @@
+<div class="dialog">
+  <div class="dialog__title">
+    <h2>Unaccepted Cashflow</h2>
+  </div>
+  <div class="dialog__content1">
+    <app-form-label>Entity One</app-form-label>
+    {{ this.data.entityOneName }}
+  </div>
+  <div class="dialog__content2">
+    <app-form-label>Entity Two</app-form-label>
+    {{ this.data.entityTwoName }}
+  </div>
+  <div class="dialog__content3">
+    <app-form-label>Invoice Id</app-form-label>
+    {{ this.data.documentReference }}
+  </div>
+  <div class="dialog__content4">
+    <app-form-label>Invoice Amount</app-form-label>
+    {{ this.data.currency }} {{ this.data.originalValue | number: '1.2' }}
+  </div>
+  <div class="dialog__content5">
+    <app-form-label>Enter reason for rejection</app-form-label>
+    <mat-form-field appearance="outline" class="dialog__reason">
+      <textarea
+        matInput
+        [(ngModel)]="data.reason"
+        rows="4"
+        data-testid="unaccepted-reason"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div class="dialog__actions1">
+    <button mat-flat-button [mat-dialog-close]="data" data-testid="unaccepted-cashflow-ok">
+      Ok
+    </button>
+  </div>
+  <div class="dialog__actions2">
+    <button mat-button data-testid="unaccepted-cashflow-cancel" (click)="cancel()">Cancel</button>
+  </div>
+</div>

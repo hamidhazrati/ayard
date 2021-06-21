@@ -1,0 +1,143 @@
+@import 'palette';
+
+.mat-form-field {
+  font-family: 'Open Sans', sans-serif;
+
+  .mat-chip-list-wrapper .mat-standard-chip {
+    min-height: 26px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 8px;
+    padding-left: 8px;
+    font-size: 0.68em;
+  }
+
+  .mat-chip.mat-standard-chip {
+    background-color: $supportive200;
+  }
+
+  .mat-select {
+    font-family: 'Open Sans', sans-serif;
+
+    .mat-select-arrow {
+      color: $supportive600;
+    }
+
+    &.mat-select-disabled {
+      .mat-select-placeholder {
+        color: $supportive300;
+      }
+
+      .mat-select-arrow {
+        color: $supportive300;
+      }
+    }
+  }
+
+  input.mat-input-element {
+    color: $supportive800;
+    height: 18px;
+    font-size: 14px;
+    line-height: initial;
+
+    &::placeholder {
+      color: $supportive500;
+    }
+
+    &:disabled {
+      color: $supportive300;
+    }
+  }
+
+  input.mat-input-element:disabled {
+    &::placeholder {
+      color: $supportive300;
+    }
+  }
+
+  .mat-select-placeholder {
+    color: $supportive500;
+  }
+
+  // NOTE: For icons centering
+  &.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: none;
+  }
+
+  &.mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0 16px;
+  }
+
+  // NOTE: Default outline
+  &.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: $supportive400;
+    background-color: $supportive0;
+    margin-top: 0;
+  }
+
+  &.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
+  &.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap,
+  &.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start {
+    border-width: 1px;
+  }
+}
+
+.mat-form-field-infix {
+  border-top: 0.3em solid transparent;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  height: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.75em 0;
+}
+
+.mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  .mat-form-field-outline-start {
+    border-width: 2px;
+  }
+
+  .mat-form-field-outline-gap {
+    border-width: 2px;
+  }
+
+  .mat-form-field-outline-end {
+    border-width: 2px;
+  }
+}
+
+.mat-form-field-wrapper .mat-form-field-flex:hover {
+  .mat-form-field-outline {
+    color: $supportive600;
+
+    .mat-form-field-outline-start {
+      border: 1px solid $supportive600;
+      border-right: none;
+    }
+
+    .mat-form-field-outline-end {
+      border: 1px solid $supportive600;
+      border-left: none;
+    }
+  }
+}
+
+.mat-focused {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    .mat-form-field-outline {
+      color: $supportive400;
+
+      .mat-form-field-outline-start {
+        border: 2px solid $supportive400;
+        border-right: none;
+      }
+
+      .mat-form-field-outline-end {
+        border: 2px solid $supportive400;
+        border-left: none;
+      }
+    }
+  }
+}

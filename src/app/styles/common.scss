@@ -1,0 +1,70 @@
+/*
+ * Styles that are common to each page in the Ops Portal
+ * Do not import this file into component scss file as it is available
+ * globally and will cause unnecessary bloat
+ */
+@import 'palette';
+@import 'grids';
+@import 'table-toolbar';
+@import 'sidebar';
+@import 'spacing-helpers';
+
+a {
+  color: $primary700;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+ul {
+  list-style-type: none;
+}
+
+td:focus {
+  outline: none;
+}
+
+h1 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.7rem;
+  font-weight: normal;
+}
+
+h2 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+h3 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.form {
+  .mat-form-field {
+    display: block;
+  }
+
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.table {
+  &__text {
+    color: $supportive900;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    &--gray {
+      color: $grey400;
+    }
+  }
+}

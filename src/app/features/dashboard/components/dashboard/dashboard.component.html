@@ -1,0 +1,94 @@
+<app-card>
+  <app-card-title data-testid="title">
+    Aston Barclay Dashboard
+  </app-card-title>
+  <app-card-content>
+    <div class="row">
+      <div class="col-3 dashboard__box">
+        <h2>Yard</h2>
+        <ul>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/entities"
+              >Gate In</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/entities/resolve"
+              >Gate Out</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/entities/match"
+              >Lotting</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/entities/match"
+              >Stock Check</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-3 dashboard__box">
+        <h2>Transport</h2>
+        <ul>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/products"
+              >Manage Products</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/counterparty-roles"
+              >Manage Counterparty Roles</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-3 dashboard__box">
+        <h2>Vehicle</h2>
+        <ul>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/contracts"
+              >Manage Contracts</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/partners"
+              >Manage Partners</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-3 dashboard__box">
+        <h2>Admin</h2>
+        <ul>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/cashflows"
+              >View Cashflows</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/cashflows/files"
+              >Manage Cashflow Files</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/facilities"
+              >Manage Facilities &amp; Limits</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/cashflows/proposals"
+              >Manage Origination Proposals</a
+            >
+          </li>
+          <li>
+            <a mat-stroked-button class="dashboard_button" routerLink="/exceptions"
+              >Manage Exceptions</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </app-card-content>
+</app-card>

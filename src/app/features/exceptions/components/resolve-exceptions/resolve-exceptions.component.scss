@@ -1,0 +1,39 @@
+@import 'palette';
+
+.resolve-exceptions__buttons,
+.resolve-exceptions__confirm-btns {
+  display: grid;
+  grid-column-gap: 15px;
+}
+
+.resolve-exceptions__buttons {
+  grid-template-columns: auto auto auto auto;
+}
+
+.resolve-exceptions__form {
+  width: 70%;
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-error {
+    font-size: 12px;
+    margin-top: 5px;
+    margin-left: -10px;
+  }
+}
+
+.resolve-exceptions__confirm-btns {
+  grid-template-columns: auto auto;
+}
+
+.resolve-exceptions__reject-btn {
+  border-color: $alert800;
+  background-color: rgba(241, 75, 61, 0);
+  color: $alert800;
+
+  &:hover {
+    background-color: rgba(254, 236, 238, 1);
+  }
+}

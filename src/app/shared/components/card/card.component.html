@@ -1,0 +1,18 @@
+<mat-card class="app-card">
+  <ng-container *ngIf="containsSection('title')">
+    <mat-card-title class="app-card__title">
+      <ng-content select="app-card-title"></ng-content>
+    </mat-card-title>
+    <mat-divider *ngIf="containsSection('content') || containsSection('actions')"></mat-divider>
+  </ng-container>
+  <ng-container *ngIf="containsSection('content')">
+    <mat-card-content class="app-card__content">
+      <ng-content select="app-card-content"></ng-content>
+    </mat-card-content>
+  </ng-container>
+  <ng-container *ngIf="containsSection('actions')">
+    <mat-card-actions class="app-card__actions">
+      <ng-content select="app-card-actions"></ng-content>
+    </mat-card-actions>
+  </ng-container>
+</mat-card>

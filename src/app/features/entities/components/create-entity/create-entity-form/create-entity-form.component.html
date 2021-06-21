@@ -1,0 +1,102 @@
+<form [formGroup]="form" autocomplete="off" class="form" (ngSubmit)="onSave()">
+  <div class="row">
+    <fieldset class="col-4">
+      <app-form-label>Legal Entity Name</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="name" formControlName="name" />
+        <mat-error
+          *ngIf="form.controls.name.invalid && form.controls.line1.touched"
+          [innerText]="getErrorMessage(form.controls.name)"
+          data-testid="name-error"
+        ></mat-error>
+      </mat-form-field>
+
+      <app-form-label>Short Name</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="short-name" formControlName="shortName" />
+        <mat-error
+          *ngIf="form.controls.shortName.invalid && form.controls.shortName.touched"
+          [innerText]="getErrorMessage(form.controls.shortName)"
+          data-testid="short-name-error"
+        ></mat-error>
+      </mat-form-field>
+    </fieldset>
+    <fieldset class="col-4">
+      <legend></legend>
+      <app-form-label>Address Line 1</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="line1" formControlName="line1" />
+        <mat-error
+          *ngIf="form.controls.line1.invalid && form.controls.line1.touched"
+          [innerText]="getErrorMessage(form.controls.line1)"
+          data-testid="line1-error"
+        ></mat-error>
+      </mat-form-field>
+
+      <app-form-label>Address Line 2</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="line2" formControlName="line2" />
+        <mat-error
+          *ngIf="form.controls.line2.invalid && form.controls.line2.touched"
+          [innerText]="getErrorMessage(form.controls.line2)"
+          data-testid="line2-error"
+        ></mat-error>
+      </mat-form-field>
+
+      <app-form-label>City</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="city" formControlName="city" />
+        <mat-error
+          *ngIf="form.controls.city.invalid && form.controls.city.touched"
+          [innerText]="getErrorMessage(form.controls.city)"
+          data-testid="city-error"
+        ></mat-error>
+      </mat-form-field>
+
+      <app-form-label>State Province Region</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="stateProvinceRegion" formControlName="stateProvinceRegion" />
+        <mat-error
+          *ngIf="
+            form.controls.stateProvinceRegion.invalid && form.controls.stateProvinceRegion.touched
+          "
+          [innerText]="getErrorMessage(form.controls.stateProvinceRegion)"
+          data-testid="state-province-region-error"
+        ></mat-error>
+      </mat-form-field>
+
+      <app-form-label>Country</app-form-label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          data-testid="country"
+          formControlName="country"
+          placeholder="Select a country"
+          panelClass="selector-position"
+        >
+          <mat-option
+            *ngFor="let country of countryList"
+            [value]="country.code"
+            data-testid="country-option"
+            >{{ country.description }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <app-form-label>Post Code</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="postcode" formControlName="postcode" />
+        <mat-error
+          *ngIf="form.controls.postcode.invalid && form.controls.postcode.touched"
+          [innerText]="getErrorMessage(form.controls.postcode)"
+          data-testid="postcode-error"
+        ></mat-error>
+      </mat-form-field>
+    </fieldset>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <button mat-flat-button [disabled]="form.invalid" data-testid="save">Save</button>
+      <a mat-button routerLink="/entities" data-testid="cancel">Cancel</a>
+    </div>
+  </div>
+</form>

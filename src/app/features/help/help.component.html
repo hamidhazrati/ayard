@@ -1,0 +1,29 @@
+<gds-blade [isOpened]="isOpened$ | async" width="420px" [hasBackdrop]="false">
+  <gds-container class="help-container">
+    <gds-container-header [closeable]="true" (closed)="close()">
+      <h2 gdsContainerTitle>Verdi help</h2>
+    </gds-container-header>
+
+    <gds-container-content class="help-container__content">
+      <div class="help__toolbar">
+        <div *ngIf="showNavControls" class="help-navigation">
+          <span class="help-navigation__item">
+            <mat-icon (click)="onBackClicked()">arrow_back</mat-icon>
+          </span>
+          <span class="help-navigation__item">
+            <mat-icon (click)="onHomeClicked()">home</mat-icon>
+          </span>
+        </div>
+      </div>
+      <div class="help__content">
+        <ng-container #placeholder></ng-container>
+      </div>
+    </gds-container-content>
+  </gds-container>
+</gds-blade>
+
+<app-help-intro-modal></app-help-intro-modal>
+
+<app-full-screen-modal>
+  <img [src]="imageSrc" class="modal__image" alt="full screen image" />
+</app-full-screen-modal>

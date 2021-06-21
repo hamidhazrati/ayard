@@ -1,0 +1,367 @@
+<div class="row">
+  <mat-card
+    data-testid="header-card"
+    class="col-12 header-card"
+    [class.header-card--rejected]="rejected"
+  >
+    <div class="row--no-padding">
+      <div class="col-5">
+        <h1>{{ cashflowFile?.clientName }}</h1>
+        - {{ cashflowFile?.id }}
+      </div>
+      <div class="col-2 header-card__status">
+        <p data-testid="status">
+          <strong>Status:</strong> {{ cashflowFile?.status | titlecaseFormat }}
+        </p>
+      </div>
+      <div class="col-5 header-card__actions">
+        <div
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipPosition]="'above'"
+          [matTooltipDisabled]="hasOriginationWriteAccess"
+          *ngIf="displayGrantInternalApprovalButton()"
+          class="header-card__action-wrapper"
+        >
+          <button
+            mat-flat-button
+            data-testid="grant-approval"
+            (click)="openInternalApprovalDialogue()"
+            [disabled]="!hasOriginationWriteAccess"
+          >
+            Internal Approval Received
+          </button>
+        </div>
+
+        <div
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipPosition]="'above'"
+          [matTooltipDisabled]="hasOriginationWriteAccess"
+          *ngIf="displayEditButton()"
+          class="header-card__action-wrapper"
+        >
+          <button
+            mat-flat-button
+            data-testid="edit"
+            (click)="editProposalTab()"
+            [disabled]="!hasOriginationWriteAccess"
+          >
+            Edit proposal
+          </button>
+        </div>
+
+        <div
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipPosition]="'above'"
+          [matTooltipDisabled]="hasOriginationWriteAccess"
+          *ngIf="displayExportButton()"
+          class="header-card__action-wrapper"
+        >
+          <button
+            mat-flat-button
+            data-testid="export"
+            (click)="openExportDialogue()"
+            [disabled]="!hasOriginationWriteAccess"
+          >
+            Export proposal
+          </button>
+        </div>
+
+        <div
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipPosition]="'above'"
+          [matTooltipDisabled]="hasOriginationWriteAccess"
+          *ngIf="displaySubmitToTradeButton(cashflowFile)"
+          class="header-card__action-wrapper"
+        >
+          <button
+            mat-flat-button
+            data-testid="submit-to-trade"
+            (click)="openSubmitToTradeDialogue()"
+            [disabled]="!hasOriginationWriteAccess"
+          >
+            Submit to trade
+          </button>
+        </div>
+
+        <div
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipPosition]="'above'"
+          [matTooltipDisabled]="hasOriginationWriteAccess"
+          *ngIf="displayRejectButton()"
+          class="header-card__action-wrapper"
+        >
+          <button
+            mat-stroked-button
+            data-testid="reject"
+            (click)="openRejectDialogue()"
+            [disabled]="!hasOriginationWriteAccess"
+          >
+            Reject File
+          </button>
+        </div>
+
+        <button mat-stroked-button data-testid="save" (click)="saveEdits()" *ngIf="isBeingEditing">
+          Save
+        </button>
+
+        <button mat-button data-testid="cancel-edit" (click)="cancelEdits()" *ngIf="isBeingEditing">
+          Cancel
+        </button>
+        <h1
+          data-testid="reject-header"
+          class="header-card--rejected-stamp"
+          *ngIf="rejected === true"
+        >
+          REJECTED
+        </h1>
+        <div *ngIf="rejected === true">
+          <div class="header-card--rejected-by" data-testid="reject-user-time">
+            Rejected by {{ cashflowFile?.rejectionDetail.user }}
+            {{ cashflowFile?.rejectionDetail.date }} UTC
+          </div>
+          <div data-testid="reject-message">{{ cashflowFile?.rejectionDetail.message }}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="row">
+  <div data-testid="proposal-tabs" class="col-12">
+    <mat-tab-group
+      #tabGroup
+      mat-stretch-tabs
+      animationDuration="0ms"
+      class="proposal-tabs"
+      [selectedIndex]="selectedTabIndex"
+      (selectedTabChange)="tabChanged($event)"
+    >
+      <mat-tab *ngFor="let total of cashflowTotals">
+        <ng-template mat-tab-label>
+          <div class="proposal-tab">
+            <span class="proposal-tab__heading"
+              >{{ total.contractName }} ({{ total.currency }})</span
+            >
+            <span class="proposal-tab__subheading">
+              FMV Amount: {{ total.currency }} {{ total.totalInitialFundingAmount | number: '1.2' }}
+            </span>
+          </div>
+        </ng-template>
+        <div class="proposal-tabs__background">
+          <ng-container *ngTemplateOutlet="proposalTabContent"></ng-container>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<ng-template #proposalTabContent>
+  <div class="row">
+    <mat-card class="col-4" data-testid="contract-card">
+      <div class="row">
+        <div class="col-4">Sellers:</div>
+        <div class="col-8" data-testid="sellers-value">
+          <span *ngFor="let seller of tabUniqueSellers">
+            {{ seller.name }}
+          </span>
+        </div>
+        <div class="col-4">Contract:</div>
+        <div class="col-8" data-testid="contract-value">
+          <a routerLink="/contracts/{{ tabCashflowTotal.contractId }}">{{
+            tabCashflowTotal.contractName
+          }}</a>
+        </div>
+        <div class="col-4">Cashflow File:</div>
+        <div class="col-8" data-testid="cashflow-file-value">
+          <a routerLink="/cashflows/files/{{ tabCashflowTotal.cashflowFileId }}">{{
+            tabCashflowTotal.cashflowFile?.filename
+          }}</a>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="col-4" data-testid="cashflow-totals-card">
+      <div class="row">
+        <div class="col-4"><strong>Gross Amount:</strong></div>
+        <div class="col-8 col--align-right" data-testid="gross-amount-value">
+          <strong>
+            {{ currency + ' ' + (tabCashflowTotal?.totalOriginalValue | number: '1.2') }}
+          </strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4"><strong>FMV Amount:</strong></div>
+        <div class="col-8 col--align-right" data-testid="fmv-amount-value">
+          <strong>
+            {{ currency + ' ' + (tabCashflowTotal?.totalInitialFundingAmount | number: '1.2') }}
+          </strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">FMV Rate:</div>
+        <div
+          class="col-8 col--align-right"
+          data-testid="fmv-rate-value"
+          *ngIf="!tabCashflowTotal.multipleAdvanceRate"
+        >
+          <span> {{ tabCashflowTotal?.contractAdvanceRate }}% </span>
+        </div>
+        <div
+          class="col-8 col--align-right"
+          data-testid="fmv-rate-value"
+          *ngIf="tabCashflowTotal.multipleAdvanceRate"
+        >
+          Multiple
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4"><strong>Discount:</strong></div>
+        <div class="col-8 col--align-right" data-testid="discount-value">
+          <strong>
+            {{ currency + ' ' + (tabCashflowTotal?.totalDiscountAmount | number: '1.2') }}
+          </strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Ref Rate:</div>
+        <div class="col-8 col--align-right" data-testid="reference-rate-value">
+          <span>
+            {{ tabCashflowTotal?.referenceRateType }}
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Ref Rate Date:</div>
+        <div class="col-8 col--align-right" data-testid="reference-rate-date">
+          <span>
+            {{ tabCashflowTotal?.referenceRateDate | date: 'dd MMM yyyy' }}
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Margin:</div>
+        <div
+          class="col-8 col--align-right"
+          data-testid="margin-value"
+          *ngIf="!tabCashflowTotal.multipleMargins"
+        >
+          <span> {{ tabCashflowTotal?.contractSpread / 100 | number: '1.2' }}% </span>
+        </div>
+        <div
+          class="col-8 col--align-right"
+          data-testid="margin-value"
+          *ngIf="tabCashflowTotal.multipleMargins"
+        >
+          Multiple
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+      </div>
+      <div class="row--no-padding">
+        <div class="col-4"><strong>Payment Amount:</strong></div>
+        <div class="col-8 col--align-right" data-testid="payment-amount-value">
+          <strong>
+            {{ currency + ' ' + (tabCashflowTotal?.totalPaymentAmount | number: '1.2') }}
+          </strong>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="col-4" data-testid="dates-card">
+      <div class="row">
+        <div class="col-4">Transaction Date:</div>
+        <div class="col-8" data-testid="transaction-date-value">
+          {{ cashflowFile?.uploadDate | date: 'dd MMM yyyy' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Acceptance Date:</div>
+        <div class="col-8" data-testid="acceptance-date-value">
+          {{ getFirstValidCashflow()?.acceptanceDate | date: 'dd MMM yyyy' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Max Maturity Date:</div>
+        <div class="col-8" data-testid="max-maturity-date-value">
+          {{ maxMaturityDate | date: 'dd MMM yyyy' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Max Tenor:</div>
+        <div *ngIf="maxTenor" class="col-8" data-testid="max-tenor-value">{{ maxTenor }} days</div>
+      </div>
+      <div class="row">
+        <div class="col-4">Buffer Period:</div>
+        <div
+          *ngIf="getFirstValidCashflow()?.bufferPeriod"
+          class="col-8"
+          data-testid="buffer-period-value"
+        >
+          {{ getFirstValidCashflow()?.bufferPeriod }}
+          days
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Adjustment:</div>
+        <div
+          *ngIf="getFirstValidCashflow()?.adjustment"
+          class="col-8"
+          data-testid="adjustment-value"
+        >
+          {{ getFirstValidCashflow()?.adjustment | ordinalFormat }} of each month
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Settlement Date:</div>
+        <div class="col-8" data-testid="settlement-date-value">
+          {{ maxMaturityDate | date: 'dd MMM yyyy' }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">Lead Business Days:</div>
+        <div
+          *ngIf="getFirstValidCashflow()?.leadDays"
+          class="col-8"
+          data-testid="lead-business-days-value"
+        >
+          {{ getFirstValidCashflow()?.leadDays }} Days
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="row cashflow-tabs" data-testid="cashflow-tabs">
+    <mat-tab-group class="col-12 table-card" mat-stretch-tabs animationDuration="0ms">
+      <mat-tab [label]="getValidTabTitle() + ' (' + getAcceptedCashflowsCount() + ')'">
+        <ng-template matTabContent>
+          <app-proposal-table-component
+            [proposalCashflowsWithFacilities]="tabProposalCashflowsWithFacilities"
+            [disableAccept]="disableAccept"
+            [cancelled]="isCancelled"
+            (unacceptedCashflowsEvent)="onUnacceptedCashflows($event)"
+          ></app-proposal-table-component>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        [label]="getInvalidTabTitle() + ' (' + tabInvalidAndRejectedCashflowSummaries.length + ')'"
+      >
+        <ng-template matTabContent>
+          <app-invalid-cashflows-proposal-table
+            [cashflowSummaries]="tabInvalidAndRejectedCashflowSummaries"
+          ></app-invalid-cashflows-proposal-table>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ng-template>

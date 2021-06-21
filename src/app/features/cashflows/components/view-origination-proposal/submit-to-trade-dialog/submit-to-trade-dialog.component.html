@@ -1,0 +1,73 @@
+<form
+  *ngIf="fileUploaded === false"
+  [formGroup]="form"
+  autocomplete="off"
+  class="form upload__form"
+>
+  <div *ngIf="fileUploaded === false" class="upload">
+    <div class="upload__title">
+      <h2>Upload files to continue</h2>
+    </div>
+    <div class="upload__content">
+      <div>
+        <app-form-label required="true">Upload client request letter</app-form-label>
+        <input
+          type="file"
+          [formControl]="form.controls.clientRequestLetterFile"
+          (select)="onSelectClientRequestLetter($event)"
+          accept=".pdf, application/pdf"
+          preserveValue
+          data-testid="client-request-letter-upload"
+        />
+      </div>
+      <div>
+        <app-form-label required="true" data-testid="proposal-file-label"
+          >Upload latest system generated proposal file ({{
+            getDownloadFilename(cashflowfile)
+          }})</app-form-label
+        >
+        <input
+          type="file"
+          [formControl]="form.controls.proposalFile"
+          (select)="onSelectProposalFile($event)"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          preserveValue
+          data-testid="proposal-file-upload"
+        />
+      </div>
+
+      <div
+        *ngIf="uploadErrorMessage.length"
+        class="p-15 upload__failed"
+        data-testid="upload__failed"
+      >
+        <mat-icon class="upload__icon-failed">warning_amber</mat-icon>
+        <span>{{ uploadErrorMessage }}</span>
+      </div>
+
+      <div class="upload__progress pb-20">
+        <mat-progress-bar [value]="progress"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="upload__actions1">
+      <button mat-flat-button [disabled]="!form.valid" (click)="upload()" data-testid="upload">
+        Submit to trade
+      </button>
+    </div>
+    <div class="upload__actions2">
+      <button mat-button data-testid="close" (click)="close()">Close</button>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="fileUploaded === true" class="upload">
+  <div class="upload__content upload__content--center">
+    <div *ngIf="uploadSuccess === true" data-testid="upload__success">
+      <mat-icon class="upload__icon-ok">check_circle_outline</mat-icon>
+      <h2>Upload Successful</h2>
+    </div>
+    <button mat-flat-button data-testid="done" (click)="close()">
+      Done
+    </button>
+  </div>
+</div>

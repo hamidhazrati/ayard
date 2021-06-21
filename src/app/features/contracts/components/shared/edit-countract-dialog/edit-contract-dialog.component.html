@@ -1,0 +1,23 @@
+<mat-dialog-content>
+  <form class="form">
+    <div class="row--no-padding">
+      <div class="col-12">
+        <h2>Facility</h2>
+
+        <app-facility-selector [formControl]="form.controls.facility"></app-facility-selector>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="mat-dialog-actions__spaced">
+  <button
+    mat-flat-button
+    *ngIf="form.value.facility"
+    data-testid="update-countract"
+    (click)="updateContract()"
+  >
+    Update Contract
+  </button>
+  <mat-error>{{ serverError }}</mat-error>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

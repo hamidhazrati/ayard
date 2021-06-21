@@ -1,0 +1,68 @@
+<fieldset>
+  <app-form-label [required]="false" data-testid="role-name">{{
+    productCounterpartyRole.name
+  }}</app-form-label>
+  <p data-testid="role-description">{{ productCounterpartyRole.description }}</p>
+
+  <app-form-error
+    [label]="productCounterpartyRole.name"
+    [control]="this.form"
+    [messages]="counterpartyCustomErrorMessages"
+  ></app-form-error>
+
+  <div class="row" *ngFor="let entityCtrl of this.form.controls; let i = index">
+    <app-card class="counterparty-form col-12">
+      <app-card-content>
+        <span class="actions">
+          <button
+            class="counterparty-form__delete"
+            id="{{ 'entity-delete-button-' + i }}"
+            color="primary"
+            mat-icon-button
+            type="button"
+            (click)="this.onRemoveEntity(i)"
+            [attr.data-testid]="'entity-delete-button-' + i"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+
+        <div>
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="Please select from available Entities. If required Entity is not available please notify the DCM"
+            [required]="false"
+            >Entity</app-form-label
+          >
+
+          <app-entity-selector
+            class="counterparty-form__entryfield"
+            [formControl]="entityCtrl.controls.entity"
+            [attr.data-testid]="'counterparty-entity-control-selector-' + i"
+          ></app-entity-selector>
+        </div>
+
+        <div>
+          <app-form-label
+            matTooltipPosition="right"
+            matTooltip="The principle counterparties external reference."
+            >Reference</app-form-label
+          >
+
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [attr.data-testid]="'counterparty-reference-' + i"
+              [formControl]="entityCtrl.controls.reference"
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+      </app-card-content>
+    </app-card>
+  </div>
+
+  <app-adder-anchor data-testid="add-entity-button" (anchorClick)="this.onAddEntity()"
+    >Add additional {{ productCounterpartyRole.name }}
+  </app-adder-anchor>
+</fieldset>

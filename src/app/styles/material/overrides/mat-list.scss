@@ -1,0 +1,28 @@
+@import 'palette';
+
+.mat-list-option,
+.mat-nav-list .mat-list-item,
+.mat-action-list .mat-list-item {
+  border-top: 1px solid $supportive300;
+  box-sizing: border-box;
+  height: 40px;
+  font-weight: 400;
+  font-size: 14px;
+
+  &:hover,
+  &:focus {
+    box-shadow: 3px 0 $primary700 inset;
+    color: $primary700;
+    background: none;
+  }
+}
+
+.mat-list-single-selected-option {
+  &,
+  &:hover,
+  &:focus {
+    box-shadow: 3px 0 $primary700 inset;
+    color: $primary700;
+    background: none;
+  }
+}

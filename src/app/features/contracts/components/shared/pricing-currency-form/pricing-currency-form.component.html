@@ -1,0 +1,17 @@
+<div>
+  <app-currency-attributes-card
+    (editCurrency)="editCurrency($event)"
+    (deleteCurrency)="removeCurrency($event)"
+    *ngFor="let kv of this.form.value.currencies | keyvalue"
+    [currencyEntry]="makeCurrencyEntry(kv)"
+    [readonly]="readonly"
+  >
+  </app-currency-attributes-card>
+  <app-adder-anchor
+    *ngIf="!readonly"
+    data-testid="add-entity-button"
+    (anchorClick)="this.addCurrency()"
+  >
+    Add currency
+  </app-adder-anchor>
+</div>

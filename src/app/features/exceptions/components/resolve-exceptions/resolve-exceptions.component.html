@@ -1,0 +1,106 @@
+<app-exception-sidebar-title
+  (closeDialogEvent)="onCloseDialogEvent()"
+  [title]="'Grouped Exceptions'"
+  [status]="tasks[0].status | titlecaseFormat"
+>
+</app-exception-sidebar-title>
+
+<mat-divider></mat-divider>
+
+<div class="p-15">
+  <p>
+    <strong>{{ tasks.length }} Selected</strong>
+  </p>
+  <p>Type: {{ tasks[0].type | titlecaseFormat }}</p>
+  <p>Primary Entity: {{ tasks[0].primaryEntity }}</p>
+  <p>Related Entity: {{ tasks[0].relatedEntity }}</p>
+</div>
+
+<mat-divider></mat-divider>
+
+<div *ngIf="!showForm" class="resolve-exceptions__buttons pt-30 pr-15 pb-30 pl-15">
+  <ng-template [ngIf]="isRaised() && isMaker">
+    <button
+      *ngIf="hasAction('RELEASE')"
+      mat-stroked-button
+      (click)="action('release', 'IN_REVIEW_RELEASE')"
+      data-testid="release"
+    >
+      Release
+    </button>
+
+    <button
+      *ngIf="hasAction('OVERRIDE')"
+      mat-stroked-button
+      (click)="action('override', 'IN_REVIEW_OVERRIDE')"
+      data-testid="override"
+    >
+      Override
+    </button>
+
+    <button
+      *ngIf="hasAction('REJECT')"
+      class="resolve-exceptions__reject-btn"
+      [disabled]="true"
+      mat-stroked-button
+      (click)="action('reject', 'IN_REVIEW_REJECT')"
+      data-testid="reject"
+    >
+      Reject
+    </button>
+  </ng-template>
+
+  <ng-template [ngIf]="!isRaised() && isChecker && allTasksNotUpdatedByUser">
+    <button
+      class="exception-container__confirm"
+      mat-stroked-button
+      (click)="confirm()"
+      data-testid="checker-confirm"
+    >
+      Confirm
+    </button>
+
+    <button
+      class="exception-container__reject"
+      mat-stroked-button
+      (click)="reject()"
+      data-testid="checker-reject"
+    >
+      Reject
+    </button>
+  </ng-template>
+
+  <button mat-button (click)="onCloseDialogEvent()" data-testid="cancel">
+    Cancel
+  </button>
+</div>
+
+<div class="pt-30 pr-15 pb-30 pl-15" *ngIf="showForm">
+  <form data-testid="resolve-exceptions-form" class="resolve-exceptions__form" [formGroup]="form">
+    <app-form-label data-testid="reasonLabel">Reason for {{ reasonLabel }}</app-form-label>
+    <mat-form-field appearance="outline">
+      <textarea
+        rows="4"
+        cols="100"
+        matInput
+        data-testid="reason"
+        formControlName="reason"
+        class="resolve-exceptions__textarea"
+      ></textarea>
+      <mat-error *ngIf="form.get('reason').hasError('required')" data-testid="required-error">
+        Reason required
+      </mat-error>
+      <mat-error *ngIf="serverError.length">
+        {{ serverError }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="resolve-exceptions__confirm-btns mt-30">
+      <button mat-flat-button (click)="updateStatus()" data-testid="confirm">
+        Confirm {{ btnLabel }}
+      </button>
+
+      <a mat-button (click)="cancelUpdate()" data-testid="confirm-cancel">Cancel</a>
+    </div>
+  </form>
+</div>

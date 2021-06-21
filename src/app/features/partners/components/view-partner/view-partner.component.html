@@ -1,0 +1,25 @@
+<ng-container *ngIf="!loading && partner">
+  <app-card>
+    <app-card-title data-testid="title">{{ partner.name }}</app-card-title>
+    <app-card-content>
+      <div class="view-partner__grid">
+        <div class="view-partner__cell1">
+          <app-form-label>Partner ID</app-form-label>
+          <app-form-value data-testid="partner-id">
+            {{ partner.id }}
+          </app-form-value>
+
+          <app-form-label>Name</app-form-label>
+          <app-form-value data-testid="partner-name">
+            {{ partner.name }}
+          </app-form-value>
+
+          <app-form-label>Entity ID</app-form-label>
+          <app-form-value data-testid="partner-entity-id">
+            {{ partner.entityId }}
+          </app-form-value>
+        </div>
+      </div>
+    </app-card-content>
+  </app-card>
+</ng-container>

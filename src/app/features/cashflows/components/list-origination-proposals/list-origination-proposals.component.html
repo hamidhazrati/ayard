@@ -1,0 +1,118 @@
+<section class="list_cashflows">
+  <div class="table-toolbar"></div>
+
+  <table mat-table [dataSource]="cashflowTotals" data-testid="proposals-table">
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell *matHeaderCellDef>Seller Name</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="seller-name">
+        {{ cashflowTotal.cashflowFile.clientName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cashflowFileId">
+      <th mat-header-cell *matHeaderCellDef>Cashflow file ID</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="cashflow-file-id">
+        {{ cashflowTotal.cashflowFileId }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contractName">
+      <th mat-header-cell *matHeaderCellDef>Contract</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="contract-name">
+        {{ cashflowTotal.contractName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acceptanceDate">
+      <th mat-header-cell *matHeaderCellDef>Purchase Date</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="purchase-date">
+        {{ cashflowTotal.acceptanceDate | date: 'dd MMM y' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef>CCY</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="currency">
+        {{ cashflowTotal.currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalOriginalValue">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>Gross amount</th>
+      <td
+        mat-cell
+        class="mat-col--right"
+        *matCellDef="let cashflowTotal"
+        data-testid="gross-amount"
+      >
+        {{ cashflowTotal.totalOriginalValue | number: '1.2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalInitialFundingAmount">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>FMV amount</th>
+      <td mat-cell class="mat-col--right" *matCellDef="let cashflowTotal" data-testid="fmv-amount">
+        {{ cashflowTotal.totalInitialFundingAmount | number: '1.2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contractAdvanceRate">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>FMV rate</th>
+      <td mat-cell class="mat-col--right" *matCellDef="let cashflowTotal" data-testid="fmv-rate">
+        <div *ngIf="cashflowTotal.multipleAdvanceRate; else nonMultipleAdvanceRate">
+          Multiple
+        </div>
+        <ng-template #nonMultipleAdvanceRate>
+          {{ cashflowTotal.contractAdvanceRate }}%
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalDiscountAmount">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>Discount</th>
+      <td mat-cell class="mat-col--right" *matCellDef="let cashflowTotal" data-testid="discount">
+        {{ cashflowTotal.totalDiscountAmount | number: '1.2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contractSpread">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>Margin</th>
+      <td mat-cell class="mat-col--right" *matCellDef="let cashflowTotal" data-testid="margin">
+        <div *ngIf="cashflowTotal.multipleMargins; else nonMultipleMargins">
+          Multiple
+        </div>
+        <ng-template #nonMultipleMargins>
+          {{ cashflowTotal.contractSpread / 100 | number: '1.2' }}%
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPaymentAmount">
+      <th mat-header-cell class="mat-col--right" *matHeaderCellDef>Seller payment amount</th>
+      <td
+        mat-cell
+        class="mat-col--right"
+        *matCellDef="let cashflowTotal"
+        data-testid="seller-payment-amount"
+      >
+        {{ cashflowTotal.totalPaymentAmount | number: '1.2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let cashflowTotal" data-testid="status">
+        {{ cashflowTotal.cashflowFile.status | titlecaseFormat }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      class="mat-row--selectable"
+      mat-row
+      [attr.data-testid]="'cashflow-total-row-' + i"
+      *matRowDef="let cashflowTotal; columns: displayedColumns; let i = index"
+      [routerLink]="['/cashflows/files/' + cashflowTotal.cashflowFileId + '/proposals']"
+      [queryParams]="{ contractId: cashflowTotal.contractId, currency: cashflowTotal.currency }"
+    ></tr>
+  </table>
+</section>

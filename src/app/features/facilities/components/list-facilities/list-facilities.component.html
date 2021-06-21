@@ -1,0 +1,64 @@
+<div class="table-toolbar">
+  <div class="table-toolbar__right">
+    <a mat-flat-button routerLink="/facilities/new" data-testid="create-new-product-btn"
+      >Create new limit configuration
+    </a>
+  </div>
+</div>
+
+<table mat-table [dataSource]="facilities">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>
+      Facility
+    </th>
+    <td mat-cell data-testid="facility-name" *matCellDef="let facility">
+      {{ facility.name }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="currency">
+    <th mat-header-cell *matHeaderCellDef>
+      CCY
+    </th>
+    <td mat-cell data-testid="facility-currency" *matCellDef="let facility">
+      {{ facility.currency }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="exposure">
+    <th mat-header-cell *matHeaderCellDef>
+      Exposure
+    </th>
+    <td mat-cell data-testid="facility-exposure" *matCellDef="let facility">
+      {{ (facility.exposure | number: '0.2') || '-' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="creditLimit">
+    <th mat-header-cell *matHeaderCellDef>
+      Credit Limit
+    </th>
+    <td mat-cell data-testid="facility-limit" *matCellDef="let facility">
+      {{ (facility.creditLimit | number: '0.2') || '-' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="creditAvailable">
+    <th mat-header-cell *matHeaderCellDef>
+      Credit Available
+    </th>
+    <td
+      mat-cell
+      data-testid="facility-available"
+      *matCellDef="let facility"
+      [ngClass]="{ 'negative-number': isNegative(facility.creditResult?.available) }"
+    >
+      {{ (facility.creditAvailable | number: '0.2') || '-' }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    class="mat-row--selectable"
+    [attr.data-testid]="'facility-row-' + i"
+    *matRowDef="let row; columns: displayedColumns; let i = index"
+    [routerLink]="['/facilities/' + row.id]"
+  ></tr>
+</table>

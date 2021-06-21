@@ -1,0 +1,10 @@
+.confirm_buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
+  flex-grow: 1;
+
+  button {
+    margin-left: 8px;
+  }
+}

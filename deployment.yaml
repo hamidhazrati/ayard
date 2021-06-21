@@ -1,0 +1,83 @@
+---
+deployment:
+  common:
+    environment_variables:
+      AUTH_URL: 'https://nonprod-keycloak.organisation.gcpfidn.net/auth'
+      AUTH_REALM: ${env}
+      AUTH_CLIENT_ID: operations-portal
+  alb:
+    common:
+      sso:
+        type: authenticate-oidc
+        authorization_endpoint: https://login.microsoftonline.com/48442080-67c9-4dde-9718-feabb03fb4ad/oauth2/v2.0/authorize
+        issuer: https://login.microsoftonline.com/48442080-67c9-4dde-9718-feabb03fb4ad/v2.0
+        on_unauthenticated_request: authenticate
+        token_endpoint: https://login.microsoftonline.com/48442080-67c9-4dde-9718-feabb03fb4ad/oauth2/v2.0/token
+        user_info_endpoint: https://graph.microsoft.com/oidc/userinfo
+        scope: 'openid profile'
+      sso_secrets:
+        client_secret: /${env}/services-alb/MS_iDP_ops-portal
+    environment_overrides:
+      eu-west-1:
+        dev1:
+          frontend: true
+          sso:
+            client_id: 278d0582-599e-4de3-bf8c-219e7a1a52e9
+        dev1vice:
+          sso:
+            client_id: 558d1eae-0369-48e0-ba81-2896a2366086
+          sso_secrets:
+            client_secret: /dev1vice/services-alb/MS_iDP_ops-portal
+        qa1:
+          frontend: true
+          sso:
+            client_id: cce943e2-8ed2-4028-8edf-6a3e54d0b4cb
+            on_unauthenticated_request: allow
+        uat1:
+          frontend: true
+          sso:
+            client_id: aa4fab13-8ed3-4ca0-930a-520fc004d2a5
+        uat2:
+          sso:
+            client_id: f57b5472-35e2-41fd-b480-953ef1e74ef7
+        perf1:
+          frontend: true
+          sso:
+            client_id: 89a62adb-fe85-44c4-b425-f5c381643d3a
+        ppd1:
+          frontend: true
+          sso:
+            client_id: 91017b7d-4eb5-4c65-a3c7-0f2d30b164c2
+        prod1:
+          frontend: true
+          sso:
+            client_id: f23dae85-53fd-4be3-b1c4-2bd9cb0d2810
+  environment_overrides:
+    eu-west-1:
+      dev1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.development.gcpfidn.net
+      dev1vice:
+        environment_variables:
+          API_URL: https://dev1vice-operations-portal-bff.development.gcpfidn.net
+          AUTH_REALM: dev1vice
+      qa1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.testing.gcpfidn.net
+      uat1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.testing.gcpfidn.net
+      uat2:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.testing.gcpfidn.net
+      perf1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.testing.gcpfidn.net
+      ppd1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.production.gcpfidn.net
+          AUTH_URL: 'https://prod-keycloak.organisation.gcpfidn.net/auth'
+      prod1:
+        environment_variables:
+          API_URL: https://${env}-operations-portal-bff.production.gcpfidn.net
+          AUTH_URL: 'https://prod-keycloak.organisation.gcpfidn.net/auth'

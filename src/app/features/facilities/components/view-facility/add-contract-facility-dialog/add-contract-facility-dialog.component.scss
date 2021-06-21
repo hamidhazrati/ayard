@@ -1,0 +1,10 @@
+h2 {
+  margin: 0 0 28px;
+  font-weight: normal;
+}
+
+.dialog__actions {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 28px;
+}

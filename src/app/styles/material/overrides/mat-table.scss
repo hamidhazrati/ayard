@@ -1,0 +1,57 @@
+@import 'palette';
+
+.mat-table {
+  font: inherit;
+  width: 100%;
+  // height: 50%;
+}
+
+.mat-header-cell {
+  color: #1b1c1d;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px;
+  vertical-align: baseline;
+}
+
+.mat-row {
+  height: 38px;
+}
+
+.mat-row--group {
+  td {
+    color: $primary500;
+    background-color: $primary50;
+    font-weight: bold;
+  }
+}
+
+.mat-row--selectable {
+  &:hover {
+    cursor: pointer;
+    background-color: $supportive100;
+  }
+}
+
+.mat-cell {
+  padding: 10px;
+  vertical-align: baseline;
+}
+
+.mat-col--right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.mat-col--center {
+  text-align: center;
+}
+
+.custom-tooltip.mat-tooltip {
+  white-space: pre-line;
+  background-color: $primary50;
+  color: $primary500;
+  max-width: unset;
+  border: 1px solid $primary500;
+  font-size: 1rem;
+}

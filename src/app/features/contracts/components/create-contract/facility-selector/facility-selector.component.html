@@ -1,0 +1,50 @@
+<div>
+  <app-form-label [for]="inputId + '-facility-relationship'">Relationship </app-form-label>
+  <mat-form-field appearance="outline">
+    <mat-select
+      [id]="inputId + '-facility-relationship'"
+      data-testid="relationship"
+      placeholder="Select a relationship"
+      [formControl]="form.controls.relationship"
+    >
+
+    <mat-option [value]="null">
+      <span class="mat-select-placeholder">Select</span>
+    </mat-option>
+
+    <mat-option
+        *ngFor="let relationship of relationships | async"
+        [value]="relationship"
+        data-testid="relationship-option"
+        >{{ relationship.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error
+    label="Relationship facility"
+    [control]="form.controls.relationship"
+  ></app-form-error>
+</div>
+
+<div *ngIf="form.value.relationship">
+  <app-form-label [for]="inputId + '-facility-facility'">Facility</app-form-label>
+
+  <mat-form-field appearance="outline">
+    <mat-select
+      [id]="inputId + '-facility-facility'"
+      data-testid="facility"
+      placeholder="Select a facility"
+      [formControl]="form.controls.facility"
+    >
+      <mat-option
+        *ngFor="let facility of form.value.relationship.facilities"
+        [value]="facility"
+        data-testid="facility-option"
+        >{{ facility.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error label="Facility name" [control]="form.controls.facility"></app-form-error>
+</div>

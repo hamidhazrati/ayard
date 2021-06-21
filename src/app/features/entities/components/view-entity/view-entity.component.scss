@@ -1,0 +1,36 @@
+@import 'palette';
+
+.header-card {
+  border: 1px solid black;
+}
+
+.capsule {
+  align-items: center;
+  border-radius: 16px;
+  cursor: default;
+  display: inline-flex;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  height: 1px;
+  margin-left: 10px;
+  min-height: 32px;
+  padding: 7px 12px;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--active {
+    background: #b0e2cf;
+  }
+
+  &--awaiting {
+    background: #feeeb9;
+  }
+}
+
+.btn-history {
+  float: right;
+}
+
+.snackbar {
+  background: $primary900;
+}

@@ -1,0 +1,15 @@
+<main>
+  <app-header></app-header>
+  <div [class.body-grid]="useBodyGrid">
+    <div></div>
+    <div class="body-wrapper__center">
+      <app-navigation></app-navigation>
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <app-footer></app-footer>
+  <app-help></app-help>
+</main>

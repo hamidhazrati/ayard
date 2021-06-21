@@ -1,0 +1,22 @@
+
+:host ::ng-deep .data-table__toolbar.ng-star-inserted {
+    margin: 0;
+    background: white;
+    position: absolute;
+    top: 116px;
+    border: solid lightgray 1px;
+    margin-left: 16px;
+    border-radius: 5px;
+    padding: 0;
+}
+
+:host ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-left: .50em;
+  padding-top: .50em;
+}
+
+
+:host ::ng-deep .data-table__toolbar-action-area.ng-star-inserted {
+  min-height: 0;
+  height: 0;
+}

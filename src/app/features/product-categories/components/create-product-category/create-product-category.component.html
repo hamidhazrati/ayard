@@ -1,0 +1,12 @@
+<div class="main-div">
+  <mat-card class="mat-card">
+    <mat-card-header>
+      <mat-card-title data-testid="page-title">Create a New Product Category</mat-card-title>
+    </mat-card-header>
+
+    <app-create-product-category-form
+      (save)="this.handleSubmit($event)"
+      [serverError]="this.serverError"
+    ></app-create-product-category-form>
+  </mat-card>
+</div>

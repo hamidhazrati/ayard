@@ -1,0 +1,54 @@
+<fieldset>
+  <app-form-label
+    matTooltipPosition="right"
+    matTooltip="Product Category"
+    [for]="inputId + '-product-category'"
+    [required]="true"
+    >Product Category
+  </app-form-label>
+  <mat-form-field appearance="outline">
+    <mat-select
+      [id]="inputId + '-product-category'"
+      data-testid="category"
+      placeholder="Select a category"
+      [formControl]="form.controls.category"
+    >
+      <mat-option
+        *ngFor="let category of categories"
+        [value]="category"
+        data-testid="category-option"
+        >{{ category.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error label="Product category" [control]="form.controls.category"></app-form-error>
+</fieldset>
+
+<fieldset *ngIf="form.value.category">
+  <app-form-label
+    matTooltipPosition="right"
+    matTooltip="The name of the Sub-product"
+    [for]="inputId + '-product-name'"
+    [required]="true"
+    >Product Name</app-form-label
+  >
+
+  <mat-form-field appearance="outline">
+    <mat-select
+      [id]="inputId + '-product-name'"
+      data-testid="product"
+      placeholder="Select a product"
+      [formControl]="form.controls.product"
+    >
+      <mat-option
+        *ngFor="let product of form.value.category.products"
+        [value]="product"
+        data-testid="product-option"
+        >{{ product.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error label="Product name" [control]="form.controls.product"></app-form-error>
+</fieldset>

@@ -1,0 +1,125 @@
+<table mat-table [dataSource]="counterparties">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell class="counterparty-list-column-name" *matCellDef="let cp">
+      {{ cp.name }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reference">
+    <th mat-header-cell *matHeaderCellDef>Reference</th>
+    <td mat-cell *matCellDef="let cp" class="counterparty-list-column-reference">
+      <span>{{ cp.counterpartyReference }}</span>
+      <div *ngIf="cp.references?.length > 0">
+        <div *ngFor="let reference of cp.references">{{ reference }}</div>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="exceptions">
+    <th mat-header-cell *matHeaderCellDef>Exceptions</th>
+    <td mat-cell *matCellDef="let cp">
+      <ul *ngIf="cp.exceptions?.length > 0">
+        <li *ngFor="let e of cp.exceptions">{{ e.message }}</li>
+      </ul>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="margin">
+    <th mat-header-cell *matHeaderCellDef>Margin rate (BPS)</th>
+    <td mat-cell *matCellDef="let cp">
+      {{ cp.marginRate }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td
+      class="counterparty-list-column-status"
+      mat-cell
+      *matCellDef="let cp"
+      [ngSwitch]="cp.verificationStatus"
+      matTooltipPosition="left"
+      [matTooltip]="cp.verificationStatus"
+    >
+      <mat-icon color="primary" *ngSwitchCase="'ACTIVE'">play_circle_filled</mat-icon>
+      <mat-icon color="error" *ngSwitchCase="'INACTIVE'">stop_circle</mat-icon>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="options">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td class="counterparty-list-column-actions" mat-cell *matCellDef="let cp">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        [matTooltip]="'More Options'"
+        data-testid="test-data-elipse"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" data-testid="test-data-elipse-menu">
+        <button mat-menu-item (click)="copyToClipboard(cp)">
+          <span>Copy counterparty Id to clipboard</span>
+        </button>
+        <button
+          mat-menu-item
+          data-testid="test-ManageBankDetailsOptionButton"
+          *ngIf="hasCurrenciesInContract()"
+          (click)="cp.contract = contract; onAction('manageBankDetails', cp)"
+        >
+          <span>Manage bank details</span>
+        </button>
+        <button mat-menu-item (click)="onAction('editReferences', cp)">
+          <span>Edit References</span>
+        </button>
+        <button mat-menu-item *ngIf="!isActive" (click)="onAction('deleteCounterparty', cp)">
+          <span>Delete counterparty </span>
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="!isActive"
+          (click)="cp.contract = contract; onAction('setMargin', cp)"
+        >
+          <span>Manage custom rates </span>
+        </button>
+
+        <span
+          [matTooltipPosition]="'left'"
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipDisabled]="hasFacilityWriteAccess"
+        >
+          <button
+            *ngIf="canAddLimit(cp)"
+            [matTooltip]="invalidPermissionMsg"
+            [matTooltipDisabled]="hasFacilityWriteAccess"
+            [disabled]="!hasFacilityWriteAccess"
+            mat-menu-item
+            (click)="onAction('addLimit', cp)"
+          >
+            <span>Add limit</span>
+          </button>
+        </span>
+
+        <span
+          [matTooltipPosition]="'left'"
+          [matTooltip]="invalidPermissionMsg"
+          [matTooltipDisabled]="hasFacilityWriteAccess"
+        >
+          <button
+            *ngIf="canCreditApprove(cp)"
+            [disabled]="!hasFacilityWriteAccess"
+            mat-menu-item
+            (click)="onAction('creditApprove', cp)"
+          >
+            <span>Credit Approval</span>
+          </button>
+        </span>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayColumns; let i = index"></tr>
+</table>

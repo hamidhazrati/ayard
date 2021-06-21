@@ -1,0 +1,17 @@
+// align with gds styles due to global styles clashing
+.data-table {
+  a {
+    color: inherit;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .datatable-header-cell-wrapper,
+  b {
+    font-weight: 600;
+  }
+}
+// align with gds styles due to global styles clashing

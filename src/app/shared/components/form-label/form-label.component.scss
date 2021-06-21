@@ -1,0 +1,11 @@
+@import 'palette';
+
+label {
+  color: $grey500;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.required-marker {
+  color: $alert900;
+}

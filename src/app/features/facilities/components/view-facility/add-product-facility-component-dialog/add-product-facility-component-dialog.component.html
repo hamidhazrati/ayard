@@ -1,0 +1,48 @@
+<form
+  [formGroup]="form"
+  autocomplete="off"
+  class="form dialog"
+  novalidate
+  (ngSubmit)="handleSave()"
+>
+  <div class="dialog__title"><h2>Add product</h2></div>
+
+  <div class="dialog__content">
+    <div class="row--no-padding">
+      <app-product-selector
+        class="col-12"
+        [formControl]="form.controls.categoryAndProduct"
+      ></app-product-selector>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-form-label [for]="'credit-limit'">
+          Credit limit
+        </app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            id="credit-limit"
+            matInput
+            data-testid="name"
+            [formControl]="form.controls.creditLimit"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Credit limit"
+          [control]="form.controls.creditLimit"
+          data-testid="credit-limit-error"
+        >
+        </app-form-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog__actions">
+    <button mat-flat-button color="primary" data-testid="save" type="submit">
+      Add product
+    </button>
+
+    <button mat-button data-testid="cancel" (click)="handleCancel()" type="button">Cancel</button>
+  </div>
+</form>

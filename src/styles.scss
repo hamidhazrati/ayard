@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'palette';
+@import 'common';
+@import 'material/overrides';
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600&display=swap');
+@import 'gds-styles/ngx-data-table/theme';
+@import 'data-table';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 14px;
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: $supportive800;
+  margin: 0;
+  height: 100%;
+  background: $supportive100;
+}

@@ -1,0 +1,34 @@
+:host ::ng-deep .form-value {
+  padding-top: 0;
+  height: inherit;
+}
+
+:host ::ng-deep .form-value:first {
+  padding-top: 10px;
+  height: inherit;
+}
+
+:host ::ng-deep .form-value:last-child {
+  padding-bottom: 0;
+  height: inherit;
+}
+
+.currency-card__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.currency-card__actions {
+  .mat-icon-button {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .mat-icon {
+    font-size: 18px;
+    line-height: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}

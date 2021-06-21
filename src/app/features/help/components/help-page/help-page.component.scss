@@ -1,0 +1,85 @@
+@use './../../help.component.scss'as *;
+@use 'gds-styles/utils/typography';
+@import 'palette';
+
+$iconSize: 16px;
+
+@mixin icon-bg($name) {
+  .icon--#{$name} {
+    background-image: url('/assets/help/icons/icon-#{$name}.svg');
+  }
+}
+
+.accordions {
+  margin: 0 #{-$contentOffsetRight} #{-$contentOffsetTop};
+}
+
+.markdown-wrapper {
+  font-size: 14px;
+
+  ::ng-deep {
+    h1 {
+      @extend %headline-5;
+    }
+
+    h2 {
+      @extend %headline-6;
+    }
+
+    h3 {
+      @extend %subtitle-1;
+    }
+
+    img {
+      cursor: pointer;
+      max-width: 100%;
+      border: 1px solid $supportive300;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    a {
+      @extend %body-1;
+
+      color: $primary800;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .icon {
+      display: inline-block;
+      width: $iconSize;
+      height: $iconSize;
+      transform: translateY(3px);
+      margin: 0 4px;
+    }
+
+    table td {
+      vertical-align: top;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+
+    blockquote {
+      border-left: 5px solid $supportive300;
+      background: $supportive50;
+      padding: 5px 10px;
+    }
+
+    @include icon-bg('external-link');
+    @include icon-bg('csv');
+    @include icon-bg('json');
+    @include icon-bg('pdf');
+    @include icon-bg('tiff');
+    @include icon-bg('word');
+    @include icon-bg('xls');
+    @include icon-bg('zip');
+  }
+}

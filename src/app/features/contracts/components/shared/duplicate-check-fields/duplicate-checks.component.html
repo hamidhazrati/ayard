@@ -1,0 +1,36 @@
+<app-form-label matTooltipPosition="right" matTooltip="Perform duplicate check"
+  >Perform duplicate check</app-form-label
+>
+<br />
+<mat-checkbox
+  color="primary"
+  data-testid="perform-duplicate-check-cb"
+  [checked]="duplicateInvoiceCheckEnabled"
+  (change)="toggleDuplicateCheck()"
+  [disabled]="readonly"
+></mat-checkbox>
+
+<mat-form-field>
+  <mat-select
+    data-testid="duplicate-check-fields-multiple-selector"
+    multiple
+    name="duplicate-check-fields-multiple-selector"
+    [formControl]="selectedChecksControl"
+    placeholder="Invoice duplicate check parameters"
+    [disabled]="readonly || !duplicateInvoiceCheckEnabled"
+  >
+    <mat-option
+      *ngFor="let duplicateCheckField of allDuplicateCheckFieldsData"
+      data-testid="duplicate-check-fields-multiple-selector-option"
+      [value]="duplicateCheckField.hashExpression"
+    >
+      {{ duplicateCheckField.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<app-form-error
+  label="Invoice duplicate check parameters"
+  [control]="selectedChecksControl"
+  data-testid="selected-checks-error"
+></app-form-error>

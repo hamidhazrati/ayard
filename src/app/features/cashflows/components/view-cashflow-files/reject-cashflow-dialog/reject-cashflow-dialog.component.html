@@ -1,0 +1,34 @@
+<form [formGroup]="form" autocomplete="off" class="dialog__form">
+  <div class="dialog">
+    <div class="dialog__title">
+      <h2>Reject cashflow file</h2>
+    </div>
+    <div class="dialog__content">
+      <app-form-label>Enter reason for rejecting file</app-form-label>
+      <mat-form-field appearance="outline">
+        <textarea
+          matInput
+          rows="7"
+          data-testid="reason"
+          [formControl]="form.controls.reason"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="dialog__error">
+      <mat-error data-testid="server-error">{{ serverError }}</mat-error>
+    </div>
+    <div class="dialog__actions1">
+      <button
+        mat-flat-button
+        [disabled]="!form.valid"
+        (click)="rejectFile()"
+        data-testid="rejectFile"
+      >
+        Reject File
+      </button>
+    </div>
+    <div class="dialog__actions2">
+      <button mat-button data-testid="cancel" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</form>

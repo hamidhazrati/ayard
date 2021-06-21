@@ -1,0 +1,21 @@
+/*
+ * Centers the body with spacing on left and right
+ * When not used, page is full width
+ */
+
+.body-grid {
+  display: grid;
+  grid-template-columns: auto minmax(1024px, 1460px) auto;
+  grid-template-rows: auto;
+  height: 100%;
+}
+
+.body-wrapper__center {
+  min-width: 1024px;
+}
+
+.content-wrapper {
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 42px;
+}

@@ -1,0 +1,109 @@
+<div>
+  <div class="row" *ngIf="isContractRuleEditable">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div *ngIf="!isEditingRules" class="ruleEditButtons">
+        <button
+          mat-stroked-button
+          matTooltip="Edit Rule"
+          color="primary"
+          type="button"
+          (click)="isEditingRules = true; isEditingRules = true"
+        >
+          Edit
+        </button>
+      </div>
+      <div *ngIf="isEditingRules" class="ruleEditButtons">
+        <button
+          mat-stroked-button
+          matTooltip="Edit Rule"
+          color="primary"
+          type="button"
+          (click)="cancelRuleChanges()"
+        >
+          Cancel
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button
+          mat-flat-button
+          matTooltip="Update Rule"
+          color="primary"
+          type="button"
+          (click)="updateRule()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <app-form-label>Match Expression</app-form-label>
+      <pre data-testid="rule-match-expression">{{ rule.matchExpression || '&nbsp;' }}</pre>
+    </div>
+
+    <div class="col-12">
+      <app-form-label>Expression</app-form-label>
+      <pre data-testid="rule-expression">{{ rule.expression }}</pre>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <app-form-label>Code</app-form-label>
+      <app-form-value data-testid="rule-code">
+        {{ rule.code }}
+      </app-form-value>
+    </div>
+    <div class="col-6">
+      <app-form-label>Message</app-form-label>
+      <app-form-value data-testid="rule-message">
+        {{ rule.message }}
+      </app-form-value>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <app-form-label>Outcome</app-form-label>
+      <app-form-value data-testid="rule-outcome">
+        {{ rule.outcomeType }}
+      </app-form-value>
+    </div>
+    <div class="col-6">
+      <app-form-label>Outcome Description</app-form-label>
+      <app-form-value data-testid="rule-outcomeDescription">
+        {{ rule.outcomeDescription }}
+      </app-form-value>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-3">
+      <app-form-label>
+        Exception Handling
+      </app-form-label>
+      <app-form-value>
+        <div *ngIf="isEditingRules; else notEditingRules">
+          <mat-select
+            matTooltip="Select if the exception will be handled internally or externally to Greensill."
+            [disabled]="!isContractRuleEditable"
+            [(value)]="rule.resolutionType"
+            name="resolutionType"
+          >
+            <mat-option *ngFor="let resType of resolutionTypeEnum | keyvalue" [value]="resType.key">
+              {{ resType.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error class="mat-errors mat-error" *ngIf="this.updateError">
+            {{ this.updateError }}
+          </mat-error>
+        </div>
+        <ng-template #notEditingRules>
+          {{ resolutionTypeEnum[rule.resolutionType] }}
+        </ng-template>
+      </app-form-value>
+    </div>
+  </div>
+</div>

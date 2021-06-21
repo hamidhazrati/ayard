@@ -1,0 +1,12 @@
+<div class="main-div" #sideBarContainer>
+  <app-card>
+    <app-card-title data-testid="page-title">Create a New Product</app-card-title>
+    <app-card-content>
+      <app-create-product-form
+        [sideBarContainerRef]="sideBarContainerRef"
+        [serverError]="this.serverError"
+        (save)="this.handleSubmit($event)"
+      ></app-create-product-form>
+    </app-card-content>
+  </app-card>
+</div>

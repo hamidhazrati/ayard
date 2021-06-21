@@ -1,0 +1,50 @@
+<form class="form">
+  <div class="row--no-padding">
+    <div class="col-12">
+      <app-form-label>Entity</app-form-label>
+
+      <app-entity-selector
+        [formControl]="form.controls.entity"
+        attr.data-testid="counterparty-entity"
+      ></app-entity-selector>
+    </div>
+
+    <app-form-error label="Entity" [control]="form.controls.entity"></app-form-error>
+  </div>
+
+  <div>
+    <app-form-label>Name</app-form-label>
+
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        attr.data-testid="counterparty-name"
+        [formControl]="form.controls.name"
+        type="text"
+      />
+    </mat-form-field>
+
+    <app-form-error label="Name" [control]="form.controls.name"></app-form-error>
+  </div>
+
+  <div>
+    <app-form-label>Primary Reference</app-form-label>
+
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        attr.data-testid="counterparty-reference"
+        [formControl]="form.controls.reference"
+        type="text"
+      />
+    </mat-form-field>
+
+    <app-form-error label="Reference" [control]="form.controls.reference"></app-form-error>
+  </div>
+
+  <div>
+    <app-form-label>Alt Reference(s)</app-form-label>
+
+    <app-list-input [formControl]="form.controls.references"></app-list-input>
+  </div>
+</form>

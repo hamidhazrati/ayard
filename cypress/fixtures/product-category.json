@@ -1,0 +1,47 @@
+[
+  {
+    "id": "CAT A",
+    "name": "Product Category A",
+    "status": "ACTIVE",
+    "description": null,
+    "guideLink": null,
+    "products": [
+      {
+        "id": "2",
+        "productCategoryId": "CAT A",
+        "name": "Product A 1",
+        "status": "ACTIVE",
+        "description": "Product A 1 Desc",
+        "productGuideLink": null,
+        "counterpartyRoles": []
+      }
+    ]
+  },
+  {
+    "id": "CAT B",
+    "name": "Product Category B",
+    "status": "ACTIVE",
+    "description": null,
+    "guideLink": null,
+    "products": [
+      {
+        "id": "2",
+        "productCategoryId": "CAT B",
+        "name": "Product B 1",
+        "status": "ACTIVE",
+        "description": "Product B 1 Desc",
+        "productGuideLink": null,
+        "counterpartyRoles": []
+      },
+      {
+        "id": "3",
+        "productCategoryId": "CAT B",
+        "name": "Product B 2",
+        "status": "ACTIVE",
+        "description": "Product B 2 Desc",
+        "productGuideLink": null,
+        "counterpartyRoles": []
+      }
+    ]
+  }
+]

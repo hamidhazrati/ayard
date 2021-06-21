@@ -1,0 +1,49 @@
+<section>
+  <div class="table-toolbar">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        data-testid="search-input"
+        type="text"
+        placeholder="Search counterparty roles"
+        [ngModel]="searchValue"
+        (ngModelChange)="checkSearchField($event)"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+
+    <div class="table-toolbar__right">
+      <a
+        mat-flat-button
+        routerLink="/counterparty-roles/new"
+        data-testid="create-new-counterparty-role-btn"
+        >Create new counterparty role</a
+      >
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="counterpartyRoles">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Counterparty Role</th>
+      <td mat-cell data-testid="crt-name" *matCellDef="let counterpartyRole">
+        {{ counterpartyRole.name }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell data-testid="crt-description" *matCellDef="let counterpartyRole">
+        {{ counterpartyRole.description }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      [attr.data-testid]="'counterparty-role-row-' + i"
+      class="mat-row--selectable"
+      *matRowDef="let row; columns: displayedColumns; let i = index"
+      [routerLink]="['/counterparty-roles/' + row.id]"
+    ></tr>
+  </table>
+</section>

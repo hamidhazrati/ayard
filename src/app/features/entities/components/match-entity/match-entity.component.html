@@ -1,0 +1,25 @@
+<div>
+  <form [formGroup]="form">
+    <app-form-label [required]="true">Enter Match Request ID</app-form-label>
+    <br />
+    <mat-form-field appearance="outline">
+      <input autocomplete="off" matInput data-testid="match-request-id" formControlName="id" />
+    </mat-form-field>
+    <br />
+    <button
+      mat-flat-button
+      (click)="onClick()"
+      data-testid="match-entities"
+      [disabled]="form.invalid"
+    >
+      Match Entities
+    </button>
+  </form>
+
+  <ng-container *ngIf="selectedEntityId">
+    <p>
+      <strong>Selected entity id:</strong>
+      {{ selectedEntityId }}
+    </p>
+  </ng-container>
+</div>

@@ -1,0 +1,61 @@
+<section>
+  <app-card>
+    <app-card-title data-testid="page-title">Create new partner</app-card-title>
+    <app-card-content>
+      <form [formGroup]="form" class="form" (ngSubmit)="createPartner()">
+        <mat-error data-testid="server-error">{{ serverError }}</mat-error>
+
+        <app-form-label required="true">Partner Identifier</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            id="partnerId"
+            data-testid="partner-id"
+            name="partnerId"
+            [formControl]="form.controls.partnerId"
+            type="text"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Partner Identifier"
+          [control]="form.controls.partnerId"
+          [messages]="errors"
+        ></app-form-error>
+        <app-form-label required="true">Partner name</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            id="name"
+            data-testid="partner-name"
+            name="name"
+            [formControl]="form.controls.name"
+            type="text"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Partner name"
+          [control]="form.controls.name"
+          [messages]="errors"
+        ></app-form-error>
+        <div class="partner-entity-selector">
+          <app-form-label required="true"
+            >Select entity to be assigned role of partner
+          </app-form-label>
+          <app-entity-selector [formControl]="this.form.controls.entity"> </app-entity-selector>
+          <mat-error
+            class="mat-errors"
+            *ngIf="form.controls.entity.touched && form.controls.entity.invalid"
+          >
+            Valid Entity Required
+          </mat-error>
+        </div>
+        <button mat-flat-button color="primary" data-testid="partner-submit" type="submit">
+          Create Partner
+        </button>
+        <button mat-button color="primary" (click)="cancel()">
+          Cancel
+        </button>
+      </form>
+    </app-card-content>
+  </app-card>
+</section>

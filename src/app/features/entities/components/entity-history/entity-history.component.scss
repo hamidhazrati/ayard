@@ -1,0 +1,8 @@
+@import './../styles/palette';
+
+.history {
+  &__title {
+    border-bottom: 1px solid $grey500;
+    padding: 10px;
+  }
+}

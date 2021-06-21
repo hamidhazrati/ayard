@@ -1,0 +1,13 @@
+<section class="facility">
+  <div class="facility__tree">
+    <app-facility-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      (whenSelected)="onSelected($event)"
+    ></app-facility-tree>
+  </div>
+
+  <div class="facility__view">
+    <app-facility-tree-view [facility]="facility"></app-facility-tree-view>
+  </div>
+</section>

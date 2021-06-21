@@ -1,0 +1,29 @@
+[
+  {
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityId": "456def",
+    "contractId": "the-contract-id1",
+    "facilityId": "the-facility-id",
+    "currency": "USD",
+    "limit": 10000,
+    "exposure": 8000
+  },
+  {
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityId": "123abc1",
+    "contractId": "the-contract-id1",
+    "facilityId": "the-facility-id",
+    "currency": "USD",
+    "limit": 10000,
+    "exposure": 8000
+  },
+  {
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "entityId": "456def",
+    "contractId": "the-contract-id1",
+    "facilityId": "the-facility-id",
+    "currency": "GBP",
+    "limit": 10000,
+    "exposure": 8000
+  }
+]

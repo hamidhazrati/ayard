@@ -1,0 +1,72 @@
+<table mat-table [dataSource]="cashflowSummaries" class="mat-elevation-z8">
+  <ng-container matColumnDef="entityOne">
+    <th mat-header-cell *matHeaderCellDef>Counterparty (Role - Name)</th>
+    <td mat-cell *matCellDef="let cashflow">
+      <p class="table__text">{{ cashflow.entityOne?.name }}</p>
+      <p class="table__text table__text--gray">{{ cashflow.entityOne?.role }}</p>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="entityTwo">
+    <th mat-header-cell *matHeaderCellDef>Counterparty (Role - Name)</th>
+    <td mat-cell *matCellDef="let cashflow">
+      <p class="table__text">{{ cashflow.entityTwo?.name }}</p>
+      <p class="table__text table__text--gray">{{ cashflow.entityTwo?.role }}</p>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="invoiceId">
+    <th mat-header-cell *matHeaderCellDef>Invoice Id</th>
+    <td mat-cell *matCellDef="let cashflow">{{ cashflow.documentReference }}</td>
+  </ng-container>
+  <ng-container matColumnDef="issueDate">
+    <th mat-header-cell *matHeaderCellDef>Issue Date</th>
+    <td mat-cell *matCellDef="let cashflow">{{ cashflow.issueDate | date: 'dd MMM yyyy' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="dueDate">
+    <th mat-header-cell *matHeaderCellDef>Due Date</th>
+    <td mat-cell *matCellDef="let cashflow">
+      {{ cashflow.originalDueDate | date: 'dd MMM yyyy' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="CCY">
+    <th mat-header-cell *matHeaderCellDef>CCY</th>
+    <td mat-cell *matCellDef="let cashflow">{{ cashflow.currency }}</td>
+  </ng-container>
+  <ng-container matColumnDef="invoiceAmount">
+    <th mat-header-cell *matHeaderCellDef class="mat-col--right">Invoice Amount</th>
+    <td mat-cell *matCellDef="let cashflow" class="mat-col--right">
+      {{ cashflow.originalValue | number: '1.2' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="fmvAmount">
+    <th mat-header-cell *matHeaderCellDef class="mat-col--right">Fmv Amount</th>
+    <td mat-cell *matCellDef="let cashflow" class="mat-col--right">
+      {{ cashflow.fundingAmount | number: '1.2' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="expectedPaymentDate">
+    <th mat-header-cell *matHeaderCellDef>Expected Payment Date</th>
+    <td mat-cell *matCellDef="let cashflow">
+      {{ cashflow.maturityDate | date: 'dd MMM yyyy' }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="invalidReason">
+    <th mat-header-cell *matHeaderCellDef>Invalid Reason</th>
+    <td mat-cell *matCellDef="let cashflow">
+      <div *ngIf="cashflow.reasonForFailure.length == 0">Unknown</div>
+      <div *ngIf="cashflow.reasonForFailure.length == 1">
+        {{ cashflow.reasonForFailure[0].message }}
+      </div>
+      <div *ngIf="cashflow.reasonForFailure.length > 1">
+        <div matTooltipClass="custom-tooltip" [matTooltip]="getFailureMessageTooltip(cashflow)">
+          <u>{{ cashflow.reasonForFailure.length }} failures</u>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr
+    mat-row
+    [attr.data-testid]="'cashflows-row-' + i"
+    *matRowDef="let row; columns: columnsToDisplay; let i = index"
+  ></tr>
+</table>

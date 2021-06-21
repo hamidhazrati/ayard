@@ -1,0 +1,220 @@
+<form [formGroup]="form" autocomplete="off" class="form">
+  <div class="row">
+    <fieldset class="col-4">
+      <fieldset>
+        <app-form-label required="true">Status</app-form-label>
+        <mat-form-field appearance="outline">
+          <mat-select
+            id="productStatusSelect"
+            [formControl]="form.controls.status"
+            placeholder="Select a status"
+            panelClass="selector-position"
+            data-testid="product-status-select"
+          >
+            <mat-option
+              *ngFor="let status of productConstants.productStatuses"
+              [value]="status.code"
+              data-testid="product-status-select-option"
+              >{{ status.description }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <app-form-error label="Status" [control]="form.controls.status"></app-form-error>
+      </fieldset>
+
+      <fieldset>
+        <app-form-label required="true">Product category</app-form-label>
+        <mat-form-field appearance="outline">
+          <mat-select
+            id="product-category-select"
+            data-testid="product-category-select"
+            placeholder="Select a category"
+            [formControl]="form.controls.productCategoryId"
+          >
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.id"
+              data-testid="product-category-select-option"
+              >{{ category.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <app-form-error
+          label="Product category"
+          data-testid="product-category-error"
+          [control]="form.controls.productCategoryId"
+        ></app-form-error>
+      </fieldset>
+
+      <fieldset>
+        <app-form-label required="true">Product name</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            id="name"
+            data-testid="product-name"
+            name="name"
+            [formControl]="form.controls.name"
+            type="text"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Product name"
+          data-testid="product-name-error"
+          [control]="form.controls.name"
+          [messages]="errors"
+        ></app-form-error>
+      </fieldset>
+
+      <fieldset>
+        <app-form-label required="true">Product description</app-form-label>
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            id="description"
+            data-testid="product-description-textarea"
+            name="description"
+            [formControl]="form.controls.description"
+          ></textarea>
+        </mat-form-field>
+        <app-form-error
+          label="Product description"
+          data-testid="product-description-error"
+          [control]="form.controls.description"
+        ></app-form-error>
+      </fieldset>
+
+      <fieldset>
+        <app-form-label>Product guide link</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="Enter URL to product guide document"
+            id="product-guide-link"
+            data-testid="product-guide-link"
+            name="productGuideLink"
+            [formControl]="form.controls.productGuideLink"
+            type="text"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Product guide Link"
+          [control]="form.controls.productGuideLink"
+        ></app-form-error>
+      </fieldset>
+    </fieldset>
+  </div>
+
+  <div class="row">
+    <mat-tab-group class="col-8 mat-tab-group">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span data-testid="counterparty-roles-tab">Counterparty roles</span>
+        </ng-template>
+
+        <mat-list data-testid="product-counterparties-list">
+          <mat-list-item
+            *ngFor="let counterpartyRole of this.form.value.counterpartyRoles; let i = index"
+          >
+            <button
+              mat-icon-button
+              matTooltip="Mandatory"
+              color="primary"
+              class="mandatory-icon"
+              data-testid="product-counterparty-mandatory"
+              *ngIf="counterpartyRole.required"
+            >
+              <mat-icon>star</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Not mandatory"
+              color="primary"
+              class="mandatory-icon"
+              data-testid="product-counterparty-not-mandatory"
+              *ngIf="!counterpartyRole.required"
+            >
+              <mat-icon>star_outline</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Delete"
+              color="warn"
+              (click)="this.form.controls.counterpartyRoles.removeAt(i)"
+              type="button"
+              data-testid="product-counterparty-delete"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            {{ counterpartyRole.name }}
+          </mat-list-item>
+        </mat-list>
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="this.addNewCounterpartyRole()"
+          data-testid="add-counterpartyrole-button"
+        >
+          Add counterparty role
+        </button>
+      </mat-tab>
+      <mat-tab>
+        <!--Rules-->
+        <ng-template mat-tab-label>
+          <span data-testid="rules-tab">Rules</span>
+        </ng-template>
+
+        <mat-list data-testid="product-rules-list">
+          <mat-list-item *ngFor="let rule of this.form.value.rules; let i = index">
+            <button
+              mat-icon-button
+              matTooltip="Edit"
+              color="primary"
+              (click)="editRule(rule)"
+              type="button"
+              data-testid="product-rule-edit"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Delete"
+              color="warn"
+              (click)="deleteRule(rule)"
+              type="button"
+              data-testid="product-rule-edit"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            {{ rule.name }}
+          </mat-list-item>
+        </mat-list>
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="this.addNewRule()"
+          data-testid="add-rule-button"
+        >
+          Add rule
+        </button>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <button mat-flat-button (click)="handleSave()" data-testid="save">
+    Save
+  </button>
+  <a mat-button routerLink="/products" data-testid="cancel">Cancel</a>
+</form>
+<mat-error data-testid="server-error" *ngFor="let detail of serverError?.details">
+  <p>
+    <strong>
+      {{serverError.title}}
+    </strong>
+    <span>
+      - {{detail.description}}
+    </span>
+  </p>
+</mat-error>

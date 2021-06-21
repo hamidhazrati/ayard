@@ -1,0 +1,22 @@
+<ng-container *ngTemplateOutlet="markdown; context: { url: url }"></ng-container>
+
+<div class="accordions" *ngIf="nestedItems?.length > 0">
+  <mat-accordion displayMode="flat">
+    <mat-expansion-panel *ngFor="let item of nestedItems">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ item.title }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ng-container *ngTemplateOutlet="markdown; context: { url: item.path }"></ng-container>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<ng-template #markdown let-url="url">
+  <div class="markdown-wrapper" (click)="onClick($event)">
+    <markdown [src]="url"></markdown>
+  </div>
+</ng-template>

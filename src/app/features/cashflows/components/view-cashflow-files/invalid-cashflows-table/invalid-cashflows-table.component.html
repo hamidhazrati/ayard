@@ -1,0 +1,14 @@
+<div class="p-20" *ngIf="hasUnprocessedCashflows">
+  <mat-spinner diameter="100"></mat-spinner>
+</div>
+
+<gds-data-table
+  *ngIf="!hasUnprocessedCashflows"
+  [columns]="columns"
+  [defaultSorts]="defaultSorts"
+  [enablePagination]="false"
+  [paginationMeta]="paginationMeta"
+  [rows]="cashflows"
+  [showExportButton]="false"
+  [showRowSelect]="false"
+></gds-data-table>

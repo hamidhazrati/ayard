@@ -1,0 +1,50 @@
+@import 'content-common';
+
+.facility-tree-invisible {
+  display: none;
+}
+
+.facility-tree .unordered-list,
+.facility-tree .list-item {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.facility-tree {
+  .unordered-list {
+    padding: 0 20px;
+  }
+
+  .list-item {
+    display: list-item;
+    text-align: -webkit-match-parent;
+  }
+}
+
+.content {
+  padding: 5px 20px;
+  .title button {
+    float: right;
+    position: relative;
+    top: -10px;
+  }
+}
+
+.gs-btn {
+  color: $primary500;
+}
+
+.gs-folder {
+  color: $primary500;
+  font-weight: bold;
+}
+
+.expanded {
+  color: $grey800;
+  font-weight: normal;
+}
+
+.level1 {
+  color: $grey900;
+}

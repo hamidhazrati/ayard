@@ -1,0 +1,130 @@
+<section class="page-body">
+  <app-card>
+    <app-card-title data-testid="page-title">Create a New Contract</app-card-title>
+    <app-card-content>
+      <form
+        id="create-contract-form"
+        [formGroup]="form"
+        autocomplete="off"
+        class="form"
+        novalidate
+        (ngSubmit)="saveContract()"
+      >
+        <div class="row--no-padding">
+          <app-product-selector
+            matTooltipPosition="right"
+            tooltip="Product Category"
+            class="col-6"
+            [formControl]="form.controls.categoryAndProduct"
+          ></app-product-selector>
+        </div>
+
+        <div class="row--no-padding" *ngIf="form.value?.categoryAndProduct?.product">
+          <app-contract-fields class="col-6" data-testid="contract-fields"></app-contract-fields>
+        </div>
+
+        <div
+          class="row--no-padding"
+          *ngIf="form.value?.categoryAndProduct?.product?.counterpartyRoles.length"
+          data-testid="counterparty-roles"
+        >
+          <div class="col-6">
+            <h2>Counterparties</h2>
+
+            <app-counterparty-form
+              *ngFor="
+                let productCounterpartyRole of form.value?.categoryAndProduct.product
+                  .counterpartyRoles;
+                let productCounterpartyRoleIndex = index
+              "
+              [productCounterpartyRole]="productCounterpartyRole"
+              [index]="productCounterpartyRoleIndex"
+              [attr.data-testid]="'counterparty-role-' + productCounterpartyRoleIndex"
+            ></app-counterparty-form>
+          </div>
+        </div>
+
+        <div class="row--no-padding" *ngIf="form.value?.categoryAndProduct?.product">
+          <div class="col-6">
+            <app-form-label
+              matTooltipPosition="right"
+              matTooltip="The Partner platform as defined on the contractual agreement. "
+              >Partnership</app-form-label
+            >
+            <mat-form-field appearance="outline">
+              <mat-select [formControl]="form.controls.partnership" name="partnership">
+
+                <mat-option [value]="null">
+                  <span class="mat-select-placeholder">Select</span>
+                </mat-option>
+
+                <mat-option *ngFor="let p of partnerships | async" [value]="p.id">
+                  {{ p.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row--no-padding" *ngIf="form.value?.categoryAndProduct?.product">
+          <div class="col-6">
+            <app-form-label matTooltipPosition="right" matTooltip="Bypass Trade Acceptance"
+              >Bypass Trade Acceptance</app-form-label
+            ><br />
+            <mat-checkbox
+              color="primary"
+              data-testid="bypassTradeAcceptance"
+              [checked]="
+                form.value.categoryAndProduct.category.name === 'AR' ||
+                form.controls.bypassTradeAcceptance.value
+              "
+              [disabled]="form.value.categoryAndProduct.category.name === 'AR'"
+              (change)="form.controls.bypassTradeAcceptance.setValue($event.checked)"
+            >
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <div class="row--no-padding" *ngIf="form.value?.categoryAndProduct?.product">
+          <div class="col-6">
+            <h2>Facility</h2>
+
+            <app-facility-selector [formControl]="form.controls.facility"></app-facility-selector>
+          </div>
+        </div>
+
+        <div *ngIf="this.form.value?.categoryAndProduct?.product">
+          <h2>Currencies</h2>
+          <app-pricing-currency-form> </app-pricing-currency-form>
+        </div>
+
+        <div class="row--no-padding" *ngIf="this.form.value?.categoryAndProduct?.product">
+          <div class="col-6">
+            <h2>Pricing</h2>
+            <app-pricing-attributes-form
+              [counterpartyRoles]="
+                this.form.value.categoryAndProduct?.product?.counterpartyRoles
+                  | pluckFromEach: 'name'
+              "
+            >
+            </app-pricing-attributes-form>
+          </div>
+        </div>
+      </form>
+    </app-card-content>
+    <app-card-content>
+      <mat-error data-testid="server-error">{{ serverError }}</mat-error>
+      <app-card-actions>
+        <button
+          mat-flat-button
+          color="primary"
+          data-testid="save"
+          type="submit"
+          form="create-contract-form"
+        >
+          Save
+        </button>
+      </app-card-actions>
+    </app-card-content>
+  </app-card>
+</section>

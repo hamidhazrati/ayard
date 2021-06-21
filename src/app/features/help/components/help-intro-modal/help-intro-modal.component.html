@@ -1,0 +1,24 @@
+<ng-template #mediumModalTemplate>
+  <gds-container context="modal" size="small" *ngIf="introModalConfig$ | async as introModalConfig">
+    <gds-container-header [closeable]="true" (closed)="introModal.close()">
+      <h2 gdsContainerTitle>{{ introModalConfig.title }}</h2>
+    </gds-container-header>
+    <gds-container-content>
+      <div class="help-intro">
+        <section class="help-intro__content">
+          <markdown [src]="introModalConfig.path"></markdown>
+        </section>
+        <section class="help-intro__actions">
+          <button mat-raised-button color="primary" (click)="learnMore()">
+            Learn more
+          </button>
+        </section>
+        <section>
+          <mat-checkbox aria-label="Don't shown this again" (change)="changeShouldShown($event)">
+            Don't shown this again
+          </mat-checkbox>
+        </section>
+      </div>
+    </gds-container-content>
+  </gds-container>
+</ng-template>

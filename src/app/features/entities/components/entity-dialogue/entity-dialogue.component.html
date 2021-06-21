@@ -1,0 +1,88 @@
+<form
+  class="entity-form"
+  [ngClass]="{ 'entity-form--rejected': data === 'rejected' }"
+  [formGroup]="form"
+>
+  <ng-container *ngIf="data === 'approved'; else rejected">
+    <h1 mat-dialog-title>
+      Approve Entity
+      <span
+        data-testid="gs-exit-modal"
+        tabindex="0"
+        (click)="onCancel()"
+        (keyup.enter)="onCancel()"
+        (keyup.space)="onCancel()"
+      >
+        <mat-icon aria-hidden="false" aria-label="">close</mat-icon>
+      </span>
+    </h1>
+
+    <hr />
+
+    <p>Are you sure you want to approve this entity?</p>
+
+    <div mat-dialog-actions class="actions">
+      <button
+        mat-button
+        type="button"
+        data-testid="gs-cancel-action"
+        (click)="onCancel()"
+        (keyup.enter)="onCancel()"
+        (keyup.space)="onCancel()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        data-testid="gs-confirm-action"
+        (click)="onClose()"
+        (keyup.enter)="onClose()"
+        (keyup.space)="onClose()"
+      >
+        Yes, I'm sure
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #rejected>
+    <h1 mat-dialog-title class="reject">
+      <span>
+        <mat-icon aria-hidden="false" aria-label="">error_outline</mat-icon>
+      </span>
+      Are you sure you want to reject?
+    </h1>
+
+    <hr />
+
+    <div mat-dialog-content>
+      <mat-label class="label">Type "REJECT" to confirm</mat-label>
+      <input data-testid="gs-rejection-input" formControlName="reason" type="text" />
+    </div>
+
+    <div mat-dialog-actions class="actions">
+      <button
+        mat-button
+        type="button"
+        data-testid="gs-cancel-action"
+        (click)="onCancel()"
+        (keyup.enter)="onCancel()"
+        (keyup.space)="onCancel()"
+      >
+        Cancel
+      </button>
+
+      <button
+        mat-flat-button
+        type="button"
+        data-testid="gs-confirm-action"
+        [disabled]="(data === 'rejected' && form.get('reason').value !== 'REJECT') || form.invalid"
+        (click)="onClose()"
+        (keyup.enter)="onClose()"
+        (keyup.space)="onClose()"
+      >
+        Reject
+      </button>
+    </div>
+  </ng-template>
+</form>

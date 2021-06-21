@@ -1,0 +1,35 @@
+<div class="view-contract__portal-header">
+  <h2>Counterparties</h2>
+  <button
+    mat-stroked-button
+    color="primary"
+    data-testid="add-counterparty"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>add</mat-icon> Add counterparty
+  </button>
+</div>
+
+<mat-menu #menu="matMenu" data-testid="add-counterparty-menu">
+  <button
+    *ngFor="let role of roles"
+    mat-menu-item
+    [attr.data-testid]="'add-counterparty-' + role"
+    (click)="addCounterparty(role)"
+  >
+    {{ role }}
+  </button>
+</mat-menu>
+
+<div *ngIf="counterpartiesGroupedByRole">
+  <div *ngFor="let groupOfCounterparties of counterpartiesGroupedByRole | keyvalue">
+    <!-- the groupOfCounterparties.key is a role -->
+    <h3>{{ groupOfCounterparties.key }}</h3>
+    <app-counterparty-list
+      [attr.data-testid]="'counterparty-list-' + groupOfCounterparties.key"
+      [counterparties]="groupOfCounterparties.value"
+      [contract]="contract"
+      (counterpartiesChangedEventEmitter)="counterpartiesChangedEventEmitter.emit($event)"
+    ></app-counterparty-list>
+  </div>
+</div>

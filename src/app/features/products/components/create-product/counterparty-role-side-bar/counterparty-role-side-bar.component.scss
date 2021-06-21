@@ -1,0 +1,8 @@
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+:host ::ng-deep .mat-horizontal-content-container {
+  overflow: initial !important;
+  padding: 0 !important;
+}

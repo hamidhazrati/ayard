@@ -1,0 +1,26 @@
+<section class="list_cashflows">
+  <div class="table-toolbar">
+    <div class="table-toolbar__right">
+      <button
+        mat-flat-button
+        data-testid="upload-cashflow"
+        (click)="openFileUploadDialogue()"
+        [disabled]="!hasMakerClaim || isFetchingCounterParties"
+      >
+        Upload new cashflow file
+      </button>
+    </div>
+  </div>
+
+  <gds-data-table
+    (columnSort)="sort($event)"
+    (paginationChange)="getCashflowFiles($event)"
+    (rowClick)="onRowClick($event)"
+    [columns]="columns"
+    [defaultSorts]="defaultSorts"
+    [paginationMeta]="paginationMeta"
+    [rows]="rows"
+    [showExportButton]="false"
+    [showRowSelect]="false"
+  ></gds-data-table>
+</section>

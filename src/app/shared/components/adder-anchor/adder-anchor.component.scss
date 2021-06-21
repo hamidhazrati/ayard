@@ -1,0 +1,20 @@
+@import 'palette';
+
+.app-adder-anchor {
+  color: $primary700;
+  display: flex;
+  align-items: center;
+  margin: 0.25em 0 1.59375em;
+
+  a {
+    color: $primary700;
+  }
+}
+
+.app-adder-anchor__icon {
+  padding-right: 28px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,36 @@
+@import 'palette';
+
+.dashboard__box {
+  border: 1px solid $grey100;
+  border-radius: 4px;
+  padding-bottom: 18px;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.dashboard_button {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+li {
+  padding-bottom: 17px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 39px;
+  margin-top: 25px;
+}
+
+a:hover {
+  text-decoration: none;
+}

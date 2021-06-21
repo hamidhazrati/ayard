@@ -1,0 +1,66 @@
+/*
+ * Move these styles into common when we've done a couple
+ * of similar pages and have a pattern
+ */
+@import 'palette';
+
+span {
+  display: block;
+}
+
+.header-card {
+  width: 100%;
+  display: flex;
+  align-self: flex-start;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.header-card--rejected {
+  background-color: $alert100;
+}
+
+.header-card--rejected-stamp {
+  padding-right: 24px;
+  color: $alert700;
+}
+
+.header-card--rejected-by {
+  color: $grey700;
+}
+
+.header-card__right {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  flex-grow: 1;
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+.col--align-right {
+  text-align: right;
+}
+
+.table-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.mat-column-rowFailed {
+  flex: none;
+  width: 15%;
+}
+
+.mat-column-message {
+  flex: none;
+  width: 85%;
+}
+
+.mat-card__spinner {
+  display: inline-block;
+}

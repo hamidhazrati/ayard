@@ -1,0 +1,34 @@
+<form [formGroup]="form" autocomplete="off" class="form">
+  <div class="row">
+    <fieldset class="col-4">
+      <legend></legend>
+      <app-form-label>Name</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="name" formControlName="name" />
+        <mat-error
+          data-testid="name-error"
+          *ngIf="form.controls.name.invalid"
+          [innerHTML]="getErrorMessage(form.controls.name)"
+        >
+        </mat-error>
+      </mat-form-field>
+
+      <app-form-label>Description</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="description" formControlName="description" />
+        <mat-error
+          data-testid="description-error"
+          *ngIf="form.controls.description.invalid"
+          [innerHTML]="getErrorMessage(form.controls.description)"
+        >
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+    <div class="col-12">
+      <button mat-flat-button (click)="saveRoleType()" data-testid="save">
+        Save
+      </button>
+      <a mat-button routerLink="/counterparty-roles" data-testid="cancel">Cancel</a>
+    </div>
+  </div>
+</form>

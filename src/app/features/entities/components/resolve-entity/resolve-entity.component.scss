@@ -1,0 +1,25 @@
+.action-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.spinner {
+  margin: auto;
+}
+
+.verdi-data-style {
+  background-color: #dff3ec;
+}
+
+.search-entities {
+  td {
+    vertical-align: top;
+  }
+  .mat-stroked-button {
+    background: white;
+
+    &.disabled {
+      border: 1px solid currentColor;
+    }
+  }
+}

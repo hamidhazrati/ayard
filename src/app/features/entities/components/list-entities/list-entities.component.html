@@ -1,0 +1,146 @@
+<section class="list_entities">
+<!--
+  <div class="table-toolbar">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        data-testid="search-input"
+        type="text"
+        placeholder="Search entities"
+        [ngModel]="query"
+        (ngModelChange)="onModelChange($event)"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+
+    <div class="table-toolbar__right" *ngIf="isAuthorized$ | async; else notAuthorized">
+      <a mat-flat-button routerLink="/entities/new" data-testid="gs-create-entity-btn"
+        >Create new entity</a
+      >
+    </div>
+
+    <ng-template #notAuthorized>
+      <div class="table-toolbar__right">
+        <div
+          aria-label="Permission not assigned"
+          matTooltip="Permission not assigned"
+          matTooltipPosition="below"
+        >
+          <button disabled mat-flat-button data-testid="gs-create-entity-btn">
+            Create new entity
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <ng-container *ngIf="entities$ | async as entities">
+    <table mat-table [dataSource]="entities">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Entity Legal Name</th>
+        <td mat-cell *matCellDef="let entity" [routerLink]="['/entities/' + entity.id]">
+          {{ entity.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Entity Address</th>
+        <td mat-cell *matCellDef="let entity" [routerLink]="['/entities/' + entity.id]">
+          <ng-container *ngIf="entity.address.display.region && entity.address.display.country">
+            <span
+              [innerText]="
+                entity.address.display.locality +
+                ', ' +
+                entity.address.display.region +
+                ', ' +
+                entity.address.display.country
+              "
+            ></span>
+          </ng-container>
+
+          <ng-container *ngIf="entity.address.display.region && !entity.address.display.country">
+            <span
+              [innerText]="entity.address.display.locality + ', ' + entity.address.display.region"
+            ></span>
+          </ng-container>
+
+          <ng-container *ngIf="!entity.address.display.region && entity.address.display.country">
+            <span
+              [innerText]="entity.address.display.locality + ', ' + entity.address.display.country"
+            ></span>
+          </ng-container>
+
+          <ng-container *ngIf="!entity.address.display.region && !entity.address.display.country">
+            <span [innerText]="entity.address.display.locality"></span>
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let entity">
+          <mat-chip-list>
+            <mat-chip
+              [ngClass]="{
+                active: entity?.status === 'ACTIVE',
+                awaiting: entity?.status === 'AWAITING_APPROVAL'
+              }"
+              >{{ entity?.status | titlecaseFormat }}</mat-chip
+            >
+          </mat-chip-list>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="mat-row--selectable" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+    <mat-paginator
+      *ngIf="meta$ | async as meta"
+      [length]="meta.totalSize"
+      [pageIndex]="meta.page"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSize]="10"
+      [showFirstLastButtons]="true"
+      (page)="onPage($event)"
+    ></mat-paginator>
+  </ng-container>
+-->
+<h1>
+  Hamid Hazrati
+</h1>
+<h2>
+  Gate In
+</h2>
+<mat-form-field appearance="outline">
+  <input
+  type="text"
+  placeholder="Car Registration"
+  aria-label="Car Registration"
+  matInput
+  />
+</mat-form-field>
+<br>
+<button mat-flat-button>
+  Check In
+</button>
+
+<zxing-scanner
+  (scanSuccess)="onCodeResult($event)"
+  [formats]="formatsEnabled"
+  [tryHarder]="true"
+></zxing-scanner>
+
+<section class="results" *ngIf="qrResultString">
+  <div>
+    <small>Result</small>
+    <strong>{{ qrResultString }}</strong>
+  </div>
+  <button mat-icon-button (click)="clearResult()">&times;</button>
+</section>
+
+
+</section>

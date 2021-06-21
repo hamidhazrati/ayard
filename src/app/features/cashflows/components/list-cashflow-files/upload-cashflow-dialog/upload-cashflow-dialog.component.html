@@ -1,0 +1,83 @@
+<form
+  *ngIf="fileUploaded === false"
+  [formGroup]="form"
+  autocomplete="off"
+  class="form upload__form"
+>
+  <div *ngIf="fileUploaded === false" class="upload" mat-dialog-content>
+    <div class="upload__title">
+      <h2 mat-dialog-title>Upload cashflow file</h2>
+    </div>
+    <div class="upload__content mb-10">
+      <fieldset>
+        <app-form-label>Select client for this cashflow file</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            type="text"
+            [formControl]="form.controls.client"
+            [matAutocomplete]="auto"
+            placeholder="Select a client"
+            aria-label="Select a client"
+            data-testid="client"
+            matInput
+          />
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected()">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+              data-testid="client-option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <input
+          type="file"
+          [attr.disabled]="fileInputDisabled ? '' : null"
+          [formControl]="form.controls.cashflowFile"
+          (select)="onSelect($event)"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          preserveValue
+          data-testid="file-upload"
+        />
+      </fieldset>
+      <div class="upload__progress">
+        <mat-progress-bar [value]="progress"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="upload__actions1">
+      <button
+        mat-flat-button
+        [disabled]="!form.valid || !!progress"
+        (click)="upload()"
+        data-testid="upload"
+        cdkFocusInitial
+      >
+        Upload Cashflow File
+      </button>
+    </div>
+    <div class="upload__actions2">
+      <button mat-button data-testid="close" (click)="close()">Close</button>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="fileUploaded === true" class="upload">
+  <div class="upload__content upload__content--center">
+    <div *ngIf="uploadSuccess === true" data-testid="upload__success">
+      <mat-icon class="upload__icon-ok">check_circle_outline</mat-icon>
+      <h2>Upload Successful</h2>
+      <p>&quot;{{ this.selectedFile?.name }}&quot; is currently being processed</p>
+    </div>
+    <div *ngIf="uploadSuccess === false" data-testid="upload__failed">
+      <mat-icon class="upload__icon-failed">cancel</mat-icon>
+      <h2>Upload Failed</h2>
+      <p>&quot;{{ this.selectedFile?.name }}&quot; is <strong>not</strong> being processed.</p>
+      <p>Reason: {{ this.uploadErrorMessage }}</p>
+    </div>
+    <button mat-flat-button data-testid="done" (click)="close()">
+      Done
+    </button>
+  </div>
+</div>

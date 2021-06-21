@@ -1,0 +1,54 @@
+[
+  {
+    "referenceRateType": "LIBOR",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "currency": "USD",
+    "contractId": "the-contract-id1",
+    "contractName": "contract-123-name",
+    "contractAdvanceRate": 90,
+    "contractSpread": 15,
+    "acceptanceDate": "2020-10-01",
+    "totalOriginalValue": 100.0,
+    "totalInitialFundingAmount": 90.0,
+    "totalDiscountAmount": 5,
+    "totalPaymentAmount": 85.5,
+    "totalCashflows": 30,
+    "cashflowFile": {
+      "id": "b1e400e5-a512-437e-8cf1-422bc083b175",
+      "clientName": "Katerra Inc",
+      "filename": "A test cashflow file.xlsx",
+      "uploadDate": "2020-07-08T12:59:08.029821Z",
+      "uploadedBy": "Operations Portal",
+      "status": "START_ORIGINATION",
+      "cashflowRowCount": 10,
+      "cashflowTotals": [],
+      "processingFailureMessages": null
+    }
+  },
+  {
+    "referenceRateType": "LIBOR",
+    "cashflowFileId": "b1e400e5-a512-437e-8cf1-422bc083b175",
+    "currency": "GBP",
+    "contractId": "the-contract-id1",
+    "contractName": "contract-456-name",
+    "contractAdvanceRate": 90,
+    "contractSpread": 15,
+    "acceptanceDate": "2020-10-01",
+    "totalOriginalValue": 100.0,
+    "totalInitialFundingAmount": 90.0,
+    "totalDiscountAmount": 5,
+    "totalPaymentAmount": 85.5,
+    "totalCashflows": 30,
+    "cashflowFile": {
+      "id": "b1e400e5-a512-437e-8cf1-422bc083b175",
+      "clientName": "Katerra Inc",
+      "filename": "A test cashflow file.xlsx",
+      "uploadDate": "2020-07-08T12:59:08.029821Z",
+      "uploadedBy": "Operations Portal",
+      "status": "START_ORIGINATION",
+      "cashflowRowCount": 10,
+      "cashflowTotals": [],
+      "processingFailureMessages": null
+    }
+  }
+]

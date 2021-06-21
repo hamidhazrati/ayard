@@ -1,0 +1,18 @@
+$component: '.view-partner';
+
+#{$component}__grid {
+  padding-top: 24px;
+  display: grid;
+  column-gap: 40px;
+  row-gap: 10px;
+  grid-template-columns: 400px auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    'cell1 margin'
+    'cell2 margin'
+    'cell3 margin';
+}
+
+#{$component}__cell1 {
+  grid-area: cell1;
+}

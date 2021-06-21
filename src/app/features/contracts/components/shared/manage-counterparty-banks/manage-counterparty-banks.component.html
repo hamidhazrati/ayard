@@ -1,0 +1,226 @@
+<h2 mat-dialog-title data-testid="title">{{ titlePrefix }} {{ counterparty.name }}</h2>
+<div *ngIf="(action === 'add') || (action === 'update')">
+  <mat-dialog-content>
+    <form class="form rule-form">
+      <div class="row">
+        <fieldset class="col-6">
+          <legend></legend>
+          <app-form-label [required]="true">Currency</app-form-label>
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControl]="form.controls.currency"
+              name="currency"
+              placeholder="Select a currency"
+              data-testid="currency"
+            >
+              <mat-option
+                data-testid="currency-option"
+                *ngFor="let currency of currencyList"
+                [value]="currency"
+                >{{ currency }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-form-error label="Currency" [control]="form.controls.currency"></app-form-error>
+
+          <app-form-label>Account name</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              data-testid="accountName"
+              [formControl]="form.controls.account.controls.name"
+            />
+          </mat-form-field>
+
+          <app-form-label>Business identifier code (BIC)</app-form-label>
+          <mat-form-field appearance="outline">
+            <input matInput data-testid="bic" [formControl]="form.controls.branch.controls.bic" />
+          </mat-form-field>
+          <mat-error
+            class="mat-errors mat-error"
+            *ngIf="form.controls.branch.controls.bic?.errors?.bic"
+          >
+            {{ form.controls.branch.controls.bic?.errors?.bic }}
+          </mat-error>
+
+          <app-form-label>International bank account number (IBAN)</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="iban"
+              [formControl]="form.controls.account.controls.iban"
+            />
+          </mat-form-field>
+          <mat-error
+            class="mat-errors mat-error"
+            *ngIf="this.form.controls.account.controls.iban?.errors?.iban"
+          >
+            {{ form.controls.account.controls.iban?.errors?.iban }}
+          </mat-error>
+
+          <app-form-label>Domestic branch identifier</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="domesticBranchId"
+              [formControl]="form.controls.branch.controls.domesticBranchId"
+            />
+          </mat-form-field>
+
+          <app-form-label>Domestic account number</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="domesticAccountId"
+              [formControl]="form.controls.account.controls.domesticAccountId"
+            />
+          </mat-form-field>
+        </fieldset>
+        <fieldset class="col-6">
+          <legend></legend>
+          <app-form-label [required]="true">Country</app-form-label>
+          <mat-form-field appearance="outline">
+            <mat-select
+              data-testid="country"
+              [formControl]="form.controls.branch.controls.address.controls.country"
+              placeholder="Select a country"
+              panelClass="selector-position"
+            >
+              <mat-option
+                *ngFor="let country of countryList"
+                [value]="country.code"
+                data-testid="country-option"
+                >{{ country.description }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <app-form-error
+            label="Country"
+            [control]="form.controls.branch.controls.address.controls.country"
+          ></app-form-error>
+
+          <app-form-label>Bank name</app-form-label>
+          <mat-form-field appearance="outline">
+            <input matInput data-testid="bankName" [formControl]="form.controls.bankName" />
+          </mat-form-field>
+
+          <app-form-label>Branch name</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="branchName"
+              [formControl]="form.controls.branch.controls.name"
+            />
+          </mat-form-field>
+
+          <app-form-label>Address Line 1</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="line1"
+              [formControl]="form.controls.branch.controls.address.controls.line1"
+            />
+          </mat-form-field>
+
+          <app-form-label>Address Line 2</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="line2"
+              [formControl]="form.controls.branch.controls.address.controls.line2"
+            />
+          </mat-form-field>
+
+          <app-form-label>Address Line 3</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="line3"
+              [formControl]="form.controls.branch.controls.address.controls.line3"
+            />
+          </mat-form-field>
+
+          <app-form-label>Address Line 4</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="line4"
+              [formControl]="form.controls.branch.controls.address.controls.line4"
+            />
+          </mat-form-field>
+
+          <app-form-label>City</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="city"
+              [formControl]="form.controls.branch.controls.address.controls.city"
+            />
+          </mat-form-field>
+
+          <app-form-label>State Province Region</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="stateProvinceRegion"
+              [formControl]="form.controls.branch.controls.address.controls.region"
+            />
+          </mat-form-field>
+
+          <app-form-label>Post Code</app-form-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              data-testid="postalCode"
+              [formControl]="form.controls.branch.controls.address.controls.postalCode"
+            />
+          </mat-form-field>
+        </fieldset>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mat-dialog-actions__spaced">
+    <mat-error>{{ serverError }}</mat-error>
+    <button *ngIf="action === 'add'" mat-flat-button data-testid="save-counterparty-bank" (click)="saveBank()">
+      Save details
+    </button>
+    <button *ngIf="action === 'update'" mat-flat-button data-testid="update-counterparty-bank" (click)="updateBank()">
+      Update details
+    </button>
+    <button mat-button data-testid="add-bank-cancel" (click)="cancelAddBank()">Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="action === 'list'">
+  <mat-dialog-content>
+    <gds-data-table
+      [enableHorizontalScroll]="false"
+      [showRowSelect]="false"
+      [showExportButton]="false"
+      [showGroupingOption]="false"
+      [showRowSelect]="false"
+      [showSearch]="false"
+      [isClickableRow]="false"
+      [enablePagination]="false"
+      [rows]="banks"
+      [columns]="columns"
+      [popOverItems]="popOverItems"
+      (popOverEvent)="popOverEvent($event)"
+    ></gds-data-table>
+    <br/>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mat-dialog-actions__spaced" >
+    <mat-error>{{ serverError }}</mat-error>
+    <button
+      mat-flat-button
+      data-testid="add-counterparty-bank"
+      *ngIf="canAddBank()"
+      (click)="addBank()"
+    >
+      Add new bank details
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
+

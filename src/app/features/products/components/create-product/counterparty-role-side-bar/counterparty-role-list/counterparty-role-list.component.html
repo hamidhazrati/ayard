@@ -1,0 +1,13 @@
+<mat-selection-list
+  data-testid="counterparty-roles"
+  [multiple]="false"
+  (selectionChange)="selectionChanged($event.option.value)"
+>
+  <mat-list-option
+    *ngFor="let option of options; let i = index"
+    data-testid="counterparty-role-1"
+    [value]="option"
+  >
+    {{ option.name }}
+  </mat-list-option>
+</mat-selection-list>

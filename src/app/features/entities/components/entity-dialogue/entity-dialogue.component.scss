@@ -1,0 +1,57 @@
+@import 'palette';
+
+.entity-form {
+  height: 100%;
+  position: relative;
+
+  hr {
+    border: 0;
+    border-top: 1px solid $grey200;
+  }
+
+  span {
+    float: right;
+  }
+
+  textarea {
+    border-radius: 5px;
+    display: block;
+    font: inherit;
+    margin-bottom: 12px;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    &:focus {
+      outline-color: $primary800;
+    }
+  }
+
+  input[type='text'] {
+    border: 1px solid $grey200;
+    font: inherit;
+    padding: 5px;
+    width: 100%;
+    &:focus {
+      outline-color: $primary800;
+    }
+  }
+
+  .actions {
+    float: right;
+  }
+
+  .label {
+    color: $grey700;
+    display: block;
+  }
+
+  .reject {
+    span {
+      color: $alert800;
+      display: block;
+      float: none;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  }
+}

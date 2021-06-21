@@ -1,0 +1,10 @@
+@import 'palette';
+.entity-selector-option {
+  line-height: normal;
+  height: auto;
+  padding: 10px;
+}
+
+.entity-selector-option__label {
+  color: $grey500;
+}

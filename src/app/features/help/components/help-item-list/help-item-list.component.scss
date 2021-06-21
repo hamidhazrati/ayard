@@ -1,0 +1,34 @@
+@import 'gds-styles/utils/colors';
+
+$plateHeight: 120px;
+$plateHorizontalOffset: 10px;
+$plateHoverBoxShadow: 0px 1px 6px #071d2e40;
+
+.help-item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.help-item {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid $supportive300;
+  margin-bottom: 16px;
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(27, 28, 29, 0.08);
+    cursor: pointer;
+  }
+
+  &__title {
+    font-size: 16px;
+    color: $primary800;
+    margin-bottom: 8px;
+  }
+
+  &__description {
+    font-size: 12px;
+  }
+}

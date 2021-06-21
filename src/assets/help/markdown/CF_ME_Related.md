@@ -1,0 +1,4 @@
+- [Working with Cashflow files](https://internal/assets/help/markdown/CF_Manage_cashflow_files.md 'Cashflow files')
+- [Origination Proposals](https://internal/assets/help/markdown/CF_Origination_Proposals.md 'Origination Proposals')
+- [Working with data tables in Verdi](https://internal/assets/help/markdown/GEN_Tables.md 'data tables')
+- [Searching the list of Exceptions](https://internal/assets/help/markdown/GEN_T_Search.md 'search data tables')

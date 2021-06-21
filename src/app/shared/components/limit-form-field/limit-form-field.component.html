@@ -1,0 +1,36 @@
+<div class="limit-form-field__limit-type">
+  <mat-radio-group (change)="limitSourceChanged($event.value)" [value]="currentValue.source">
+    <mat-radio-button [value]="source" *ngFor="let source of limitSources">
+      {{ formatSource(source) }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div class="row--no-padding">
+  <mat-form-field appearance="outline" class="col-8">
+    <input
+      [disabled]="!valueEnabled()"
+      [attr.data-testid]="limitType + '-limit-type-value'"
+      [placeholder]="placeholder()"
+      matInput
+      type="number"
+      [value]="currentValue.value"
+      (change)="limitAmountChange($event.srcElement.value)"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="col-4">
+    <mat-select
+      [attr.data-testid]="limitType + '-limit-type-currency'"
+      panelClass="selector-position"
+      [value]="currencyCodes[0]"
+    >
+      <mat-option
+        *ngFor="let currencyCode of currencyCodes"
+        [value]="currencyCode"
+        [attr.data-testid]="limitType + '-limit-type-currency-' + currencyCode"
+        >{{ currencyCode }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</div>

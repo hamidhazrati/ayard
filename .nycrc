@@ -1,0 +1,4 @@
+{
+  "report-dir": "reports/coverage/cypress",
+  "reporter": ["html", "json"]
+}

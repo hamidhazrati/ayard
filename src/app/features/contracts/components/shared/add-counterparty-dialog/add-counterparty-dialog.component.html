@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Add {{ this.data.roleName }}</h2>
+<mat-dialog-content>
+  <app-basic-counterparty-form #counterPartyForm></app-basic-counterparty-form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button data-testid="submit-add-counterparty" (click)="addCounterParty()">
+    Add
+  </button>
+  <mat-error>{{ serverError }}</mat-error>
+</mat-dialog-actions>

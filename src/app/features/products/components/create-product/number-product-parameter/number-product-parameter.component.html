@@ -1,0 +1,66 @@
+<ng-container [formGroup]="numberParameterForm">
+  <div>
+    <div class="row">
+      <div class="col-4">
+        <app-form-label [required]="item.initialDefaultValue.mandatory">Default Value</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            appPositiveTwoDecimal
+            type="number"
+            min="0"
+            step="1"
+            [formControl]="numberParameterForm.controls.defaultValue"
+            placeholder="Enter Default Value here"
+            matInput
+            data-testid="defaultValue"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Default Value"
+          [control]="numberParameterForm.controls.defaultValue"
+        ></app-form-error>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-form-label [required]="item.initialMinimumValue.mandatory">Minimum Value</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            appPositiveTwoDecimal
+            type="number"
+            min="0"
+            step="1"
+            [formControl]="numberParameterForm.controls.minimumValue"
+            placeholder="Enter Minimum Value here"
+            matInput
+            data-testid="minValue"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Minimum Value"
+          [control]="numberParameterForm.controls.minimumValue"
+        ></app-form-error>
+      </div>
+      <div class="col-4">
+        <app-form-label [required]="item.initialMaximumValue.mandatory">Maximum Value</app-form-label>
+        <mat-form-field appearance="outline">
+          <input
+            appPositiveTwoDecimal
+            type="number"
+            min="0"
+            step="1"
+            [formControl]="numberParameterForm.controls.maximumValue"
+            placeholder="Enter Maximium Value here"
+            matInput
+            data-testid="maxValue"
+          />
+        </mat-form-field>
+        <app-form-error
+          label="Maximum Value"
+          [control]="numberParameterForm.controls.maximumValue"
+        ></app-form-error>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

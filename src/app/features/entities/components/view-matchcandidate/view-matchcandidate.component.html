@@ -1,0 +1,143 @@
+<ng-container *ngIf="!loading && entityMatchCandidate">
+  <app-card>
+    <app-card-title data-testid="title">{{ entityMatchCandidate.name }}</app-card-title>
+
+    <app-card-content>
+      <div class="row">
+        <div class="col-4">
+          <div *ngIf="entityMatchCandidate.id">
+            <app-form-label>Match Candidate ID</app-form-label>
+            <app-form-value data-testid="entityMatchCandidate-id">
+              {{ entityMatchCandidate.id }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="entityMatchCandidate.dunsNumber">
+            <app-form-label>DUNS Number</app-form-label>
+            <app-form-value data-testid="duns-number">
+              {{ entityMatchCandidate.dunsNumber }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entityMatchCandidate.packagesData &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.tradeStyleNames &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.tradeStyleNames.length > 0
+            "
+          >
+            <app-form-label>Trade Style Names</app-form-label>
+            <app-form-value
+              *ngFor="
+                let tradeStyleName of entityMatchCandidate.packagesData.CLEANSE_MATCH
+                  .tradeStyleNames
+              "
+            >
+              {{ tradeStyleName.name }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entityMatchCandidate.packagesData &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.registrationNumbers &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.registrationNumbers.length > 0
+            "
+          >
+            <app-form-label>Registration Numbers</app-form-label>
+            <app-form-value
+              *ngFor="
+                let regNum of entityMatchCandidate.packagesData.CLEANSE_MATCH.registrationNumbers
+              "
+            >
+              {{ regNum.typeDescription }} : {{ regNum.registrationNumber }}
+            </app-form-value>
+          </div>
+
+          <div
+            *ngIf="
+              entityMatchCandidate.packagesData &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.corporateLinkage
+                .familytreeRolesPlayed &&
+              entityMatchCandidate.packagesData.CLEANSE_MATCH.corporateLinkage.familytreeRolesPlayed
+                .length > 0
+            "
+          >
+            <app-form-label>Family Tree Roles</app-form-label>
+            <app-form-value
+              *ngFor="
+                let role of entityMatchCandidate.packagesData.CLEANSE_MATCH.corporateLinkage
+                  .familytreeRolesPlayed
+              "
+            >
+              {{ role.description }}
+            </app-form-value>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div *ngIf="entityMatchCandidate.primaryAddress.line1">
+            <app-form-label>Address line 1</app-form-label>
+            <app-form-value data-testid="address-line-1">
+              {{ entityMatchCandidate.primaryAddress.line1 }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="entityMatchCandidate.primaryAddress.line2">
+            <app-form-label>Address line 2</app-form-label>
+            <app-form-value data-testid="address-line-2">
+              {{ entityMatchCandidate.primaryAddress.line2 }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="entityMatchCandidate.primaryAddress.city">
+            <app-form-label>City/Locality</app-form-label>
+            <app-form-value data-testid="city">
+              {{ entityMatchCandidate.primaryAddress.city }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="regionNameIfNotRegionCode">
+            <app-form-label>Region/State/Province</app-form-label>
+            <app-form-value data-testid="region">
+              {{ regionNameIfNotRegionCode }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="entityMatchCandidate.primaryAddress.postalCode">
+            <app-form-label>Postal Code</app-form-label>
+            <app-form-value data-testid="postcode">
+              {{ entityMatchCandidate.primaryAddress.postalCode }}
+            </app-form-value>
+          </div>
+
+          <div *ngIf="entityMatchCandidate.primaryAddress.countryName">
+            <app-form-label>Country</app-form-label>
+            <app-form-value data-testid="country">
+              {{ entityMatchCandidate.primaryAddress.countryName }}
+            </app-form-value>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!entityMatchCandidate.entityId" class="confirm_buttons">
+        <button
+          mat-flat-button
+          data-testid="save"
+          (click)="this.createEntity(entityMatchCandidate.dunsNumber)"
+        >
+          Save
+        </button>
+
+        <button mat-flat-button (click)="this.cancel()" data-testid="cancel">
+          Cancel
+        </button>
+      </div>
+      <mat-error *ngIf="showError"
+        ><h2>{{ errorMessage }}</h2></mat-error
+      >
+    </app-card-content>
+  </app-card>
+</ng-container>

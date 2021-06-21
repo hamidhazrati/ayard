@@ -1,0 +1,69 @@
+<form [formGroup]="form" autocomplete="off" class="form" novalidate>
+  <div class="row">
+    <div class="col-4">
+      <app-form-label [for]="'name'" [required]="true">
+        Limit configuration name
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <input id="name" matInput data-testid="name" [formControl]="form.controls.name" required />
+      </mat-form-field>
+      <app-form-error
+        label="Limit configuration name"
+        [control]="form.controls.name"
+        [messages]="nameCustomErrorMessages"
+        data-testid="name-error"
+      >
+      </app-form-error>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <app-form-label>Entity</app-form-label>
+      <app-entity-selector [formControl]="this.form.controls.entity"></app-entity-selector>
+      <app-form-error
+        label="Entity"
+        [control]="form.controls.entity"
+        data-testid="status-error"
+      ></app-form-error>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="Please select from list of available currencies."
+        required="true"
+        >Currency</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select
+          id="currency"
+          data-testid="currency"
+          [formControl]="form.controls.currency"
+          typeaheadDebounceInterval="200"
+        >
+          <mat-option
+            *ngFor="let ccy of currencies$ | async"
+            [value]="ccy"
+            data-testid="currency-option"
+          >
+            {{ ccy }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <app-form-error label="Currency" [control]="form.controls.currency"></app-form-error>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <button mat-flat-button color="primary" data-testid="save" (click)="handleSave()">
+        Create limit configuration
+      </button>
+      <a mat-button routerLink="/facilities" data-testid="cancel">Cancel</a>
+    </div>
+  </div>
+</form>

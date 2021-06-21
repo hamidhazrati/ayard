@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  operations-portal:
+    container_name: operations-portal
+    build: .
+    ports:
+      - 8086:8080
+    environment:
+      NODE_ENV: development
+      API_URL: http://localhost:8087
+      AUTH_URL: http://keycloak:8088/auth
+      AUTH_REALM: local
+      AUTH_CLIENT_ID: operations-portal
+
+networks:
+  default:
+    external:
+      name: verdi

@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Manage custom rates</h2>
+<h4>{{ counterparty.name }}</h4>
+<mat-dialog-content>
+  <form class="form">
+    <div class="row--no-padding">
+      <div class="col-6">
+        <app-form-label>Contract margin rate (BPS)</app-form-label>
+        <p>
+          {{ counterparty?.contract?.pricingOperation?.spread }}
+        </p>
+
+        <app-form-label>Custom margin rate (BPS)</app-form-label>
+        <p>
+          <input
+            matInput
+            min="0"
+            step="0.01"
+            [formControl]="form.controls.marginRate"
+            type="number"
+            name="marginRate"
+            placeholder="Update margin"
+            inputmode="numeric"
+            appPositiveTwoDecimal
+          />
+        </p>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="mat-dialog-actions__spaced">
+  <button mat-flat-button data-testid="update-counterparty" (click)="update(counterparty)">
+    Save Custom Rate
+  </button>
+  <mat-error>{{ serverError }}</mat-error>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

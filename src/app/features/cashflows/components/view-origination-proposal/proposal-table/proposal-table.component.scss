@@ -1,0 +1,35 @@
+@import 'palette';
+@import 'content-common';
+
+.table-nested {
+  padding: 0;
+}
+
+tr.table-nested__detail-row {
+  height: 0;
+}
+
+tr.table-nested__element-row:not(.table-nested__expanded-row):hover {
+  background-color: $supportive100;
+}
+
+tr.table-nested__element-row:not(.table-nested__expanded-row):active {
+  background-color: $supportive100;
+}
+
+.table-nested__element-row td {
+  border-bottom-width: 0;
+}
+
+.table-nested__detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.proposal_table__last-cell {
+  padding-left: 8px;
+}
+
+.mat-cell.mat-col--rate {
+  padding: 6px 0;
+}

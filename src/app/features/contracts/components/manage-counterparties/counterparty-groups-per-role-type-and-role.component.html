@@ -1,0 +1,35 @@
+<div class="row">
+  <mat-tab-group
+    *ngIf="!errorMessage && !loadingCounterparties; else message"
+    class="col-12 mat-tab-group"
+    data-testid="mat-tab-group"
+    [selectedIndex]="lastTabVistedIndex"
+    (selectedTabChange)="selectedTabChange($event)"
+  >
+    <ng-container *ngFor="let roleType of ROLE_TYPE_TABS_IN_ORDER">
+      <mat-tab *ngIf="counterpartiesGroupedByRoleType && counterpartiesGroupedByRoleType[roleType]">
+        <ng-template mat-tab-label>
+          <span [attr.data-testid]="'counterparty-roles-tab-' + roleType">{{
+            counterpartyRoleTypeLabels[roleType]
+          }}</span>
+        </ng-template>
+        <app-counterparty-groups-per-role
+          [attr.data-testid]="'counterparty-groups-per-role-' + roleType"
+          [counterparties]="
+            counterpartiesGroupedByRoleType ? counterpartiesGroupedByRoleType[roleType] : []
+          "
+          [contract]="contract"
+          [roles]="getUniqueRoles(counterpartiesGroupedByRoleType[roleType])"
+          (counterpartiesChangedEventEmitter)="loadAndGroupCounterparties()"
+        ></app-counterparty-groups-per-role>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+
+  <ng-template #message>
+    <div data-testid="counterpartiesGroupsMessage">
+      <span *ngIf="loadingCounterparties">Loading</span>
+      <span *ngIf="errorMessage">{{ errorMessage }}</span>
+    </div>
+  </ng-template>
+</div>

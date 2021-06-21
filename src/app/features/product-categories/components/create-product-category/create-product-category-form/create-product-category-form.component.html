@@ -1,0 +1,121 @@
+<form [formGroup]="form" autocomplete="off" class="form" novalidate>
+  <div class="row">
+    <fieldset class="col-4">
+      <legend></legend>
+      <app-form-label [required]="true">
+        Status
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          id="status"
+          [formControl]="form.controls.status"
+          placeholder="Select a value"
+          panelClass="selector-position"
+          data-testid="status-selector"
+        >
+          <mat-option
+            *ngFor="let status of productConstants.PRODUCT_CATEGORY_STATUSES"
+            [value]="status.code"
+            data-testid="status-selector-option"
+            >{{ status.description }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <app-form-error
+        [label]="'Status'"
+        [control]="form.controls.status"
+        data-testid="status-error"
+      ></app-form-error>
+
+      <app-form-label [for]="'name'" [required]="true">
+        Product category name
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <input id="name" matInput data-testid="name" [formControl]="form.controls.name" required />
+      </mat-form-field>
+      <app-form-error
+        label="Name"
+        [control]="form.controls.name"
+        [messages]="nameCustomErrorMessages"
+        data-testid="name-error"
+      >
+      </app-form-error>
+
+      <app-form-label [required]="true">
+        Product type
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          id="productType"
+          [formControl]="form.controls.productType"
+          placeholder="Select a value"
+          panelClass="selector-position"
+          data-testid="productType-selector"
+        >
+          <mat-option
+            *ngFor="let productType of productConstants.PRODUCT_TYPES"
+            [value]="productType"
+            data-testid="productType-selector-option"
+            >{{ productType }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <app-form-error
+        [label]="'Product type'"
+        [control]="form.controls.productType"
+        data-testid="productType-error"
+      ></app-form-error>
+
+      <app-form-label [for]="'description'" [required]="true">
+        Product category description
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <textarea
+          id="description"
+          matInput
+          data-testid="description"
+          [formControl]="form.controls.description"
+        >
+        </textarea>
+      </mat-form-field>
+      <app-form-error
+        [label]="'Description'"
+        [control]="form.controls.description"
+        data-testid="description-error"
+      >
+      </app-form-error>
+
+      <app-form-label [for]="'guideLink'">
+        Product guide link
+      </app-form-label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="guideLink"
+          data-testid="guideLink"
+          [formControl]="form.controls.productGuideLink"
+        />
+      </mat-form-field>
+      <app-form-error
+        [label]="'Guide Link'"
+        [control]="form.controls.productGuideLink"
+        data-testid="guide-link-error"
+      >
+      </app-form-error>
+    </fieldset>
+  </div>
+  <button mat-flat-button color="primary" data-testid="save" (click)="handleSave()">
+    Create product category
+  </button>
+  <a mat-button routerLink="/products" data-testid="cancel">Cancel</a>
+</form>
+<mat-error data-testid="server-error" *ngFor="let detail of serverError?.details">
+  <p>
+    <strong>
+      {{serverError.title}}
+    </strong>
+    <span>
+      - {{detail.description}}
+    </span>
+  </p>
+</mat-error>

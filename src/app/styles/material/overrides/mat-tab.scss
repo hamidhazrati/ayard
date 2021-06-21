@@ -1,0 +1,16 @@
+@import 'palette';
+
+.mat-tab-label {
+  min-height: 48px;
+  height: inherit;
+}
+
+.mat-tab-group {
+  font: inherit;
+}
+
+.mat-tab-label-content {
+  color: #0b0b0c;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.4rem;
+}

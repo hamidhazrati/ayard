@@ -1,0 +1,16 @@
+{
+  "id": "b1e400e5-a512-437e-8cf1-422bc083b175",
+  "clientName": "Katerra Inc",
+  "filename": "A test cashflow file.xlsx",
+  "uploadDate": "2020-07-08T12:59:08.029821Z",
+  "uploadedBy": "Operations Portal",
+  "status": "REJECTED",
+  "cashflowRowCount": 10,
+  "cashflowTotals": [],
+  "processingFailureMessages": null,
+  "rejectionDetail": {
+    "user": "ops-portal-user",
+    "message": "Date too far in the future",
+    "date": "2020-08-07 12:38:46"
+  }
+}

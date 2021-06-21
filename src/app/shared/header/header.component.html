@@ -1,0 +1,26 @@
+<header class="header">
+  <div class="header__burger-menu">
+    <i class="material-icons md-24">menu</i>
+  </div>
+  <div class="header__logo">
+    <a [routerLink]="['']">
+      <img class="header__logo-icon" src="assets/ab-logo2.jpeg"
+        style=" height: 50px;
+                position: absolute;
+                top: 3px;"  />
+    </a>
+  </div>
+  <div class="header__nav">
+    <ul class="header__nav-items">
+      <li><i class="material-icons md-24">search</i></li>
+      <li><i class="material-icons md-24" (click)="toggleHelp()">help_outline</i></li>
+      <li><i class="material-icons md-24">notifications_none</i></li>
+      <li><i class="material-icons md-24">account_circle</i></li>
+      <li>
+        <a href="javascript:void(0)" (click)="logout()"
+          ><em class="material-icons md-24">power_settings_new</em></a
+        >
+      </li>
+    </ul>
+  </div>
+</header>

@@ -1,0 +1,300 @@
+<app-exception-sidebar-title
+  (closeDialogEvent)="onCloseDialogEvent()"
+  [title]="'Individual Exception'"
+  [status]="task.status | titlecaseFormat"
+>
+</app-exception-sidebar-title>
+
+<mat-divider></mat-divider>
+
+<mat-tab-group mat-stretch-tabs animationDuration="0ms">
+  <mat-tab label="Exception">
+    <div class="exception-container">
+      <div class="exception-container__status">
+        <div *ngIf="task.previousStatuses && task.previousStatuses.length > 0">
+          <gds-tag
+            [color]="'red'"
+            [label]="task.previousStatuses[0].status | titlecaseFormat"
+          ></gds-tag>
+        </div>
+        <div *ngIf="!task.previousStatuses || task.previousStatuses.length === 0">
+          <gds-tag [color]="'red'" [label]="task.status | titlecaseFormat"></gds-tag>
+        </div>
+      </div>
+
+      <div class="exception-container__createdDateTime">
+        <strong
+          >Exception created at {{ task.createdDate | date: 'HH:mm' }} on
+          {{ task.createdDate | date: 'dd MMM yyyy' }}</strong
+        >
+      </div>
+
+      <div class="exception-container__description">{{ task.message }}</div>
+
+      <div class="row">
+        <div class="col-4">
+          <div>Exception ID:</div>
+          <div>{{ task.sourceId }}</div>
+        </div>
+        <div class="col-4">
+          <div>Category:</div>
+          <div>{{ task.resourceType | titlecase }}</div>
+        </div>
+        <div class="col-4">
+          <div>Exception Type:</div>
+          <div>{{ task.type }}</div>
+        </div>
+      </div>
+
+      <div *ngFor="let item of task.previousStatuses | slice: 1">
+        <div class="exception-container__divider">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="exception-container__status">
+          <span class="capsule"> {{ getStatusToDisplay(item.status) | titlecase }}</span>
+        </div>
+        <div class="exception-container__createdDateTime">
+          <strong
+            >{{ item.updatedBy }} at {{ item.updated | date: 'HH:mm' }} on
+            {{ item.updated | date: 'dd MMM yyyy' }}</strong
+          >
+        </div>
+        <div class="exception-container__description">{{ item.reason }}</div>
+      </div>
+      <div *ngIf="task.previousStatuses && task.previousStatuses.length > 0">
+        <div class="exception-container__divider">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="exception-container__status">
+          <gds-tag [color]="'red'" [label]="task.status | titlecaseFormat"></gds-tag>
+        </div>
+        <div class="exception-container__createdDateTime">
+          <strong
+            >{{ task.statusInfo.updatedBy }} at {{ task.statusInfo.updated | date: 'HH:mm' }} on
+            {{ task.statusInfo.updated | date: 'dd MMM yyyy' }}</strong
+          >
+        </div>
+        <div class="exception-container__description">{{ task.statusInfo.reason }}</div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="exception-container" *ngIf="showOnStatusConflict">
+      <mat-error>
+        {{ updateTaskErrorMessage }}
+      </mat-error>
+      <button
+        class="exception-container__cancel"
+        mat-button
+        (click)="onCloseDialogEvent()"
+        data-testid="cancel"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <div class="exception-container" *ngIf="!showConfirmTextbox">
+      <ng-template [ngIf]="task.status === 'RAISED' && isMaker">
+        <button
+          *ngIf="hasAction('RELEASE')"
+          class="exception-container__release"
+          mat-stroked-button
+          (click)="release()"
+          data-testid="release"
+        >
+          Release
+        </button>
+        <button
+          *ngIf="hasAction('OVERRIDE')"
+          class="exception-container__override"
+          mat-stroked-button
+          (click)="override()"
+          data-testid="override"
+        >
+          Override
+        </button>
+        <button
+          *ngIf="hasAction('REJECT')"
+          class="exception-container__reject reject"
+          [disabled]="true"
+          mat-stroked-button
+          (click)="reject()"
+          data-testid="reject"
+        >
+          Reject
+        </button>
+      </ng-template>
+
+      <ng-template
+        [ngIf]="
+          task.status !== 'RAISED' && isChecker && task.statusInfo.updatedBy != userName
+        "
+      >
+        <button
+          class="exception-container__confirm"
+          mat-stroked-button
+          (click)="checkerConfirm()"
+          data-testid="checker-confirm"
+        >
+          Confirm
+        </button>
+        <button
+          class="exception-container__reject"
+          mat-stroked-button
+          (click)="checkerReject()"
+          data-testid="checker-reject"
+        >
+          Reject
+        </button>
+      </ng-template>
+
+      <button
+        class="exception-container__cancel"
+        mat-button
+        (click)="onCloseDialogEvent()"
+        data-testid="cancel"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <div class="exception-container" *ngIf="showConfirmTextbox && !showOnStatusConflict">
+      <form [formGroup]="form" class="form">
+        <div class="row">
+          <div class="col-8">
+            <app-form-label data-testid="reasonLabel">Reason for {{ reasonLabel }}</app-form-label>
+            <mat-form-field appearance="outline">
+              <textarea
+                rows="4"
+                cols="100"
+                matInput
+                data-testid="reason"
+                formControlName="reason"
+              ></textarea>
+            </mat-form-field>
+            <app-form-error
+              data-testid="reason-error"
+              label="reasonErrorLabel"
+              [control]="form.controls.reason"
+              [messages]="errors"
+            ></app-form-error>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button
+              class="exception-container__confirm"
+              mat-flat-button
+              (click)="updateStatus()"
+              data-testid="confirm"
+            >
+              Confirm {{ buttonDisplayActionText }}
+            </button>
+            <a
+              mat-button
+              class="exception-container__cancel"
+              (click)="cancelConfirmBox()"
+              data-testid="confirm-cancel"
+              >Cancel</a
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab mat-table label="{{ task.resourceType | titlecase }} details">
+    <div class="exception-container">
+      <table>
+        <tr class="row">
+          <td class="col-4">
+            <strong>Primary Entity:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.primaryEntity }}
+          </td>
+        </tr>
+        <tr class="row">
+          <td class="col-4">
+            <strong>Related Entity:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.relatedEntity }}
+          </td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Document Reference:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.attributes.documentReference }}
+          </td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Issue Date:</strong>
+          </td>
+          <td class="col-8">{{ task.attributes.issueDate | date: 'dd-MMM-yy' }}</td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Due Date:</strong>
+          </td>
+          <td class="col-8">{{ task.attributes.dueDate | date: 'dd-MMM-yy' }}</td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>CCY:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.attributes.certifiedAmountCurrency }}
+          </td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Amount:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.attributes.certifiedAmount | number: '1.2' }}
+          </td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Status:</strong>
+          </td>
+          <td class="col-8">
+            {{ task.attributes.cashflowStatus }}
+          </td>
+        </tr>
+        <tr class="row">
+          <td class="col-4">
+            <strong>Contract:</strong>
+          </td>
+          <td class="col-8">
+            <a [routerLink]="['/contracts/' + task.attributes.contractId]">
+              {{ task.attributes.contractName }}
+            </a>
+          </td>
+        </tr>
+
+        <tr class="row">
+          <td class="col-4">
+            <strong>Facility Name:</strong>
+          </td>
+          <td class="col-8">
+            <a [routerLink]="['/facilities/' + task.attributes.facilityId]">
+              {{ task.attributes.facilityName }}
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </mat-tab>
+</mat-tab-group>

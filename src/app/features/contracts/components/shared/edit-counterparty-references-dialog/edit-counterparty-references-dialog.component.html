@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{ counterparty.name }} References</h2>
+<mat-dialog-content>
+  <form class="form">
+    <div class="row--no-padding">
+      <div class="col-12">
+        <app-form-label>Alt Reference(s)</app-form-label>
+        <app-list-input [formControl]="form.controls.references"></app-list-input>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="mat-dialog-actions__spaced">
+  <button mat-flat-button data-testid="update-counterparty" (click)="update()">
+    Update
+  </button>
+  <mat-error>{{ serverError }}</mat-error>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

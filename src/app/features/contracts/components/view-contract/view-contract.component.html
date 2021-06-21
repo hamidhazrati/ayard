@@ -1,0 +1,186 @@
+<ng-container>
+  <ng-container *ngIf="!loading && contract">
+    <div class="row">
+      <app-card class="col-12">
+        <app-card-title class="view-contract__header">
+          <span>
+            <span data-testid="contract-product">{{ contract.product }}</span> |
+            <span data-testid="contract-name">{{ contract.name }}</span>
+          </span>
+          <span>
+            <button mat-flat-button *ngIf="canApprove()" (click)="approve()">Approve</button>
+          </span>
+        </app-card-title>
+      </app-card>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-card>
+          <app-card-content>
+            <div class="row--no-padding">
+              <div class="col-4">
+                <app-form-label>Contract ID</app-form-label>
+                <app-form-value data-testid="contract-id">
+                  {{ contract.id }}
+                </app-form-value>
+
+                <app-form-label>Status</app-form-label>
+                <app-form-value data-testid="contract-status">
+                  {{ contract.status | titlecaseFormat }}
+                </app-form-value>
+              </div>
+              <div class="col-4">
+                <app-form-label>Created Date</app-form-label>
+                <app-form-value data-testid="contract-created">
+                  {{ contract.created | date: 'dd MMM y' }}
+                </app-form-value>
+
+                <div *ngIf="contract.partnerId != null">
+                  <app-form-label>Partner ID</app-form-label>
+                  <app-form-value data-testid="partner-id">
+                    {{ contract.partnerId }}
+                  </app-form-value>
+                </div>
+
+                <app-form-label>Facility</app-form-label>
+                <app-form-value data-testid="contract-facility">
+                  <a
+                    *ngIf="contract.facility"
+                    routerLink="/facilities/{{ contract.facility.id.split('_')[0] }}"
+                  >
+                    {{ contract.facility.name }}
+                  </a>
+                  <span *ngIf="!contract.facility">None</span>
+                </app-form-value>
+              </div>
+              <div class="col-3"></div>
+              <div class="col-1">
+                <div data-testid="contract-edit">
+                  <button
+                    mat-stroked-button
+                    *ngIf="contract.status === 'PENDING_APPROVAL'"
+                    (click)="editContract()"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </app-card-content>
+        </app-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <app-card>
+    <app-card-title>
+      <h2>Details</h2>
+    </app-card-title>
+    <app-card-content>
+      <div class="row view-contract__details">
+        <div class="col-2">
+          <mat-selection-list
+            data-testid="contract-details-selector"
+            [multiple]="false"
+            (selectionChange)="portalSelected($event.option.value)"
+          >
+            <mat-list-option
+              data-testid="contract-details-selector-option"
+              *ngFor="let portal of portals"
+              [value]="portal"
+            >
+              {{ portal.name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div class="col-10">
+          <ng-template [cdkPortalOutlet]="selectedView?.portal"></ng-template>
+        </div>
+      </div>
+
+      <ng-template #templatePortalParameters>
+        <div class="view-contract__portal-header">
+          <h2>Per Currency Parameters</h2>
+          <span>
+            <button mat-stroked-button *ngIf="editing" (click)="cancelEdit(selectedView.name)">
+              Cancel
+            </button>
+
+            <button
+              mat-stroked-button
+              *ngIf="canEdit()"
+              (click)="edit()"
+              data-testid="edit-parameter-button"
+            >
+              Edit
+            </button>
+            <button
+              mat-flat-button
+              *ngIf="editing"
+              [disabled]="!canSubmitEdit()"
+              (click)="submitUpdate(selectedView.name)"
+              type="button"
+            >
+              Update
+            </button>
+            <mat-error *ngIf="!form.valid" >
+              <br />Not all fields validated.
+            </mat-error>
+          </span>
+        </div>
+
+        <form
+          [ngClass]="{ readonly: !editing }"
+          [formGroup]="form"
+          autocomplete="off"
+          class="form"
+          novalidate
+          (ngSubmit)="submitUpdate(selectedView.name)"
+        >
+          <div>
+            <app-pricing-currency-form [readonly]="!editing" [currencies]="contract.currencies">
+            </app-pricing-currency-form>
+          </div>
+
+          <div class="view-contract__portal-header">
+            <h2 data-testid="parameters-id">Parameters</h2>
+          </div>
+
+          <app-pricing-attributes-form
+            data-testid="pricing-attributes-form"
+            [readonly]="!editing"
+            [contract]="contract"
+            [duplicateCheckEnabled]="contract.hashExpressions.length > 0"
+            [counterpartyRoles]="contractProduct?.counterpartyRoles | pluckFromEach: 'name'"
+          ></app-pricing-attributes-form>
+        </form>
+      </ng-template>
+
+      <ng-template #templatePortalCounterparties>
+        <app-counterparty-groups-per-role-type-and-role
+          *ngIf="contractProduct"
+          [contract]="contract"
+        ></app-counterparty-groups-per-role-type-and-role>
+      </ng-template>
+
+      <ng-template #templatePortalRules>
+        <div class="view-contract__portal-header">
+          <h2>Rules</h2>
+        </div>
+
+        <div *ngFor="let ruleGroup of groupedRules | keyvalue">
+          <h3>{{ ruleGroup.key }}</h3>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle *ngFor="let rule of ruleGroup.value">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ rule.name }}</mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-view-rule [contract]="contract" [rule]="rule"></app-view-rule>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </ng-template>
+    </app-card-content>
+  </app-card>
+</ng-container>

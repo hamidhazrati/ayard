@@ -1,0 +1,77 @@
+<div *ngIf="searchable && (showHelpers$ | async)">
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      autocomplete="off"
+      data-testid="search-field"
+      type="text"
+      [(ngModel)]="search"
+      (ngModelChange)="onValueChange($event)"
+    />
+  </mat-form-field>
+</div>
+
+<ng-container *ngIf="data$ | async as data">
+  <table mat-table [dataSource]="data">
+    <ng-container *ngFor="let item of columnList; let i = index">
+      <ng-container [matColumnDef]="item.id">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          [ngClass]="{
+            filter: item.filter,
+            first: i === 0
+          }"
+          (click)="onFilterClick(item)"
+        >
+          <span
+            [innerText]="item.label"
+            [ngStyle]="{
+              display: 'block',
+              textAlign: item.format && item.format === 'number' ? 'right' : 'left'
+            }"
+          ></span>
+        </th>
+        <td mat-cell [attr.data-testid]="item.id" *matCellDef="let result">
+          <ng-container *ngIf="!item.format; else format">{{ result[item.id] }}</ng-container>
+          <ng-template #format>
+            <ng-container [ngSwitch]="item.format">
+              <span
+                *ngSwitchCase="'number'"
+                [ngStyle]="{ display: 'block', textAlign: 'right' }"
+                [ngClass]="{ 'negative-number': isNegative(result[item.id]) }"
+              >
+                <ng-container *ngIf="item.formatOption; else defaultFormat">
+                  {{ result[item.id] | number: item.formatOption }}
+                </ng-container>
+                <ng-template #defaultFormat>{{ result[item.id] | number }}</ng-template>
+              </span>
+            </ng-container>
+          </ng-template>
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="columns$ | async as columns">
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr
+        *matRowDef="let row; columns: columns; let i = index"
+        mat-row
+        tabindex="0"
+        [attr.data-testid]="'facility-row-' + i"
+        (click)="onRowClick(row)"
+        (keyup.enter)="onRowClick(row)"
+        (keyup.space)="onRowClick(row)"
+      ></tr>
+    </ng-container>
+  </table>
+
+  <mat-paginator
+    *ngIf="pagination$ | async as pagination"
+    [length]="pagination.itemsCount"
+    [pageSize]="pagination.pageSize"
+    [pageSizeOptions]="pagination.pageSizeOptions"
+    [showFirstLastButtons]="true"
+    (page)="onPageToggle($event)"
+  ></mat-paginator>
+</ng-container>

@@ -1,0 +1,36 @@
+@import 'palette';
+
+.breadcrumbs {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbs__item {
+  &:after {
+    content: '/';
+    margin-left: 4px;
+    margin-right: 5px;
+    color: $primary700;
+  }
+
+  &:last-child {
+    &::after {
+      display: none;
+    }
+  }
+
+  a {
+    color: $primary700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:active {
+      color: $primary700;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<mat-horizontal-stepper #stepper data-testid="side-bar">
+  <mat-step *ngIf="!this.editing">
+    <h2 mat-dialog-title>
+      <mat-icon data-testid="close-button" class="close-icon" (click)="this.dialogRef.close()"
+        >close</mat-icon
+      >
+      Add counterparty role
+    </h2>
+
+    <app-counterparty-role-list
+      (selectOption)="this.configure($event)"
+      [selectedOptions]="this.selectedCounterpartyRoles"
+    ></app-counterparty-role-list>
+  </mat-step>
+
+  <mat-step>
+    <h2>
+      <ng-container>
+        <mat-icon
+          *ngIf="!this.editing"
+          data-testid="back-button"
+          class="close-icon"
+          (click)="this.list()"
+          >arrow_back</mat-icon
+        >
+        <mat-icon
+          *ngIf="this.editing"
+          data-testid="close-button"
+          class="close-icon"
+          (click)="this.dialogRef.close()"
+          >close</mat-icon
+        >
+      </ng-container>
+      {{ counterpartyRole?.name }}
+    </h2>
+
+    <app-counterparty-role-configurator
+      [productCounterpartyRole]="counterpartyRole"
+      [editing]="this.editing"
+      (save)="this.dialogRef.close($event)"
+      (cancel)="this.dialogRef.close()"
+    ></app-counterparty-role-configurator>
+  </mat-step>
+</mat-horizontal-stepper>

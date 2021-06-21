@@ -1,0 +1,51 @@
+.dialog__form {
+  height: 100%;
+
+  .mat-form-field {
+    display: block;
+  }
+}
+
+.dialog {
+  display: grid;
+  height: 100%;
+  gap: 0;
+  grid-template-columns: auto auto;
+  grid-template-rows: 28px auto 36px;
+  grid-template-areas:
+    'title title'
+    'content content'
+    'error error'
+    'actions1 actions2';
+}
+
+.dialog__title {
+  grid-area: title;
+
+  h2 {
+    margin: 0;
+    font-weight: normal;
+  }
+}
+
+.dialog__content {
+  grid-area: content;
+  align-self: center;
+}
+
+.dialog__error {
+  grid-area: error;
+  align-self: center;
+}
+
+.dialog__actions1 {
+  grid-area: actions1;
+  align-self: end;
+  justify-self: start;
+}
+
+.dialog__actions2 {
+  grid-area: actions2;
+  align-self: end;
+  justify-self: end;
+}

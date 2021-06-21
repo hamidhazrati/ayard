@@ -1,0 +1,104 @@
+@import '~@angular/material/theming';
+@import 'palette';
+
+$gs-green: (
+  50: $primary50,
+  100: $primary100,
+  200: $primary200,
+  300: $primary300,
+  400: $primary400,
+  500: $primary500,
+  600: $primary600,
+  700: $primary700,
+  800: $primary800,
+  900: $primary900,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$gs-grey: (
+  50: $grey50,
+  100: $grey100,
+  200: $grey200,
+  300: $grey300,
+  400: $grey400,
+  500: $grey500,
+  600: $grey600,
+  700: $grey700,
+  800: $grey800,
+  900: $grey900,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$gs-alert: (
+  50: $alert50,
+  100: $alert100,
+  200: $alert200,
+  300: $alert300,
+  400: $alert400,
+  500: $alert500,
+  600: $alert600,
+  700: $alert700,
+  800: $alert800,
+  900: $alert900,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$gs-typography: mat-typography-config(
+  $font-family: 'Open Sans, sans-serif',
+  $body-1: mat-typography-level(14px, 20px, 500),
+);
+
+@include mat-core($gs-typography);
+
+$app-primary: mat-palette($gs-green);
+$app-accent: mat-palette($gs-grey);
+$app-warn: mat-palette($gs-alert);
+
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);

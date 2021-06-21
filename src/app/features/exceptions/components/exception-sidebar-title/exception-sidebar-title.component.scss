@@ -1,0 +1,10 @@
+.exception-sidebar-title {
+  display: grid;
+  grid-column-gap: 15px;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.exception-sidebar-title__close-icon:hover {
+  cursor: pointer;
+}

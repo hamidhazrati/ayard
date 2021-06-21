@@ -1,0 +1,120 @@
+<form [formGroup]="form" autocomplete="off" class="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-12">
+      <!-- country -->
+      <app-form-label>Country</app-form-label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          formControlName="country"
+          placeholder="Select a country"
+          panelClass="selector-position"
+          data-testid="country"
+        >
+          <mat-option
+            *ngFor="let country of countryList"
+            [value]="country.code"
+            data-testid="country-option"
+          >
+            {{ country.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div
+        class="form-error"
+        data-testid="country-required"
+        *ngIf="form.controls.country.invalid && form.controls.country.errors?.required"
+      >
+        <span [innerText]="form.controls.country.errors.required"></span>
+      </div>
+
+      <!-- state province -->
+      <app-form-label>State/Province</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="region" formControlName="region" />
+      </mat-form-field>
+
+      <div
+        class="form-error"
+        data-testid="region-required"
+        *ngIf="form.controls.region.invalid && form.controls.region.errors?.required"
+      >
+        <span [innerText]="form.controls.region.errors.required"></span>
+      </div>
+
+      <div
+        class="form-error"
+        data-testid="region-maxlength"
+        *ngIf="form.controls.region.invalid && form.controls.region.errors?.maxlength"
+      >
+        <span>Maximum length 64 exceeded.</span>
+      </div>
+
+      <!-- duns number -->
+      <app-form-label>DUNS Number</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="duns-number" formControlName="dunsNumber" />
+      </mat-form-field>
+
+      <div
+        class="form-error"
+        data-testid="duns-number-pattern"
+        *ngIf="form.controls.dunsNumber.invalid && form.controls.dunsNumber.errors?.pattern"
+      >
+        <span>DUNS Number format is incorrect</span>
+      </div>
+
+      <!-- registration number -->
+      <app-form-label>Registration Number</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="registration-number" formControlName="registrationNumber" />
+      </mat-form-field>
+
+      <!-- entity name -->
+      <app-form-label>Entity Name</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="name" formControlName="name" />
+      </mat-form-field>
+
+      <div
+        class="form-error"
+        *ngIf="form.controls.name.invalid && form.controls.name.errors?.required"
+        data-testid="name-required"
+      >
+        <span [innerText]="form.controls.name.errors.required"></span>
+      </div>
+
+      <div
+        class="form-error"
+        *ngIf="form.controls.name.invalid && form.controls.name.errors?.maxlength"
+        data-testid="name-maxlength"
+      >
+        <span>Maximum length 100 exceeded.</span>
+      </div>
+
+      <!-- postal code -->
+      <app-form-label>Postal Code</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="postal-code" formControlName="postalCode" />
+      </mat-form-field>
+
+      <!-- address line 1 -->
+      <app-form-label>Address Line 1</app-form-label>
+      <mat-form-field appearance="outline">
+        <input matInput data-testid="address" formControlName="address" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button
+        mat-flat-button
+        data-testid="search-btn"
+        [disabled]="(isPopulated$ | async) === false"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</form>

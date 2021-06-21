@@ -1,0 +1,156 @@
+<form [formGroup]="form" class="form rule-form">
+  <app-form-label [required]="true">Resource</app-form-label>
+  <mat-form-field appearance="outline">
+    <mat-select
+      [formControl]="this.form.controls.resource"
+      placeholder="Select a resource"
+      panelClass="selector-position"
+      [attr.data-testid]="'rule-resource-select-' + this.index"
+    >
+      <mat-option
+        *ngFor="let ruleType of this.ruleTypes"
+        [value]="ruleType.code"
+        [attr.data-testid]="'rule-resource-select-' + this.index + '-option'"
+        >{{ ruleType.description }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error
+    label="Resource"
+    [control]="this.form.controls.resource"
+    [attr.data-testid]="'rule-resource-error-' + this.index"
+  ></app-form-error>
+
+  <app-form-label [required]="true">Name</app-form-label>
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      type="text"
+      [formControl]="this.form.controls.name"
+      id="{{ 'rule-name-input-' + this.index }}"
+      [attr.data-testid]="'rule-name-input-' + this.index"
+    />
+  </mat-form-field>
+
+  <app-form-error
+    label="Name"
+    [control]="this.form.controls.name"
+    [attr.data-testid]="'rule-name-error-' + this.index"
+  ></app-form-error>
+
+  <app-form-label [required]="true">Match Expression</app-form-label>
+  <mat-form-field appearance="outline">
+    <textarea
+      matInput
+      id="{{ 'rule-match-expression-textarea-' + this.index }}"
+      [attr.data-testid]="'rule-match-expression-textarea-' + this.index"
+      type="text"
+      [formControl]="this.form.controls.matchExpression"
+      rows="3"
+    ></textarea>
+  </mat-form-field>
+
+  <app-form-error
+    *ngIf="!this.form.controls.matchExpression?.errors?.matchExpression"
+    label="Match Expression"
+    [control]="this.form.controls.matchExpression"
+    [attr.data-testid]="'rule-exprematchEsion-error-' + this.index"
+  ></app-form-error>
+  <mat-error class="mat-errors mat-error"
+    *ngIf="this.form.controls.matchExpression?.errors?.matchExpression">
+    {{this.form.controls.matchExpression?.errors?.matchExpression}}
+  </mat-error>
+
+  <app-form-label [required]="true">Expression</app-form-label>
+  <mat-form-field appearance="outline">
+    <textarea
+      matInput
+      id="{{ 'rule-expression-textarea-' + this.index }}"
+      [attr.data-testid]="'rule-expression-textarea-' + this.index"
+      type="text"
+      [formControl]="this.form.controls.expression"
+      rows="3"
+    ></textarea>
+  </mat-form-field>
+
+  <app-form-error
+    *ngIf="!this.form.controls.expression?.errors?.expression"
+    label="Expression"
+    [control]="this.form.controls.expression"
+    [attr.data-testid]="'rule-expression-error-' + this.index"
+  ></app-form-error>
+  <mat-error class="mat-errors mat-error"
+    *ngIf="this.form.controls.expression?.errors?.expression">
+    {{this.form.controls.expression?.errors?.expression}}
+  </mat-error>
+
+  <app-form-label [required]="true">Code</app-form-label>
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      id="{{ 'rule-code-input-' + this.index }}"
+      [attr.data-testid]="'rule-code-input-' + this.index"
+      type="text"
+      [formControl]="this.form.controls.code"
+    />
+  </mat-form-field>
+
+  <app-form-error
+    label="Code"
+    [control]="this.form.controls.code"
+    [attr.data-testid]="'rule-code-error-' + this.index"
+  ></app-form-error>
+
+  <app-form-label [required]="true">Message</app-form-label>
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      id="{{ 'rule-message-textarea-' + this.index }}"
+      [attr.data-testid]="'rule-message-textarea-' + this.index"
+      type="text"
+      [formControl]="this.form.controls.message"
+    />
+  </mat-form-field>
+
+  <app-form-error
+    label="Message"
+    [control]="this.form.controls.message"
+    [attr.data-testid]="'rule-message-error-' + this.index"
+  ></app-form-error>
+
+  <app-form-label [required]="true">Outcome</app-form-label>
+  <mat-form-field appearance="outline">
+    <mat-select
+      [formControl]="this.form.controls.outcomeType"
+      placeholder="Select a outcome"
+      panelClass="selector-position"
+      [attr.data-testid]="'rule-outcome-select-' + this.index"
+    >
+      <mat-option
+        *ngFor="let outcome of this.outcomeTypes"
+        [value]="outcome.code"
+        [attr.data-testid]="'rule-outcome-select-' + this.index + '-option'"
+        >{{ outcome.description }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <app-form-error
+    label="Outcome"
+    [control]="this.form.controls.outcomeType"
+    [attr.data-testid]="'rule-outcome-error-' + this.index"
+  ></app-form-error>
+
+  <app-form-label [required]="false">Outcome Description</app-form-label>
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      id="{{ 'rule-outcomeDescription-textarea-' + this.index }}"
+      [attr.data-testid]="'rule-outcomeDescription-textarea-' + this.index"
+      type="text"
+      [formControl]="this.form.controls.outcomeDescription"
+    />
+  </mat-form-field>
+
+</form>

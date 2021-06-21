@@ -1,0 +1,421 @@
+<div class="row--no-padding">
+  <div class="col-6">
+    <app-form-label matTooltipPosition="right" matTooltip="Discount Mode" [required]="false"
+      >Discount Mode</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <mat-select
+        [formControl]="form.controls.discountMode"
+        name="discountMode"
+        data-testid="discount-mode"
+      >
+        <mat-option
+          data-testid="discount-mode-option"
+          *ngFor="let discountMode of pricintConstants.discountModes"
+          [value]="discountMode.value"
+        >
+          {{ discountMode.displayText }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-form-error label="Discount Mode" [control]="form.controls.discountMode"></app-form-error>
+  </div>
+
+  <div class="col-6">
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="The method of rounding agreed with contract counterparties."
+      [required]="false"
+      >Rounding Mode</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="form.controls.roundingMode" name="roundingMode">
+        <mat-option *ngFor="let r of pricintConstants.roundingModes" [value]="r.value">
+          {{ r.displayText }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-form-error label="Rounding Mode" [control]="form.controls.roundingMode"></app-form-error>
+  </div>
+</div>
+
+<div class="row--no-padding">
+  <div class="col-6">
+    <app-form-label
+      matTooltipPosition="right"
+      [required]="false"
+      matTooltip="The adjustment type to determine a business day for the reference rate publication date."
+      >Reference Rate Adjustment Type</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="form.controls.referenceRateAdjustmentType">
+        <mat-option *ngFor="let v of pricintConstants.adjustmentCalendarTypes" [value]="v.value">{{
+          v.displayText
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-form-error
+      label="Reference Rate Adjustment Type"
+      [control]="form.controls.referenceRateAdjustmentType"
+    ></app-form-error>
+  </div>
+
+  <div class="col-6">
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="The Reference Rate Adjustment determines the reference rate publication date to use in pricing operations."
+      [required]="false"
+      >Reference Rate Adjustment</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <mat-select [formControl]="form.controls.referenceRateOffset">
+        <mat-option
+          *ngFor="let v of pricintConstants.referenceRateOffsetValues"
+          [value]="v.value"
+          >{{ v.displayText }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <app-form-error
+      label="Reference Rate Adjustment"
+      [control]="form.controls.referenceRateOffset"
+    ></app-form-error>
+  </div>
+</div>
+
+<div class="row--no-padding">
+  <div class="col-6">
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="Minimum allowable Tenor of trades under this contract"
+      [required]="false"
+      >Min Tenor</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <input
+        data-testid="min-tenor"
+        matInput
+        [formControl]="form.controls.tenorRange.controls.min"
+        type="number"
+        name="minTenor"
+        appPositiveTwoDecimal
+        min="0"
+      />
+    </mat-form-field>
+    <app-form-error
+      label="Min Tenor"
+      [control]="form.controls.tenorRange.controls.min"
+    ></app-form-error>
+  </div>
+
+  <div class="col-6">
+    <app-form-label
+      matTooltipPosition="right"
+      matTooltip="Maximum allowable Tenor of trades under this contract"
+      [required]="false"
+      >Max Tenor</app-form-label
+    >
+    <mat-form-field appearance="outline">
+      <input
+        data-testid="max-tenor"
+        matInput
+        [formControl]="form.controls.tenorRange.controls.max"
+        type="number"
+        name="minTenor"
+        min="0"
+        appPositiveTwoDecimal
+      />
+    </mat-form-field>
+    <app-form-error
+      label="Max Tenor"
+      [control]="form.controls.tenorRange.controls.max"
+    ></app-form-error>
+  </div>
+</div>
+
+<div class="row--no-padding">
+  <div class="col-12">
+    <app-form-error label="Tenor" [control]="form.controls.tenorRange"></app-form-error>
+  </div>
+</div>
+
+<div>
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="The number of days post acceptance to determine the effective payment date"
+        [required]="false"
+        >Settlement Days</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          data-testid="settlement-days"
+          matInput
+          [formControl]="form.controls.settlementDays"
+          type="number"
+          name="settlementDays"
+          appPositiveTwoDecimal
+          MIN="0"
+        />
+      </mat-form-field>
+      <app-form-error
+        label="Settlement Days"
+        [control]="form.controls.settlementDays"
+      ></app-form-error>
+    </div>
+
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="The Closing time for trades to be accepted in the next trading window."
+        [required]="false"
+        >Trading Cut off (UTC)</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select [formControl]="form.controls.tradingCutoff" data-testid="trading-cut-off">
+          <mat-option
+            data-testid="trading-cut-off-option"
+            *ngFor="let v of hoursOfDay"
+            [value]="v"
+            >{{ v }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <app-form-error label="Trading Cut off (UTC)" [control]="form.controls.tradingCutoff">
+      </app-form-error>
+    </div>
+  </div>
+
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="Determines the formula to be used while calculating fees."
+        [required]="false"
+        >Calculation Type</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select [formControl]="form.controls.calculationType">
+          <mat-option *ngFor="let r of pricintConstants.calculationTypes" [value]="r.value">
+            {{ r.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="The margin to apply with any base rate charge while calculating fees"
+        [required]="false"
+        >Margin rate</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          appPositiveTwoDecimal
+          matInput
+          [formControl]="form.controls.spread"
+          type="number"
+          min="0"
+          step="0.01"
+          name="spread"
+          data-testid="spread"
+          appPositiveTwoDecimal
+        />
+      </mat-form-field>
+      <app-form-error label="Spread" [control]="form.controls.spread"></app-form-error>
+    </div>
+  </div>
+  <div class="row--no-padding">
+    <div class="col-12">
+      <app-form-label
+        matTooltipPosition="right"
+        matTooltip="Determines how rates are to be applied while calculating fees."
+        [required]="false"
+        >Pricing Operation</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select [formControl]="form.controls.pricingOperation">
+          <mat-option *ngFor="let r of pricintConstants.pricingOperations" [value]="r.value">
+            {{ r.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        [required]="false"
+        matTooltip="The allowable types of MARKET Cashflow for a product to meet working capital needs of the customer"
+        >Document Types</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select
+          [formControl]="form.controls.documentTypes"
+          name="documentTypes"
+          multiple
+          data-testid="document-types-selector"
+        >
+          <mat-option
+            *ngFor="let r of pricintConstants.documentTypes"
+            [value]="r.value"
+            (onSelectionChange)="documentTypesChangeListener($event)"
+            data-testid="document-types-selector-option"
+          >
+            {{ r.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-form-error
+        label="Document Types"
+        [control]="form.controls.documentTypes"
+      ></app-form-error>
+    </div>
+  </div>
+  <div class="row--no-padding" *ngIf="form.controls.documentTypes?.value?.includes('INVOICE')">
+    <div class="col-6">
+      <app-duplicate-check-fields
+        data-testid="duplicate-checks-component"
+        [counterpartyRoles]="counterpartyRoles"
+        [preSelectedHashExpressions]="contract?.hashExpressions"
+        [duplicateInvoiceCheckEnabled]="duplicateCheckEnabled"
+        [readonly]="readonly"
+      >
+      </app-duplicate-check-fields>
+    </div>
+  </div>
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label
+        matTooltipPosition="right"
+        [required]="false"
+        matTooltip="Restrictions to be imposed to minimize the fraud risk ."
+        >Cashflow Exclusions</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select [formControl]="form.controls.exclusions" name="exclusions" multiple>
+          <mat-option *ngFor="let r of pricintConstants.exclusions" [value]="r.value">
+            {{ r.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-form-error
+        label="Cashflow Exclusions"
+        [control]="form.controls.exclusions"
+      ></app-form-error>
+    </div>
+  </div>
+
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="Advance Rate" [required]="false"
+        >Advance Rate (%)</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          data-testid="advance-rate"
+          matInput
+          [formControl]="form.controls.advanceRate"
+          type="number"
+          name="advanceRate"
+        />
+      </mat-form-field>
+      <app-form-error label="Advance Rate can be blank or " [control]="form.controls.advanceRate"></app-form-error>
+    </div>
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="Automated Payment" [required]="false"
+        >Automated Payment</app-form-label
+      ><br />
+      <mat-checkbox
+        color="primary"
+        [formControl]="form.controls.automatedPayment"
+        data-testid="automated-payment"
+      ></mat-checkbox>
+    </div>
+  </div>
+
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="BAU Obligor Name" [required]="false"
+        >BAU Obligor Name</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          data-testid="bau-obligor-name"
+          matInput
+          [formControl]="form.controls.bauObligorName"
+          type="string"
+          name="bauObligorName"
+        />
+      </mat-form-field>
+      <app-form-error
+        label="BAU Obligor Name"
+        [control]="form.controls.bauObligorName"
+      ></app-form-error>
+    </div>
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="Discount Posting" [required]="false"
+        >Discount Posting</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          data-testid="discount-posting"
+          matInput
+          [formControl]="form.controls.discountPosting"
+          type="string"
+          name="discountPosting"
+        />
+      </mat-form-field>
+      <app-form-error
+        label="Discounted Posting"
+        [control]="form.controls.discountPosting"
+      ></app-form-error>
+    </div>
+  </div>
+
+  <div class="row--no-padding">
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="Lead Days" [required]="false"
+        >Lead Days</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <input
+          data-testid="lead-days"
+          matInput
+          [formControl]="form.controls.leadDays"
+          type="number"
+          name="leadDays"
+          appPositiveTwoDecimal
+          min="0"
+        />
+      </mat-form-field>
+      <app-form-error label="Lead Days" [control]="form.controls.leadDays"></app-form-error>
+    </div>
+    <div class="col-6">
+      <app-form-label matTooltipPosition="right" matTooltip="Rejection Mode" [required]="false"
+        >Rejection Mode</app-form-label
+      >
+      <mat-form-field appearance="outline">
+        <mat-select
+          [formControl]="form.controls.rejectionMode"
+          name="rejectionMode"
+          data-testid="rejection-mode"
+        >
+          <mat-option
+            *ngFor="let r of pricintConstants.rejectionModes"
+            [value]="r.value"
+            data-testid="rejection-mode-option"
+          >
+            {{ r.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-form-error
+        label="Rejection Mode"
+        [control]="form.controls.rejectionMode"
+      ></app-form-error>
+    </div>
+  </div>
+</div>

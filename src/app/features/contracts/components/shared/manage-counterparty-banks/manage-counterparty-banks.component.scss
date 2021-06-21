@@ -1,0 +1,8 @@
+.mat-errors {
+  margin: -1.34375em 0 0.25em;
+  padding-bottom: 1.34375em;
+  font-size: 0.85rem;
+}
+:host ::ng-deep .ngx-datatable.scroll-horz .datatable-body {
+  overflow-x: hidden;
+}

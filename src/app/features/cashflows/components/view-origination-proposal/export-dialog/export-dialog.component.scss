@@ -1,0 +1,20 @@
+@import 'palette';
+
+.export {
+  height: 100%;
+  min-width: 20em;
+}
+
+.export__title {
+  margin: 0 0 30px;
+}
+
+.export__actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.export__spinner {
+  display: inline-grid;
+  margin-right: 10px;
+}
