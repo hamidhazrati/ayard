@@ -12,7 +12,7 @@ The current statuses which you may see applied to cashflow files in this section
 | **End Processing**              | File structure has been passed. File is ready to be submitted for cashflow creation |
 | * **Cashflow creation start**   | Cashflow creation has begun |
 | **Cashflow creation end**       | Cashflow creation is complete. Check for exceptions and submit to origination proposal |
-| **Awaiting internal approval**  | Verdi is awaiting Greensill internal approval |
+| **Awaiting internal approval**  | Verdi is awaiting Aston Barclay internal approval |
 | **Start origination**           | Origination proposal is created. Proposal can be exported |
 
 > Statuses marked with an asterisk * are transitional and may be seen in the table as the files are processed in the background.

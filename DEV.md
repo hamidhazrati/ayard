@@ -38,18 +38,18 @@ Then within that row you specify your columns
 
 Please take a look at the examples in the code; for example view-cashflow-files or create-entity
 
-## Greensill Styling
+## Aston Barclay Styling
 
-We're using Angular Material with Greensill styling, as per the creatives:
+We're using Angular Material with Aston Barclay styling, as per the creatives:
 
 - https://app.axure.cloud/app/project/kfcxcp/overview
-- https://www.figma.com/file/9coN4HuLlclKGQdmAoL9H6/Greensill-Components
+- https://www.figma.com/file/9coN4HuLlclKGQdmAoL9H6/AstonBarclay-Components
 
-The Greensill Angular Material Theme is in `src/app/styles/material/ops-portal-theme.scss`
+The Aston Barclay Angular Material Theme is in `src/app/styles/material/ops-portal-theme.scss`
 
 Overrides for material components are in `src/app/styles/material/overrides` (You do not need to import this files into component-level.scss)
 
-The Greensill colour pallet is defined in `src/app/styles/palette.scss`
+The Aston Barclay colour pallet is defined in `src/app/styles/palette.scss`
 
 Css that is common across all pages is in `src/app/styles/common.scss` and the .scss files it imports. (You do not need to import these file into component-level scss)
 

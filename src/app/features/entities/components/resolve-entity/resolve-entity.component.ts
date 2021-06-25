@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EntitySearchResult } from '../../models/entity-search-result.model';
 import { AuthService } from '@app/auth/auth-service';
 import { from, Observable } from 'rxjs';
+import { BarcodeFormat } from '@zxing/library';
 
 @Component({
   templateUrl: './resolve-entity.component.html',
@@ -74,4 +75,27 @@ export class ResolveEntityComponent implements OnInit {
   isValuePresent(value) {
     return value && value !== '';
   }
+
+  // ...
+  formatsEnabled: BarcodeFormat[] = [
+    BarcodeFormat.CODE_39,
+    BarcodeFormat.CODE_128,
+    BarcodeFormat.DATA_MATRIX,
+    BarcodeFormat.EAN_13,
+    BarcodeFormat.QR_CODE,
+];
+
+//     BarcodeFormat.QR_CODE,
+
+
+  qrResultString: string;
+
+  clearResult(): void {
+    this.qrResultString = null;
+  }
+
+  onCodeResult(resultString: string) {
+    this.qrResultString = resultString;
+  }
+
 }
